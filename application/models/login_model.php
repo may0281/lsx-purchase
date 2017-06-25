@@ -10,11 +10,10 @@ class login_model extends ci_model
 	public function checkLogin($username,$password)
     {
         $this->db->select('*');
-        $this->db->from('bn_auth_user');
-        $this->db->join('bn_user_profile' , 'bn_auth_user.username = bn_user_profile.account','left');
-        $this->db->where('bn_auth_user.username',$username);
-        $this->db->where('bn_auth_user.password',$password);
-        $this->db->where('bn_auth_user.Status','A');
+        $this->db->from('bn_user_profile');
+        $this->db->where('account',$username);
+        $this->db->where('password',$password);
+        $this->db->where('status','A');
         $login = $this->db->get();
         return $login->result_array();
 
@@ -53,11 +52,15 @@ class login_model extends ci_model
 
     public function getPermission($role)
     {
-        $this->db->select('*');
-        $this->db->from('bn_auth_role_func');
-        $this->db->where('role_ref',$role);
-        $query = $this->db->get();
-        return $query->result();
+        $this->db->select('major.uri as majorUri,minor.uri as minorUri,b.func_minor_sub_name as action');
+        $this->db->from('bn_auth_role_func a');
+        $this->db->join('bn_func_minor_sub b ' , 'a.func_ref = b.func_minor_sub_ids','left');
+        $this->db->join('bn_func_minor minor ' , 'b.func_minor_id = minor.func_minor_ids','left');
+        $this->db->join('bn_func_major major ' , 'b.func_master_id = major.func_master_ids','left');
+        $this->db->where('a.role_ref',$role);
+        $permission = $this->db->get();
+        return $permission->result_array();
+
     }
 
 

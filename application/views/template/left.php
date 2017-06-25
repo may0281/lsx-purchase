@@ -50,25 +50,6 @@
 	<script type="text/javascript" src="<?php echo base_url();?>plugins/slimscroll/jquery.slimscroll.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url();?>plugins/slimscroll/jquery.slimscroll.horizontal.min.js"></script>
 
-	<!-- Page specific plugins -->
-	<!-- Charts -->
-	<script type="text/javascript" src="<?php echo base_url();?>plugins/sparkline/jquery.sparkline.min.js"></script>
-
-	<script type="text/javascript" src="<?php echo base_url();?>plugins/daterangepicker/moment.min.js"></script>
-	<script type="text/javascript" src="<?php echo base_url();?>plugins/daterangepicker/daterangepicker.js"></script>
-	<script type="text/javascript" src="<?php echo base_url();?>plugins/blockui/jquery.blockUI.min.js"></script>
-
-	<!-- Forms -->
-	<script type="text/javascript" src="<?php echo base_url();?>plugins/uniform/jquery.uniform.min.js"></script> <!-- Styled radio and checkboxes -->
-	<script type="text/javascript" src="<?php echo base_url();?>plugins/select2/select2.min.js"></script> <!-- Styled select boxes -->
-
-	<!-- DataTables -->
-	<script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/jquery.dataTables.min.js"></script>
-	<script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/tabletools/TableTools.min.js"></script> <!-- optional -->
-	<script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/colvis/ColVis.min.js"></script> <!-- optional -->
-	<script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/columnfilter/jquery.dataTables.columnFilter.js"></script> <!-- optional -->
-	<script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/DT_bootstrap.js"></script>
-
 	<!-- App -->
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/app.js"></script>
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/plugins.js"></script>
@@ -85,9 +66,8 @@
 	</script>
 
 	<!-- Demo JS -->
-	<script type="text/javascript" src="<?php echo base_url();?>assets/js/custom.js"></script>
 
-	
+
 </head>
 
 <body>
@@ -114,36 +94,36 @@
 			</a>
 			<!-- /Sidebar Toggler -->
 			<!-- Top Left Menu -->
-			<ul class="nav navbar-nav navbar-left hidden-xs hidden-sm">
+			<ul class="nav navbar-nav navbar-right hidden-xs hidden-sm">
 				<li>
 					<a href="<?php echo base_url();?>dashboard">
 						Dashboard
 					</a>
 				</li>
 				<li>
-							<a href="<?php echo base_url();?>login/Logout"><i class="icon-plus"></i><span>Logout</span></a>
+					<a href="<?php echo base_url();?>login/Logout"><i class="icon-plus"></i><span>Logout</span></a>
 				</li>
 			</ul>
 			<!-- /Top Left Menu -->
 		</div>
 	</header> <!-- /.header -->
-    <?php $path = explode('/',$_SERVER["REQUEST_URI"]) ;?>
+    <?php $path = explode('/',$_SERVER["REQUEST_URI"]);?>
     <div id="container">
 		<div id="sidebar" class="sidebar-fixed">
 			<div id="sidebar-content">
 				<!--=== Navigation ===-->
 				<ul id="nav">
-					<?php  foreach ($this->session->userdata('menu') as $menuList) { $subMenuList = array_get($menuList,'subMenu'); ?>
+					<?php  foreach ($this->session->userdata('menu') as $menuList) {
+						$subMenuList = array_get($menuList,'subMenu'); ?>
 					<?php if($subMenuList){ ?>
-					<li class="">
-
+					<li class="<?php if(array_get($path,1) == array_get($menuList,'uri')){echo "current open";} ?>">
 						<a href="javascript:void(0);">
-							<i class="icon-table"></i>
+							<i class="<?php echo array_get($menuList,'icon') ?>"></i>
 							<?php echo array_get($menuList,'menu'); ?>
 						</a>
 						<ul class="sub-menu">
 							<?php foreach ($subMenuList as  $subMenu) {?>
-								<li class="<?php if($path[2] == array_get($subMenu,'subMenuUri')){echo "current";} ?>">
+								<li class="<?php if(array_get($path,2) == array_get($subMenu,'subMenuUri')){echo "current";} ?>">
 									<a href="<?php echo base_url(array_get($menuList,'uri'));?>/<?php echo array_get($subMenu,'subMenuUri')?>">
 										<i class="icon-angle-right"></i>
 										<?php echo array_get($subMenu,'subMenu')?>
@@ -153,9 +133,9 @@
 						</ul>
 					</li>
 					<?php }else{ ?>
-						<li class="<?php if($path[1] == array_get($menuList,'uri')){echo "current open";} ?>">
+						<li class="<?php if(array_get($path,1) == array_get($menuList,'uri')){echo "current open";} ?>">
 							<a href="<?php echo base_url(array_get($menuList,'uri'))?>">
-								<i class="icon-table"></i>
+								<i class="<?php echo array_get($menuList,'icon') ?>"></i>
 								<?php echo array_get($menuList,'menu'); ?>
 							</a>
 						</li>

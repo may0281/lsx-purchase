@@ -21,7 +21,7 @@ class login extends CI_Controller {
 	{
 
         $username = $this->input->post('username');
-		if($this->session->userdata('admin') != '')
+		if($this->session->userdata('isSession') === true)
 		{
 			echo "<script>window.location.assign('".base_url()."dashboard');</script>";
             exit();
@@ -29,20 +29,27 @@ class login extends CI_Controller {
 		$pass = md5($this->input->post('password'));
 
 		$q = $this->login_model->checkLogin($username,$pass);
-
-        if($q)
+        if(!empty($q))
         {
-            $menu = $this->getMenu();
-            $this->session->set_userdata('menu',$menu);
+            $user =  array_get($q,0);
+
             $this->session->set_userdata('isSession',true);
-            $this->session->set_userdata('adminData',$q);
+            $this->session->set_userdata('adminData',array_get($user,'account'));
+            $this->session->set_userdata('role',array_get($user, 'role_id'));
+
+            $menu = $this->getMenu();
+            $action = $this->getPermission(array_get($user, 'role_id'));
+            $this->session->set_userdata('menu',$menu);
+            $this->session->set_userdata('userPermission',$action);
 
             echo "<script>window.location.assign('".base_url('dashboard')."');</script>";
             exit();
 
         }
-        else{
-            echo "<script>alert('Username or Password is wrong');window.location='".base_url('login')."';</script>";
+        else
+        {
+
+            echo "<script>alert('Username or Password is wrong'); window.location='".base_url('login')."';</script>";
             exit();
         }
 
