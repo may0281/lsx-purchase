@@ -15,6 +15,7 @@ class project extends CI_Controller {
 
     public function index()
     {
+		echo "pp";
 
         $data = array(
             'menu'=> 'Project',
