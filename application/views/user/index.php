@@ -74,12 +74,12 @@
                                     <td><?php echo $r['last_login_date'];?></td>
 
                                     <td class="align-center">
-                                        <a class="btn btn-sm btn-warning" href="<?php echo base_url(); ?>user/update/<?php echo $r['account']; ?>">
+                                        <a class="btn btn-sm btn-warning" href="<?php echo base_url(); ?>authen/update-user/<?php echo $r['account']; ?>">
                                             <i class="icon-edit"></i>
                                         </a>
                                     </td>
                                     <td class="align-center">
-                                        <a class="btn btn-sm btn-danger" href="<?php echo base_url(); ?>user/delete/<?php echo $r['account']; ?>" onclick="delFunction()">
+                                        <a class="btn btn-sm btn-danger" href="<?php echo base_url(); ?>authen/delete-user/<?php echo $r['account']; ?>" onclick="delFunction()">
                                             <i class=" icon-remove"></i>
                                         </a>
                                     </td>
@@ -103,8 +103,7 @@
 
 <script  type="text/javascript">
     function delFunction() {
-        var txt;
-        var r = confirm("Press a button!");
+        var r = confirm("Are you sure to delete user?");
         if (r == true) {
             return true;
         }

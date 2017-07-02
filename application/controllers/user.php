@@ -17,6 +17,8 @@ class user extends CI_Controller {
     public function index()
     {
 
+        sd($this->session->all_userdata());
+
         $data = array(
             'menu'=> 'User',
             'subMenu'=> 'User List',
@@ -54,7 +56,7 @@ class user extends CI_Controller {
         try
         {
             $this->user_model->createUser($bn_user_profile);
-            echo "<script> window.location.assign('".base_url()."user/init-user'); </script>";
+            echo "<script> window.location.assign('".base_url()."authen/init-user'); </script>";
             exit();
 
         }
@@ -93,7 +95,7 @@ class user extends CI_Controller {
         try
         {
             $this->user_model->updateUserData($account,$bn_user_profile);
-            echo "<script> window.location.assign('".base_url()."user/init-user'); </script>";
+            echo "<script> window.location.assign('".base_url()."authen/init-user'); </script>";
             exit();
 
         }
@@ -107,10 +109,19 @@ class user extends CI_Controller {
 
     public function deleteUser($account)
     {
+
+        $masterFlag  = $this->user_model->getMasterFlag($account);
+
+        if($masterFlag == 'Y')
+        {
+            echo "<script>alert('Can not delete this user is master.'); history.back(); </script>";
+            exit();
+        }
+
         try
         {
-            $this->user_model->updateUserData($account,$data);
-            echo "<script> window.location.assign('".base_url()."user/init-user'); </script>";
+            $this->db->delete('bn_user_profile', array('account' => $account));
+            echo "<script> window.location.assign('".base_url()."authen/init-user'); </script>";
             exit();
 
         }
@@ -130,7 +141,7 @@ class user extends CI_Controller {
         try
         {
             $this->user_model->updateUserData($account,$data);
-            echo "<script> window.location.assign('".base_url()."user/init-user'); </script>";
+            echo "<script> window.location.assign('".base_url()."authen/init-user'); </script>";
             exit();
 
         }

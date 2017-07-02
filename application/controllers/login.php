@@ -19,7 +19,6 @@ class login extends CI_Controller {
 
 	public function Verify()
 	{
-
         $username = $this->input->post('username');
 		if($this->session->userdata('isSession') === true)
 		{
@@ -27,7 +26,6 @@ class login extends CI_Controller {
             exit();
 		}
 		$pass = md5($this->input->post('password'));
-
 		$q = $this->login_model->checkLogin($username,$pass);
         if(!empty($q))
         {
@@ -36,11 +34,7 @@ class login extends CI_Controller {
             $this->session->set_userdata('isSession',true);
             $this->session->set_userdata('adminData',array_get($user,'account'));
             $this->session->set_userdata('role',array_get($user, 'role_id'));
-
-            $menu = $this->getMenu();
-            $action = $this->getPermission(array_get($user, 'role_id'));
-            $this->session->set_userdata('menu',$menu);
-            $this->session->set_userdata('userPermission',$action);
+            $this->getPermission(array_get($user, 'role_id'));
 
             echo "<script>window.location.assign('".base_url('dashboard')."');</script>";
             exit();
@@ -48,7 +42,6 @@ class login extends CI_Controller {
         }
         else
         {
-
             echo "<script>alert('Username or Password is wrong'); window.location='".base_url('login')."';</script>";
             exit();
         }
@@ -59,16 +52,17 @@ class login extends CI_Controller {
     {
         if($role == null)
         {
-            return array();
+            $permission = array();
         }
         $permission = $this->login_model->getPermission($role);
 
-        return $permission;
+        $this->session->set_userdata('permission',$permission);
     }
 
 	protected  function getMenu()
     {
-        return $this->login_model->getMenu();
+        $menu = $this->login_model->getMenu();
+        $this->session->set_userdata('menu',$menu);
     }
 
 	public function Logout()

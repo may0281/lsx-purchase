@@ -58,6 +58,11 @@ class CI_Controller {
 	{
 		return self::$instance;
 	}
+
+	public function checkPermission($menu,$subMenu,$action)
+    {
+
+    }
 }
 // END Controller class
 

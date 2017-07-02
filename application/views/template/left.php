@@ -1,3 +1,4 @@
+<?php $this->load->library('permission'); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -97,51 +98,105 @@
 			<ul class="nav navbar-nav navbar-right hidden-xs hidden-sm">
 				<li>
 					<a href="<?php echo base_url();?>dashboard">
-						Dashboard
+						Dashboard <?php  echo $this->permission->allow(1,2,3);?>
 					</a>
 				</li>
 				<li>
-					<a href="<?php echo base_url();?>login/Logout"><i class="icon-plus"></i><span>Logout</span></a>
+					<a href="<?php echo base_url();?>logout"><i class="icon-plus"></i><span>Logout</span></a>
 				</li>
 			</ul>
 			<!-- /Top Left Menu -->
 		</div>
 	</header> <!-- /.header -->
-    <?php $path = explode('/',$_SERVER["REQUEST_URI"]);?>
+    <?php $path = array(1=>null,1=>null,2=>null); $path = explode('/',$_SERVER["REQUEST_URI"]);
+	if(isset($path[2]))
+	{
+		$path_2 = $path[2];
+	}else{ $path_2 =null;}
+	?>
     <div id="container">
 		<div id="sidebar" class="sidebar-fixed">
 			<div id="sidebar-content">
 				<!--=== Navigation ===-->
 				<ul id="nav">
-					<?php  foreach ($this->session->userdata('menu') as $menuList) {
-						$subMenuList = array_get($menuList,'subMenu'); ?>
-					<?php if($subMenuList){ ?>
-					<li class="<?php if(array_get($path,1) == array_get($menuList,'uri')){echo "current open";} ?>">
+					<?php $permission = $this->session->user_data('isSession'); ?>
+					<li class="<?php if(array_get($path,1) == 'dashboard'){echo "current open";} ?>">
+						<a href="<?php echo base_url('dashboard')?>">
+							<i class="icon-dashboard"></i>
+							Dashboard
+						</a>
+					<li class="<?php if(array_get($path,1) == 'authen'){echo "current open";} ?>">
 						<a href="javascript:void(0);">
-							<i class="<?php echo array_get($menuList,'icon') ?>"></i>
-							<?php echo array_get($menuList,'menu'); ?>
+							<i class="icon-sitemap"></i>
+							Authentication
 						</a>
 						<ul class="sub-menu">
-							<?php foreach ($subMenuList as  $subMenu) {?>
-								<li class="<?php if(array_get($path,2) == array_get($subMenu,'subMenuUri')){echo "current";} ?>">
-									<a href="<?php echo base_url(array_get($menuList,'uri'));?>/<?php echo array_get($subMenu,'subMenuUri')?>">
-										<i class="icon-angle-right"></i>
-										<?php echo array_get($subMenu,'subMenu')?>
-									</a>
-								</li>
-							<?php } ?>
+							<li class="<?php if($path_2 == 'init-user'){echo "current";} ?>">
+								<a href="<?php echo base_url('authen/init-user');?>">
+									<i class="icon-angle-right"></i>
+									User Management
+								</a>
+							</li><li class="<?php if($path_2 == 'init-role'){echo "current";} ?>">
+								<a href="<?php echo base_url('authen/init-role');?>">
+									<i class="icon-angle-right"></i>
+									Role Management
+								</a>
+							</li>
 						</ul>
 					</li>
-					<?php }else{ ?>
-						<li class="<?php if(array_get($path,1) == array_get($menuList,'uri')){echo "current open";} ?>">
-							<a href="<?php echo base_url(array_get($menuList,'uri'))?>">
-								<i class="<?php echo array_get($menuList,'icon') ?>"></i>
-								<?php echo array_get($menuList,'menu'); ?>
-							</a>
-						</li>
-
-					<?php } }?>
-				</ul>			
+					<li class="<?php if(array_get($path,1) == 'sale'){echo "current open";} ?>">
+						<a href="javascript:void(0);">
+							<i class="icon-group"></i>
+							Marketing & Sale
+						</a>
+						<ul class="sub-menu">
+							<li class="<?php if($path_2 == 'report'){echo "current";} ?>">
+								<a href="<?php echo base_url('sale/report');?>">
+									<i class="icon-angle-right"></i>
+									Report
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="<?php if(array_get($path,1) == 'purchase'){echo "current open";} ?>">
+						<a href="javascript:void(0);">
+							<i class="icon-usd"></i>
+							Purchase Management
+						</a>
+						<ul class="sub-menu">
+							<li class="<?php if($path_2 == 'request'){echo "current";} ?>">
+								<a href="<?php echo base_url('purchase/request');?>">
+									<i class="icon-angle-right"></i>
+									Purchase Request
+								</a>
+							</li>
+							<li class="<?php if($path_2 == 'approve'){echo "current";} ?>">
+								<a href="<?php echo base_url('purchase/approve');?>">
+									<i class="icon-angle-right"></i>
+									Purchase Approve
+								</a>
+							</li>
+							<li class="<?php if($path_2 == 'report'){echo "current";} ?>">
+								<a href="<?php echo base_url('purchase/report');?>">
+									<i class="icon-angle-right"></i>
+									Purchase Report
+								</a>
+							</li>
+							<li class="<?php if($path_2 == 'po'){echo "current";} ?>">
+								<a href="<?php echo base_url('purchase/po');?>">
+									<i class="icon-angle-right"></i>
+									PO
+								</a>
+							</li>
+							<li class="<?php if($path_2 == 'po-report'){echo "current";} ?>">
+								<a href="<?php echo base_url('purchase/po-report');?>">
+									<i class="icon-angle-right"></i>
+									PO report
+								</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
 				<!-- /Navigation -->
 				<div class="sidebar-widget align-center">
 					<div class="btn-group" data-toggle="buttons" id="theme-switcher">

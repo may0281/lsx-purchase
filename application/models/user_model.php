@@ -50,4 +50,14 @@ class user_model extends ci_model
         $this->db->delete('bn_user_profile', array('account' => $account));
     }
 
+    public function getMasterFlag($account)
+    {
+        $this->db->select('master_flag');
+        $this->db->from('bn_user_profile');
+        $this->db->where('account',$account);
+        $query = $this->db->get();
+        $data = $query->result_array();
+        return $data[0]['master_flag'];
+    }
+
 }

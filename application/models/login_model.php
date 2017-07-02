@@ -32,6 +32,7 @@ class login_model extends ci_model
                 'menu' => array_get($q,'func_master_name_en'),
                 'uri' => array_get($q,'uri'),
                 'icon' => array_get($q,'icon'),
+                'isSubMenu' => array_get($q,'sub_menu'),
                 'subMenu' => []
             );
             $this->db->select('*');

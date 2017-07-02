@@ -184,7 +184,6 @@ if (! function_exists('array_get')) {
         }
 
         return $array;
-//        return Arr::get($array, $key, $default);
     }
 }
 

@@ -24,6 +24,19 @@ class role extends CI_Controller {
         $this->load->view('role/index',$data);
 
 	}
+
+	public function createRole()
+    {
+        $major = $this->role_model->getMajor();
+        $data = array(
+            'menu' => 'Role',
+            'subMenu' => 'Create Role',
+            'majors' => $major,
+        );
+
+        $this->load->view('template/left');
+        $this->load->view('role/create',$data);
+    }
    
 	
 }
