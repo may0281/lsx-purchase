@@ -17,8 +17,6 @@ class user extends CI_Controller {
     public function index()
     {
 
-        sd($this->session->all_userdata());
-
         $data = array(
             'menu'=> 'User',
             'subMenu'=> 'User List',

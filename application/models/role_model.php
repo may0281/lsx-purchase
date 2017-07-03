@@ -31,4 +31,92 @@ class role_model extends ci_model
         return $query->result_array();
     }
 
+    public function getFunctionAll()
+    {
+        $sql = 'select b.func_master_name_en,c.func_minor_name_en,a.func_minor_sub_name,a.func_minor_sub_ids as id from bn_func_minor_sub a 
+                left join bn_func_major b on a.func_master_id = b.func_master_ids
+                left join bn_func_minor c on a.func_minor_id = c.func_minor_ids';
+
+        $query = $this->db->query($sql);
+        return $query->result_array();
+    }
+
+    public function getRole()
+    {
+        $this->db->select('*');
+        $this->db->from('bn_auth_role');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function getRoleByRoleCode($roleCode)
+    {
+        $this->db->select('*');
+        $this->db->from('bn_auth_role');
+        $this->db->where('role_code',$roleCode);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function createRole($data)
+    {
+        $this->db->insert('bn_auth_role', $data);
+    }
+
+    public function createAuthRole($data)
+    {
+        $this->db->insert('bn_auth_role_func', $data);
+    }
+
+    public function deleteAuthRole($roleCode)
+    {
+        $this->db->delete('bn_auth_role_func', array('role_ref' => $roleCode));
+    }
+
+    public function checkMasterFlag($roleCode)
+    {
+        $this->db->select('master_flag');
+        $this->db->from('bn_auth_role');
+        $this->db->where('role_code',$roleCode);
+        $this->db->where('master_flag','Y');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+
+
+    public function getPermission($roleCode)
+    {
+        $this->db->select('func_ref');
+        $this->db->from('bn_auth_role_func');
+        $this->db->where('role_ref',$roleCode);
+
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function updateRole($roleData, $roleCode)
+    {
+        $this->db->where('role_code', $roleCode);
+        $this->db->update('bn_auth_role', $roleData);
+    }
+
+    public function getUserUseRole($roleCode)
+    {
+        $this->db->select('*');
+        $this->db->from('bn_user_profile');
+        $this->db->where('role_id',$roleCode);
+
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function deleteRole($roleCode)
+    {
+        $this->db->delete('bn_auth_role', array('role_code' => $roleCode));
+    }
+
+
+
+
 }
