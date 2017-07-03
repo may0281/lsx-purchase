@@ -18,5 +18,11 @@ $route['authen/init-user'] = "user/index";
 $route['authen/create-user'] = "user/createUser";
 $route['authen/update-user/(:any)'] = "user/updateUser/$1";
 $route['authen/delete-user/(:any)'] = "user/deleteUser/$1";
-$route['role/init-role'] = "role/index";
-$route['role/create-role'] = "role/createRole";
+
+$route['authen/init-role'] = "role/index";
+$route['authen/create-role'] = "role/createRole";
+$route['authen/createRoleAction'] = "role/createAction";
+$route['authen/update-role/(:any)'] = "role/updateRole/$1";
+$route['authen/delete-role/(:any)'] = "role/deleteRole/$1";
+$route['authen/updateRoleAction'] = "role/updateAction";
+

@@ -1,4 +1,3 @@
-<?php $this->load->library('permission'); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -98,7 +97,7 @@
 			<ul class="nav navbar-nav navbar-right hidden-xs hidden-sm">
 				<li>
 					<a href="<?php echo base_url();?>dashboard">
-						Dashboard <?php  echo $this->permission->allow(1,2,3);?>
+						Dashboard
 					</a>
 				</li>
 				<li>
@@ -119,7 +118,6 @@
 			<div id="sidebar-content">
 				<!--=== Navigation ===-->
 				<ul id="nav">
-					<?php $permission = $this->session->user_data('isSession'); ?>
 					<li class="<?php if(array_get($path,1) == 'dashboard'){echo "current open";} ?>">
 						<a href="<?php echo base_url('dashboard')?>">
 							<i class="icon-dashboard"></i>

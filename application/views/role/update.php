@@ -75,18 +75,20 @@
                     <div class="widget-header">
                         <h4><i class="icon-reorder"></i> Fill the information.</h4>
                     </div>
+                    <?php $roleData = $data[0]; ?>
                     <div class="widget-content">
                         <form class="form-horizontal row-border" method="post" id="validate-1" action="<?php echo base_url(); ?>authen/updateRoleAction">
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Role Code <span class="required">*</span></label>
                                 <div class="col-md-9">
-                                    <input type="text" name="roleCode" class="form-control required">
+                                    <input type="text" name="roleCode" disabled value="<?php echo $roleData['role_code'] ?>" class="form-control required">
+
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Role Description <span class="required">*</span></label>
                                 <div class="col-md-9">
-                                    <input type="text" name="roleDes" class="form-control required" minlength="5">
+                                    <input type="text" name="roleDes" value="<?php echo $roleData['role_desc'] ?> " class="form-control required">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -117,13 +119,21 @@
                                                 </thead>
                                                 <tbody>
                                                 <?php $i=1; foreach ($function as $r){?>
+                                                    <?php
+                                                        $allow = null;
+                                                        if (is_array($permission)) {
+                                                            if (in_array($r['id'], $permission, false)) {
+                                                                $allow = 'checked';
+                                                            }
+                                                        }
+                                                     ?>
                                                     <tr>
                                                         <td class="align-center"><?php echo $i; ?></td>
                                                         <td class="hidden-xs"><?php echo $r['func_master_name_en'] ?></td>
                                                         <td><?php echo $r['func_minor_name_en'] ?></td>
                                                         <td><?php echo strtoupper($r['func_minor_sub_name']); ?></td>
                                                         <td class="checkbox-column">
-                                                            <input type="checkbox" name="functions[]" class="uniform required" value="<?php echo $r['id'] ?>">
+                                                            <input type="checkbox" name="functions[]" class="uniform required" value="<?php echo $r['id'] ?>" <?php echo $allow; ?>>
                                                         </td>
                                                     </tr>
                                                 <?php $i++; } ?>
@@ -137,8 +147,8 @@
                                 </div>
                             </div>
 
-
                             <div class="form-actions">
+                                <input type="hidden" name="roleCode" value="<?php echo $roleData['role_code'] ?>" >
                                 <input type="submit" value="<?php echo strtoupper($subMenu) ?>" class="btn btn-primary pull-right">
                             </div>
                         </form>

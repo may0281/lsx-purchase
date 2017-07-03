@@ -1,3 +1,10 @@
+<script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/tabletools/TableTools.min.js"></script> <!-- optional -->
+<script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/colvis/ColVis.min.js"></script> <!-- optional -->
+<script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/columnfilter/jquery.dataTables.columnFilter.js"></script> <!-- optional -->
+<script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/DT_bootstrap.js"></script>
+
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/demo/ui_general.js"></script>
 <body>
 <div id="container">
     <div id="content">
@@ -15,6 +22,10 @@
                     <li class="current">
                         <a href="#" title=""><?php echo strtoupper($subMenu) ?></a>
                     </li>
+                </ul>
+                <ul class="crumb-buttons">
+                    <li><a href="<?php echo base_url(); ?>authen/create-role" title=""><i class="icon-plus"></i><span>ADD ROLE</span></a></li>
+
                 </ul>
             </div>
 
@@ -46,9 +57,10 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Major Name</th>
-                                    <th>Url</th>
-                                    <th>icon</th>
+                                    <th>Role Code</th>
+                                    <th>Description</th>
+                                    <th>Create</th>
+                                    <th>Last Update</th>
                                     <th data-hide="phone,tablet">Edit</th>
                                     <th data-hide="phone,tablet">Del</th>
                                 </tr>
@@ -57,12 +69,13 @@
                                 <?php  $i=1;foreach ($q as $r) { ?>
                                 <tr>
                                     <td><?php echo $i;?></td>
-                                    <td><?php echo $r['func_master_name_en'];?></td>
-                                    <td><?php echo $r['uri'];?></td>
-                                    <td><?php echo $r['icon'];?></td>
+                                    <td><?php echo $r['role_code'];?></td>
+                                    <td><?php echo $r['role_desc'];?></td>
+                                    <td><?php echo $r['create_by'];?> <br> <?php echo $r['create_date'];?> </td>
+                                    <td><?php echo $r['update_by'];?> <br> <?php echo $r['update_date'];?> </td>
 
-                                    <td data-hide="phone,tablet"><a href="<?php echo base_url(); ?>blog/edit/<?php echo $r['func_master_ids']; ?>" title="Edit">Edit </a></td>
-                                    <td data-hide="phone,tablet"><a href="<?php echo base_url(); ?>blog/del/<?php echo $r['func_master_ids']; ?>" title="Del">Del </a></td>
+                                    <td data-hide="phone,tablet"><a href="<?php echo base_url(); ?>authen/update-role/<?php echo $r['role_code']; ?>" title="Edit">Edit </a></td>
+                                    <td data-hide="phone,tablet"><a href="<?php echo base_url(); ?>authen/delete-role/<?php echo $r['role_code']; ?>" title="Del">Del </a></td>
                                 </tr>
                         <?php $i++; }?>
                         </tbody>
