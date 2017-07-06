@@ -95,7 +95,7 @@
                                     <div class="widget box">
 
                                         <div class="widget-content no-padding">
-                                            <table class="table table-hover table-striped table-checkable table-bordered table-highlight-head">
+                                            <table class="table table-hover table-striped table-checkable table-bordered table-highlight-head table-responsive">
                                                 <thead>
                                                 <tr>
                                                     <th rowspan="2" class="align-center">#</th>

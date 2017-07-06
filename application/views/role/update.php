@@ -104,7 +104,7 @@
                                             </div>
                                         </div>
                                         <div class="widget-content no-padding">
-                                            <table class="table table-striped table-checkable table-hover">
+                                            <table class="table table-striped table-checkable table-hover table-responsive">
                                                 <thead>
                                                 <tr>
                                                     <th rowspan="2" class="align-center">#</th>
@@ -133,15 +133,16 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <?php $i=1; $allow = null; foreach ($function as $r){?>
+                                                <?php $i=1; foreach ($function as $r){ $allow = null; ?>
                                                     <tr>
                                                         <td class="align-center"><?php echo $i; ?></td>
                                                         <td class="hidden-xs"><?php echo $r['masterName'] ?></td>
                                                         <td><?php echo $r['minorName'] ?></td>
                                                         <td class="checkbox-column  align-center">
                                                             <?php if($r['view']){
+                                                                $allow = null;
                                                                 if (is_array($permission)) {
-                                                                    if (in_array($r['view'], $permission, false)) {
+                                                                    if (in_array($r['view'], $permission, true)) {
                                                                         $allow = 'checked';
                                                                     }
                                                                 }
@@ -151,8 +152,9 @@
                                                         </td>
                                                         <td class="checkbox-column align-center">
                                                             <?php if($r['create']){
+                                                                $allow = null;
                                                                 if (is_array($permission)) {
-                                                                    if (in_array($r['create'], $permission, false)) {
+                                                                    if (in_array($r['create'], $permission, true)) {
                                                                         $allow = 'checked';
                                                                     }
                                                                 }
@@ -162,8 +164,9 @@
                                                         </td>
                                                         <td class="checkbox-column align-center">
                                                             <?php if($r['update']){
+                                                                $allow = null;
                                                                 if (is_array($permission)) {
-                                                                    if (in_array($r['update'], $permission, false)) {
+                                                                    if (in_array($r['update'], $permission, true)) {
                                                                         $allow = 'checked';
                                                                     }
                                                                 }
@@ -173,10 +176,12 @@
                                                         </td>
                                                         <td class="checkbox-column align-center">
                                                             <?php if($r['delete']){
+                                                                $allow = null;
                                                                 if (is_array($permission)) {
-                                                                    if (in_array($r['delete'], $permission, false)) {
+                                                                    if (in_array($r['delete'], $permission, true)) {
                                                                         $allow = 'checked';
                                                                     }
+
                                                                 }
                                                                 ?>
                                                                 <input type="checkbox" name="functions[]" <?php echo $allow; ?>  class="uniform required" value="<?php echo $r['delete'] ?>">
@@ -184,8 +189,9 @@
                                                         </td>
                                                         <td class="checkbox-column align-center">
                                                             <?php if($r['change-status']){
+                                                                $allow = null;
                                                                 if (is_array($permission)) {
-                                                                    if (in_array($r['change-status'], $permission, false)) {
+                                                                    if (in_array($r['change-status'], $permission, true)) {
                                                                         $allow = 'checked';
                                                                     }
                                                                 }
