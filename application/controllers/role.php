@@ -26,7 +26,7 @@ class role extends CI_Controller {
 
 	public function createRole()
     {
-        $functions = $this->role_model->getFunctionAll();
+        $functions = $this->prepareMenu();
         $data = array(
             'menu' => 'Role',
             'subMenu' => 'Create Role',
@@ -35,6 +35,37 @@ class role extends CI_Controller {
 
         $this->load->view('template/left');
         $this->load->view('role/create',$data);
+    }
+
+    public function prepareMenu()
+    {
+        $sql = 'select func_master_ids as masterId,func_master_name_en as masterName,IFNULL(func_minor_ids,0) as minorId,IFNULL(func_minor_name_en,"-") as minorName 
+                from bn_func_major a left join bn_func_minor c on a.func_master_ids = c.func_master_id ORDER by func_master_ids asc';
+        $query = $this->db->query($sql);
+        $data = $query->result_array();
+        $i=0;
+        foreach ($data as $m)
+        {
+            $this->db->select('func_minor_sub_ids as minorSubId, func_minor_sub_name as minorSubName');
+            $this->db->from('bn_func_minor_sub');
+            $this->db->where('func_master_id',$m['masterId']);
+            $this->db->where('func_minor_id',$m['minorId']);
+            $q = $this->db->get();
+            $menu[$i] = $m;
+
+            $menu[$i]['view'] = 0;
+            $menu[$i]['create'] = 0;
+            $menu[$i]['update'] = 0;
+            $menu[$i]['delete'] = 0;
+            $menu[$i]['change-status'] = 0;
+            foreach ($q->result_array() as $mSub)
+            {
+                $menu[$i][$mSub['minorSubName']] = $mSub['minorSubId'];
+            }
+
+            $i++;
+        }
+        return $menu;
     }
 
     public function createAction()
@@ -95,7 +126,7 @@ class role extends CI_Controller {
             echo "<script>alert('Opp.!! Something went wrong. Please try again'); history.back(); </script>";
             exit();
         }
-        $functions = $this->role_model->getFunctionAll();
+        $functions = $this->prepareMenu();
         $permission = $this->preparePermission($roleCode);
         $data = array(
             'menu'=> 'Role',

@@ -23,10 +23,13 @@ class role_model extends ci_model
         $query = $this->db->get();
         return $query->result_array();
     }
-	public function getMinorSub()
+	public function getMinorSub($masterId,$minorId = 0)
     {
+        s($masterId);
         $this->db->select('*');
         $this->db->from('bn_func_minor_sub');
+        $this->db->where('func_master_id',$masterId);
+        $this->db->where('func_minor_id',$minorId);
         $query = $this->db->get();
         return $query->result_array();
     }

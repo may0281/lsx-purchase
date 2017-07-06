@@ -107,38 +107,100 @@
                                             <table class="table table-striped table-checkable table-hover">
                                                 <thead>
                                                 <tr>
-                                                    <th class="align-center">#</th>
-                                                    <th class="hidden-xs"> Menu</th>
-                                                    <th>Sub Menu</th>
-                                                    <th>Permission</th>
+                                                    <th rowspan="2" class="align-center">#</th>
+                                                    <th rowspan="2" class="hidden-xs"> Menu</th>
+                                                    <th rowspan="2" >Sub Menu</th>
+                                                    <th colspan="5" class="checkbox-column">Permission <input type="checkbox" class="uniform"> </th>
+                                                </tr>
+                                                <tr>
                                                     <th class="checkbox-column">
-                                                        Allow
-                                                        <input type="checkbox" class="uniform">
+                                                        View
                                                     </th>
+                                                    <th class="checkbox-column">
+                                                        Create
+                                                    </th>
+                                                    <th class="checkbox-column">
+                                                        Update
+                                                    </th>
+                                                    <th class="checkbox-column">
+                                                        Delete
+                                                    </th>
+
+                                                    <th class="checkbox-column">
+                                                        Change Status
+                                                    </th>
+
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <?php $i=1; foreach ($function as $r){?>
-                                                    <?php
-                                                        $allow = null;
-                                                        if (is_array($permission)) {
-                                                            if (in_array($r['id'], $permission, false)) {
-                                                                $allow = 'checked';
-                                                            }
-                                                        }
-                                                     ?>
+                                                <?php $i=1; $allow = null; foreach ($function as $r){?>
                                                     <tr>
                                                         <td class="align-center"><?php echo $i; ?></td>
-                                                        <td class="hidden-xs"><?php echo $r['func_master_name_en'] ?></td>
-                                                        <td><?php echo $r['func_minor_name_en'] ?></td>
-                                                        <td><?php echo strtoupper($r['func_minor_sub_name']); ?></td>
-                                                        <td class="checkbox-column">
-                                                            <input type="checkbox" name="functions[]" class="uniform required" value="<?php echo $r['id'] ?>" <?php echo $allow; ?>>
+                                                        <td class="hidden-xs"><?php echo $r['masterName'] ?></td>
+                                                        <td><?php echo $r['minorName'] ?></td>
+                                                        <td class="checkbox-column  align-center">
+                                                            <?php if($r['view']){
+                                                                if (is_array($permission)) {
+                                                                    if (in_array($r['view'], $permission, false)) {
+                                                                        $allow = 'checked';
+                                                                    }
+                                                                }
+                                                                ?>
+                                                                <input type="checkbox" name="functions[]"  <?php echo $allow; ?> class="uniform required" value="<?php echo $r['view'] ?>">
+                                                            <?php } ?>
                                                         </td>
-                                                    </tr>
-                                                <?php $i++; } ?>
+                                                        <td class="checkbox-column align-center">
+                                                            <?php if($r['create']){
+                                                                if (is_array($permission)) {
+                                                                    if (in_array($r['create'], $permission, false)) {
+                                                                        $allow = 'checked';
+                                                                    }
+                                                                }
+                                                                ?>
+                                                                <input type="checkbox" name="functions[]" <?php echo $allow; ?>  class="uniform required" value="<?php echo $r['create'] ?>">
+                                                            <?php } ?>
+                                                        </td>
+                                                        <td class="checkbox-column align-center">
+                                                            <?php if($r['update']){
+                                                                if (is_array($permission)) {
+                                                                    if (in_array($r['update'], $permission, false)) {
+                                                                        $allow = 'checked';
+                                                                    }
+                                                                }
+                                                                ?>
+                                                                <input type="checkbox" name="functions[]" <?php echo $allow; ?>  class="uniform required" value="<?php echo $r['update'] ?>">
+                                                            <?php } ?>
+                                                        </td>
+                                                        <td class="checkbox-column align-center">
+                                                            <?php if($r['delete']){
+                                                                if (is_array($permission)) {
+                                                                    if (in_array($r['delete'], $permission, false)) {
+                                                                        $allow = 'checked';
+                                                                    }
+                                                                }
+                                                                ?>
+                                                                <input type="checkbox" name="functions[]" <?php echo $allow; ?>  class="uniform required" value="<?php echo $r['delete'] ?>">
+                                                            <?php } ?>
+                                                        </td>
+                                                        <td class="checkbox-column align-center">
+                                                            <?php if($r['change-status']){
+                                                                if (is_array($permission)) {
+                                                                    if (in_array($r['change-status'], $permission, false)) {
+                                                                        $allow = 'checked';
+                                                                    }
+                                                                }
+                                                                ?>
+                                                                <input type="checkbox" name="functions[]" <?php echo $allow; ?>  class="uniform required" value="<?php echo $r['change-status'] ?>">
+                                                            <?php } ?>
+                                                        </td>
 
-                                                </tr>
+                                                    </tr>
+                                                <?php
+                                                    $i++;
+
+                                                 } ?>
+
+
                                                 </tbody>
                                             </table>
 

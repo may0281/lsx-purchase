@@ -76,7 +76,7 @@
                         <h4><i class="icon-reorder"></i> Fill the information.</h4>
                     </div>
                     <div class="widget-content">
-                        <form class="form-horizontal row-border" method="post" id="validate-1" action="<?php echo base_url(); ?>authen/updateRoleAction">
+                        <form class="form-horizontal row-border" method="post" id="validate-1" action="<?php echo base_url(); ?>authen/createRoleAction">
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Role Code <span class="required">*</span></label>
                                 <div class="col-md-9">
@@ -93,38 +93,68 @@
                                 <label class="col-md-3 control-label">Function <span class="required">*</span></label>
                                 <div class="col-md-9">
                                     <div class="widget box">
-                                        <div class="widget-header">
-                                            <h4><i class="icon-reorder"></i> </h4>
-                                            <div class="toolbar no-padding">
-                                                <div class="btn-group">
-                                                    <span class="btn btn-xs widget-collapse"><i class="icon-angle-down"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
+
                                         <div class="widget-content no-padding">
-                                            <table class="table table-striped table-checkable table-hover">
+                                            <table class="table table-hover table-striped table-checkable table-bordered table-highlight-head">
                                                 <thead>
                                                 <tr>
-                                                    <th class="align-center">#</th>
-                                                    <th class="hidden-xs"> Menu</th>
-                                                    <th>Sub Menu</th>
-                                                    <th>Permission</th>
-                                                    <th class="checkbox-column">
-                                                        Allow
-                                                        <input type="checkbox" class="uniform">
+                                                    <th rowspan="2" class="align-center">#</th>
+                                                    <th rowspan="2" class="align-center"> Menu</th>
+                                                    <th rowspan="2" class="align-center"> Sub Menu</th>
+                                                    <th colspan="5" class="checkbox-column">Permission <input type="checkbox" class="uniform"> </th>
+                                                </tr>
+                                                <tr>
+                                                    <th class="align-center">
+                                                        View
                                                     </th>
+                                                    <th class="align-center">
+                                                        Create
+                                                    </th>
+                                                    <th class="align-center">
+                                                        Update
+                                                    </th>
+                                                    <th class="align-center">
+                                                        Delete
+                                                    </th>
+
+                                                    <th class="align-center">
+                                                        Change <br> Status
+                                                    </th>
+
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <?php $i=1; foreach ($function as $r){?>
+                                                <?php $i=1; foreach ($function as $r){ ?>
                                                     <tr>
                                                         <td class="align-center"><?php echo $i; ?></td>
-                                                        <td class="hidden-xs"><?php echo $r['func_master_name_en'] ?></td>
-                                                        <td><?php echo $r['func_minor_name_en'] ?></td>
-                                                        <td><?php echo strtoupper($r['func_minor_sub_name']); ?></td>
-                                                        <td class="checkbox-column">
-                                                            <input type="checkbox" name="functions[]" class="uniform required" value="<?php echo $r['id'] ?>">
+                                                        <td class="hidden-xs"><?php echo $r['masterName'] ?></td>
+                                                        <td><?php echo $r['minorName'] ?></td>
+                                                        <td class="checkbox-column  align-center">
+                                                            <?php if($r['view']){ ?>
+                                                                <input type="checkbox" name="functions[]" class="uniform required" value="<?php echo $r['view'] ?>">
+                                                            <?php } ?>
                                                         </td>
+                                                        <td class="checkbox-column align-center">
+                                                            <?php if($r['create']){ ?>
+                                                                <input type="checkbox" name="functions[]" class="uniform required" value="<?php echo $r['create'] ?>">
+                                                            <?php } ?>
+                                                        </td>
+                                                        <td class="checkbox-column align-center">
+                                                            <?php if($r['update']){ ?>
+                                                                <input type="checkbox" name="functions[]" class="uniform required" value="<?php echo $r['update'] ?>">
+                                                            <?php } ?>
+                                                        </td>
+                                                        <td class="checkbox-column align-center">
+                                                            <?php if($r['delete']){ ?>
+                                                                <input type="checkbox" name="functions[]" class="uniform required" value="<?php echo $r['delete'] ?>">
+                                                            <?php } ?>
+                                                        </td>
+                                                        <td class="checkbox-column align-center">
+                                                            <?php if($r['change-status']){ ?>
+                                                                <input type="checkbox" name="functions[]" class="uniform required" value="<?php echo $r['change-status'] ?>">
+                                                            <?php } ?>
+                                                        </td>
+
                                                     </tr>
                                                 <?php $i++; } ?>
 
