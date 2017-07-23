@@ -12,7 +12,7 @@ class login_model extends ci_model
         $this->db->select('*');
         $this->db->from('bn_user_profile');
         $this->db->where('account',$username);
-        $this->db->where('password',$password);
+     //   $this->db->where('password',$password);
         $this->db->where('status','A');
         $login = $this->db->get();
         return $login->result_array();

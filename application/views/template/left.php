@@ -194,6 +194,52 @@
 							</li>
 						</ul>
 					</li>
+					<li class="">
+						<a href="javascript:void(0);">
+							<i class="icon-hdd"></i>
+							Project
+						</a>
+						<ul class="sub-menu">
+							<li class="current">
+								<a href="<?php echo base_url('project/create');?>">
+									<i class="icon-angle-right"></i>
+									Create New Project
+								</a>
+							</li>
+							<li>
+								<a href="<?php echo base_url('project/lists');?>">
+									<i class="icon-angle-right"></i>
+									Project List
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="">
+						<a href="javascript:void(0);">
+							<i class="icon-barcode"></i>
+							Stock
+						</a>
+						<ul class="sub-menu">
+							<li class="current">
+								<a href="<?php echo base_url('stock/add_product');?>">
+									<i class="icon-angle-right"></i>
+									Add Product
+								</a>
+							</li>
+							<li>
+								<a href="<?php echo base_url('stock/list_product');?>">
+									<i class="icon-angle-right"></i>
+									Product List
+								</a>
+							</li>
+							<li>
+								<a href="<?php echo base_url('stock/tracking_order');?>">
+									<i class="icon-angle-right"></i>
+									Tracking Order
+								</a>
+							</li>
+						</ul>
+					</li>
 				</ul>
 				<!-- /Navigation -->
 				<div class="sidebar-widget align-center">
