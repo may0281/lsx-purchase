@@ -221,15 +221,21 @@
 						</a>
 						<ul class="sub-menu">
 							<li class="current">
-								<a href="<?php echo base_url('stock/add_product');?>">
+								<a href="<?php echo base_url('stock/add_item');?>">
 									<i class="icon-angle-right"></i>
-									Add Product
+									Add New Item
 								</a>
 							</li>
 							<li>
-								<a href="<?php echo base_url('stock/list_product');?>">
+								<a href="<?php echo base_url('stock/list_item');?>">
 									<i class="icon-angle-right"></i>
-									Product List
+									Item List
+								</a>
+							</li>
+							<li>
+								<a href="<?php echo base_url('stock/stock_item');?>">
+									<i class="icon-angle-right"></i>
+									Item in Stock
 								</a>
 							</li>
 							<li>

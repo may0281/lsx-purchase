@@ -17,11 +17,11 @@ class project_model extends ci_model
         return $query->result_array();
 	}
 	
-	public function getCompany()
+	public function getCustomer()
 	{
         $this->db->select('*');
-        $this->db->from('company');
-		$this->db->order_by("compa_name", "asc");
+        $this->db->from('customer');
+		$this->db->order_by("cus_name", "asc");
         $query = $this->db->get();
         return $query->result_array();
 	}
@@ -35,26 +35,26 @@ class project_model extends ci_model
         return $query->result_array();
 	}
 	
-	public function getCompanyname($id)
+	public function getCustomername($id)
 	{
-        $this->db->select('compa_name');
-        $this->db->from('company');
-		$this->db->where('compa_id',$id);
+        $this->db->select('cus_name');
+        $this->db->from('customer');
+		$this->db->where('cus_id',$id);
         $query = $this->db->get();
 		$row = $query->row();
 			if ($query->num_rows() > 0)
 			{
-				$name = $row->compa_name;
+				$name = $row->cus_name;
 			}else{
 				$name = "-";
 			}
 		return $name;
 	}
 	
-	public function updateCompany($compa_name)
+	public function updateCustomer($cus_name)
 	{
-		$this->db->set('compa_name',$compa_name);
-		$this->db->insert('company'); 
+		$this->db->set('cus_name',$cus_name);
+		$this->db->insert('customer'); 
 		echo $insert_id = $this->db->insert_id();
 		return  $insert_id;
 	}

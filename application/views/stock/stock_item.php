@@ -46,44 +46,28 @@
 									<thead>
 										<tr>
 											<th>No</th>
-											<th>Order ID</th>
 											<th>Item Code</th>
-											<th>Price/Unit</th>
-											<th class="hidden-xs">Qty</th>
+											<th>Add by</th>
+											<th>Add Type</th>
+											<th>Order ID</th>
+											<th>Add Date</th>
+											<th>Qty</th>
 										</tr>
 									</thead>
 									<tbody>
+									<?php  $i=1;foreach ($q as $r) { ?>
 										<tr>
-											<th>1</th>
-											<th>0001</th>
-											<th>TY-0001</th>
-											<th>350</th>
-											<th class="hidden-xs">250</th>
+											<th><?php echo $i;?></th>
+											<th><?php echo $this->stock_model->getItemcode($r['item_id']);?></th>
+											<th><?php echo $r['stk_add_by'];?></th>
+											<th><?php echo $r['stk_add_type'];?></th>
+											<th><?php echo $r['order_id'];?></th>
+											<th><?php echo $r['stk_add_date'];?></th>
+											<th><?php echo $r['stk_qty'];?></th>
 										</tr>
-											<tr>
-											<th>2</th>
-											<th>0004</th>
-											<th>TYA-114</th>
-											<th>200</th>
-											<th class="hidden-xs">1,450</th>
-										</tr>
-											<tr>
-											<th>3</th>
-											<th>0001</th>
-											<th>TY-0001</th>
-											<th>450</th>
-											<th class="hidden-xs">250</th>
-										</tr>
-										
+									<?php $i++; }?>	
 									</tbody>
-									<tfoot>
-									<td colspan="4"></td>
-									<td>
-									</td>
-									</tfoot>
 								</table>
-								<div align="right"><input class="btn btn-sm btn-primary" type="submit" value="เบิกสินค้า">
-									<input class="btn btn-sm btn-inverse" type="submit" value="Export"></div>
 							</div>
 						</div>
 					</div>
