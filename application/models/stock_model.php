@@ -50,9 +50,11 @@ class stock_model extends ci_model
 	{
         $this->db->select('*');
         $this->db->from('stock');
+		$this->db->join('item', 'item.item_id = stock.item_id','left');
 		if($this->uri->segment(3) != ''){
-			$this->db->where('item_id',$this->uri->segment(3));
+			$this->db->where('item.item_id',$this->uri->segment(3));
 		}
+		
         $query = $this->db->get();
         return $query->result_array();
 	}
@@ -98,6 +100,38 @@ class stock_model extends ci_model
 				$item_code = "-";
 			}
 		return $item_code;
+	}
+	
+	public function importItem($filename)
+	{
+		$file = fopen($filename, "r");
+		$i = 1;
+		while (($emapData = fgetcsv($file, 10000, ",")) !== FALSE)
+		{
+			if($i <> '1'){
+				if (isset($emapData[0])) { $item_1=$emapData[0]; }
+				if (isset($emapData[1])) { $item_2=$emapData[1]; }
+				if (isset($emapData[2])) { $item_3=$emapData[2]; }
+				if (isset($emapData[3])) { $item_4=$emapData[3]; }
+				
+				$data['tmp_item_code'] = $item_1.'-'.$item_2.'-'.$item_3.'-'.$item_4;
+				$data['tmp_item_aica'] = $emapData[4];
+				$data['tmp_item_pfilm'] = $emapData[5];
+				$data['tmp_item_size'] = $emapData[6];
+				$data['tmp_item_thickness'] = $emapData[7];
+				$data['tmp_item_price'] = $emapData[8];
+				$data['tmp_item_qty'] = $emapData[9];
+				
+				$this->db->set($data);
+				$this->db->insert('temp_import');
+			}
+			$i++;
+		}
+
+		fclose($file);
+
+
+
 	}
 
 }

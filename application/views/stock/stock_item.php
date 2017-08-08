@@ -34,7 +34,7 @@
 					<div class="col-md-12">
 						<div class="widget box">
 							<div class="widget-header">
-								<h4><i class="icon-reorder"></i> Item List</h4>
+								<h4><i class="icon-reorder"></i> Item List in Stock</h4>
 								<div class="toolbar no-padding">
 									<div class="btn-group">
 										<span class="btn btn-xs widget-collapse"><i class="icon-angle-down"></i></span>
@@ -46,24 +46,24 @@
 									<thead>
 										<tr>
 											<th>No</th>
+											<th>Stock ID</th>
 											<th>Item Code</th>
-											<th>Add by</th>
-											<th>Add Type</th>
-											<th>Order ID</th>
-											<th>Add Date</th>
-											<th>Qty</th>
+											<th>QTY</th>
+											<th>Unit Price</th>
+											<th>Import Date</th>
+											<th>Import By</th>
 										</tr>
 									</thead>
 									<tbody>
 									<?php  $i=1;foreach ($q as $r) { ?>
 										<tr>
-											<th><?php echo $i;?></th>
-											<th><?php echo $this->stock_model->getItemcode($r['item_id']);?></th>
-											<th><?php echo $r['stk_add_by'];?></th>
-											<th><?php echo $r['stk_add_type'];?></th>
-											<th><?php echo $r['order_id'];?></th>
-											<th><?php echo $r['stk_add_date'];?></th>
-											<th><?php echo $r['stk_qty'];?></th>
+											<td><?php echo $i;?></td>
+											<td><?php echo $r['stk_id'];?></td>
+											<td><?php echo $r['item_code'];?></td>
+											<td><?php echo $r['stk_qty'];?></td>
+											<td><?php echo $r['stk_unit_price'];?></td>
+											<td><?php echo $r['stk_add_date'];?></td>
+											<td><?php echo $r['stk_add_by'];?></td>
 										</tr>
 									<?php $i++; }?>	
 									</tbody>

@@ -54,12 +54,12 @@
 									<tbody>
 									<?php  $i=1;foreach ($q as $r) { ?>
 										<tr>
-											<th><?php echo $i;?></th>
-											<th><?php echo $r['item_code'];?></th>
-											<th class="hidden-xs"><?php echo $r['item_qty'];?></th>
-											<th class="hidden-xs"><?php echo nbs(5);?>
+											<td><?php echo $i;?></td>
+											<td><?php echo $r['item_code'];?></td>
+											<td class="hidden-xs"><?php echo $r['item_qty'];?></td>
+											<td class="hidden-xs"><?php echo nbs(5);?>
 											<input type="button" onClick="location.href='<?php echo base_url(); ?>stock/add_more_item/<?php echo $r['item_id'];?>'" class="btn btn-sm btn" value="Add more item"><?php echo nbs(5);?><input type="button" onClick="location.href='<?php echo base_url(); ?>stock/stock_item/<?php echo $r['item_id'];?>'" class="btn btn-sm btn-success" value="Lookup in Stock">
-											</th>
+											</td>
 										</tr>
 									<?php $i++; }?>	
 									</tbody>

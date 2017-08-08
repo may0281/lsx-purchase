@@ -114,8 +114,8 @@ class stock extends CI_Controller {
 	public function stock_item()
     {
 		$data = array(
-            'menu'=> 'Stock',
-            'subMenu'=> 'List Item',
+            'menu'=> 'Stock List',
+            'subMenu'=> 'Stock List',
 			 'q' => $this->stock_model->getStockitem()
         );
 
@@ -134,4 +134,19 @@ class stock extends CI_Controller {
         $this->load->view('stock/tracking_order',$data);
     }
 	
+		public function import_item()
+    {
+		$filename=$_FILES["file"]["tmp_name"];
+		$this->stock_model->importItem($filename);
+		$this->load->view('stock/tracking_order',$data);
+		
+    }
+	
+		public function temp_list()
+    {
+		$filename=$_FILES["file"]["tmp_name"];
+		$this->stock_model->importItem($filename);
+		$this->load->view('stock/tracking_order',$data);
+		
+    }
 }

@@ -37,7 +37,7 @@
 			<h4><i class="icon-reorder"></i> Add by import file</h4>
 			</div>
 			<div class="widget-content">
-			<form class="form-horizontal row-border" action="<?php echo base_url(); ?>stock/import_item">
+			<form class="form-horizontal row-border" method="post" action="<?php echo base_url(); ?>stock/import_item" enctype="multipart/form-data">
 			<!--									<div class="alert alert-info fade in">
 			<i class="icon-remove close" data-dismiss="alert"></i>
 			This are examples of full width input fields. Please find select-boxes and other things below.
@@ -45,7 +45,7 @@
 			<div class="form-group">
 			<label class="col-md-2 control-label">File Upload:</label>
 			<div class="col-md-10">
-			<input type="file" data-style="fileinput">
+			<input type="file" name="file" data-style="fileinput">
 			</div>
 			</div>
 			<div align="right"><input class="btn btn-sm btn-primary" type="submit" value="Import"> <input class="btn" type="reset" value="Reset"></div>
