@@ -52,23 +52,23 @@
 										<div class="col-md-10"><input type="text" name="create_by" class="form-control" value="<?php echo $create_by; ?>" disabled="disabled"></div>
 									</div>
 									<div class="form-group">
-										<label class="col-md-2 control-label" for="input19">Company</label>
+										<label class="col-md-2 control-label" for="input19">Customer</label>
 										<div class="col-md-10">
-											<select name="company" id="input19" class="select2-select-00 col-md-12 full-width-fix">
+											<select name="customer" id="input19" class="select2-select-00 col-md-12 full-width-fix">
 													<option value="">---Select--</option>
-													<?php foreach ($company as $r) { ?>
-													<option value="<?php echo $r['compa_id'];?>"><?php echo $r['compa_name'];?></option>
+													<?php foreach ($customer as $r) { ?>
+													<option value="<?php echo $r['cus_id'];?>"><?php echo $r['cus_name'];?></option>
 													<?php } ?>
 											</select>
 										</div>
 									</div>			
 									<div class="form-group">
 										<label class="col-md-2 control-label"></label>
-										<div class="col-md-10"><input class="btn btn-sm btn-primary" id="Add" type="button" value="Others Company"></div>
+										<div class="col-md-10"><input class="btn btn-sm btn-primary" id="Add" type="button" value="Others Customer"></div>
 									</div>
-									<div class="form-group" id="other_company" style="display:none">
-									<label class="col-md-2 control-label">Company Name:</label>
-										<div class="col-md-10"><input type="text" name="new_company" id="new_company" class="form-control"></div>
+									<div class="form-group" id="other_customer" style="display:none">
+									<label class="col-md-2 control-label">Customer Name:</label>
+										<div class="col-md-10"><input type="text" name="new_customer" id="new_customer" class="form-control"></div>
 									</div>
 										<div class="form-group">
 										<label class="col-md-2 control-label">Detail:</label>
@@ -97,7 +97,7 @@
 	$(function () {
 	  $('#Add').on('click', function () {
 	//	$('<p>Text</p>').appendTo('#other_company');
-		 $("#other_company").toggle();
+		 $("#other_customer").toggle();
 	  });
 	});
 	

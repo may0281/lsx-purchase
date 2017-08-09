@@ -21,11 +21,11 @@ class project extends CI_Controller {
 	public function create()
     {
 		$create_by = $this->project_model->getUserlogin($this->session->userdata('adminData'));
-		$company = $this->project_model->getCompany();
+		$customer = $this->project_model->getCustomer();
         $data = array(
             'menu'=> 'Project',
             'subMenu'=> 'Create Project',
-			'company'=> $company,
+			'customer'=> $customer,
 			'create_by'=> $create_by,
             'q' => $this->project_model->getProjectList()
         );
@@ -40,7 +40,7 @@ class project extends CI_Controller {
             'menu'=> 'Project',
             'subMenu'=> 'Edit',
 			'proj_id'=> $proj_id,
-			'companyList'=> $this->project_model->getCompany(),
+			'customerList'=> $this->project_model->getCustomer(),
 			'ProjectData'=> $this->project_model->getProjectby($proj_id)
         );
         $this->load->view('template/left');
@@ -71,16 +71,16 @@ class project extends CI_Controller {
 		 $proj_name = $this->input->post('name');
 		 $proj_owner = $this->input->post('create_by');
 		 
-		 if($this->input->post('new_company') == "" && $this->input->post('company') != ""){
-			$compa_id = $this->input->post('company');
+		 if($this->input->post('new_customer') == "" && $this->input->post('customer') != ""){
+			$cus_id = $this->input->post('customer');
 			
-		 }else if($this->input->post('new_company') != "" && $this->input->post('company') != ""){
-			$compa_id = $this->input->post('company');
+		 }else if($this->input->post('new_customer') != "" && $this->input->post('customer') != ""){
+			$cus_id = $this->input->post('customer');
 			
-		 }else if($this->input->post('new_company') != "" && $this->input->post('company') == ""){
-		 	$compa_id = $this->project_model->updateCompany($this->input->post('new_company'));
+		 }else if($this->input->post('new_customer') != "" && $this->input->post('customer') == ""){
+		 	$cus_id = $this->project_model->updateCustomer($this->input->post('new_customer'));
 		 }else{
-			echo "<script>alert('Please select company.'); window.location.assign('".base_url()."index.php/project/create'); </script>";
+			echo "<script>alert('Please select customer.'); window.location.assign('".base_url()."index.php/project/create'); </script>";
 			exit();
 		 }
 		
@@ -90,7 +90,7 @@ class project extends CI_Controller {
 		 $data = array(
             'proj_name'=> $proj_name,
             'proj_owner'=> $this->project_model->getUserlogin($this->session->userdata('adminData')),
-			'compa_id'=> $compa_id,
+			'cus_id'=> $cus_id,
 			'proj_createdate'=> date('Y-m-d H:i:s'),
 			'proj_about'=> $proj_about,
 			'status'=> '1'
@@ -104,16 +104,16 @@ class project extends CI_Controller {
     {
 		 $proj_name = $this->input->post('name');
 		 $proj_id = $this->input->post('proj_id');
-		 if($this->input->post('new_company') == "" && $this->input->post('company') != ""){
-			$compa_id = $this->input->post('company');
+		 if($this->input->post('new_customer') == "" && $this->input->post('customer') != ""){
+			$cus_id = $this->input->post('customer');
 			
-		 }else if($this->input->post('new_company') != "" && $this->input->post('company') != ""){
-			$compa_id = $this->input->post('company');
+		 }else if($this->input->post('new_customer') != "" && $this->input->post('customer') != ""){
+			$cus_id = $this->input->post('customer');
 			
-		 }else if($this->input->post('new_company') != "" && $this->input->post('company') == ""){
-		 	$compa_id = $this->project_model->updateCompany($this->input->post('new_company'));
+		 }else if($this->input->post('new_customer') != "" && $this->input->post('customer') == ""){
+		 	$cus_id = $this->project_model->updateCustomer($this->input->post('new_customer'));
 		 }else{
-			echo "<script>alert('Please select company.'); window.location.assign('".base_url()."index.php/project/create'); </script>";
+			echo "<script>alert('Please select customer.'); window.location.assign('".base_url()."index.php/project/create'); </script>";
 			exit();
 		 }
 		
@@ -121,7 +121,7 @@ class project extends CI_Controller {
 		 date_default_timezone_set('asia/bangkok');
 		 $data = array(
             'proj_name'=> $proj_name,
-			'compa_id'=> $compa_id,
+			'cus_id'=> $cus_id,
 			'proj_about'=> $proj_about,
 			'status'=> '1'
          );

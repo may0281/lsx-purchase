@@ -34,7 +34,7 @@
 					<div class="col-md-12">
 						<div class="widget box">
 							<div class="widget-header">
-								<h4><i class="icon-reorder"></i> Item List</h4>
+								<h4><i class="icon-reorder"></i> Item List in Stock</h4>
 								<div class="toolbar no-padding">
 									<div class="btn-group">
 										<span class="btn btn-xs widget-collapse"><i class="icon-angle-down"></i></span>
@@ -46,44 +46,28 @@
 									<thead>
 										<tr>
 											<th>No</th>
-											<th>Order ID</th>
+											<th>Stock ID</th>
 											<th>Item Code</th>
-											<th>Price/Unit</th>
-											<th class="hidden-xs">Qty</th>
+											<th>QTY</th>
+											<th>Unit Price</th>
+											<th>Import Date</th>
+											<th>Import By</th>
 										</tr>
 									</thead>
 									<tbody>
+									<?php  $i=1;foreach ($q as $r) { ?>
 										<tr>
-											<th>1</th>
-											<th>0001</th>
-											<th>TY-0001</th>
-											<th>350</th>
-											<th class="hidden-xs">250</th>
+											<td><?php echo $i;?></td>
+											<td><?php echo $r['stk_id'];?></td>
+											<td><?php echo $r['item_code'];?></td>
+											<td><?php echo $r['stk_qty'];?></td>
+											<td><?php echo $r['stk_unit_price'];?></td>
+											<td><?php echo $r['stk_add_date'];?></td>
+											<td><?php echo $r['stk_add_by'];?></td>
 										</tr>
-											<tr>
-											<th>2</th>
-											<th>0004</th>
-											<th>TYA-114</th>
-											<th>200</th>
-											<th class="hidden-xs">1,450</th>
-										</tr>
-											<tr>
-											<th>3</th>
-											<th>0001</th>
-											<th>TY-0001</th>
-											<th>450</th>
-											<th class="hidden-xs">250</th>
-										</tr>
-										
+									<?php $i++; }?>	
 									</tbody>
-									<tfoot>
-									<td colspan="4"></td>
-									<td>
-									</td>
-									</tfoot>
 								</table>
-								<div align="right"><input class="btn btn-sm btn-primary" type="submit" value="เบิกสินค้า">
-									<input class="btn btn-sm btn-inverse" type="submit" value="Export"></div>
 							</div>
 						</div>
 					</div>

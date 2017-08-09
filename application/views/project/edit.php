@@ -53,13 +53,13 @@
 										<div class="col-md-10"><input type="text" name="create_by" class="form-control" value="<?php echo array_get($data,'proj_owner');?>" disabled="disabled"></div>
 									</div>
 									<div class="form-group">
-										<label class="col-md-2 control-label" for="input19">Company</label>
+										<label class="col-md-2 control-label" for="input19">Customer</label>
 										<div class="col-md-10">
-											<select name="company" id="input19" class="select2-select-00 col-md-12 full-width-fix">
+											<select name="customer" id="input19" class="select2-select-00 col-md-12 full-width-fix">
 											<option value="">---Select--</option>
-                        				 <?php foreach ($companyList as $list){ ?>
-                                            <option value="<?php echo array_get($list,'compa_id'); ?>" <?php echo (array_get($list,'compa_id') == array_get($data,'compa_id'))? 'selected' : null ?>>
-                                                <?php echo array_get($list,'compa_name'); ?>
+                        				 <?php foreach ($customerList as $list){ ?>
+                                            <option value="<?php echo array_get($list,'cus_id'); ?>" <?php echo (array_get($list,'cus_id') == array_get($data,'cus_id'))? 'selected' : null ?>>
+                                                <?php echo array_get($list,'cus_name'); ?>
                                             </option>
                                         <?php } ?>
 											</select>
@@ -67,11 +67,11 @@
 									</div>			
 									<div class="form-group">
 										<label class="col-md-2 control-label"></label>
-										<div class="col-md-10"><input class="btn btn-sm btn-primary" id="Add" type="button" value="Others Company"></div>
+										<div class="col-md-10"><input class="btn btn-sm btn-primary" id="Add" type="button" value="Others Customer"></div>
 									</div>
-									<div class="form-group" id="other_company" style="display:none">
-									<label class="col-md-2 control-label">Company Name:</label>
-										<div class="col-md-10"><input type="text" name="new_company" class="form-control"></div>
+									<div class="form-group" id="other_customer" style="display:none">
+									<label class="col-md-2 control-label">Customer Name:</label>
+										<div class="col-md-10"><input type="text" name="new_customer" class="form-control"></div>
 									</div>
 										<div class="form-group">
 										<label class="col-md-2 control-label">Detail:</label>
@@ -101,7 +101,7 @@
 	$(function () {
 	  $('#Add').on('click', function () {
 	//	$('<p>Text</p>').appendTo('#other_company');
-		 $("#other_company").toggle();
+		 $("#other_customer").toggle();
 	  });
 	});
 </script>
