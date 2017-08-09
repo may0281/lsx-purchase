@@ -11,7 +11,7 @@ if (! function_exists('sd')) {
     {
         array_map(function ($x) {
             echo "<pre>";
-            var_dump($x);
+            print_r($x);
         }, func_get_args());
 
         die(1);
@@ -30,7 +30,7 @@ if (! function_exists('s')) {
     {
         array_map(function ($x) {
             echo "<pre>";
-            var_dump($x);
+            print_r($x);
         }, func_get_args());
 
     }

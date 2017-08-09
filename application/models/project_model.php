@@ -91,4 +91,13 @@ class project_model extends ci_model
         $this->db->where('proj_id', $proj_id);
         $this->db->update('project', $ProjectData);
     }
+
+    public function getNameProjectList()
+    {
+        $this->db->select('proj_id,proj_name');
+        $this->db->from('project');
+        $this->db->where('status',1);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 }

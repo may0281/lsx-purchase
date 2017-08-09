@@ -10,7 +10,7 @@ $(document).ready(function(){
 
 	//===== Date Pickers & Time Pickers & Color Pickers =====//
 	$( ".datepicker" ).datepicker({
-		defaultDate: +7,
+		// defaultDate: +7,
 		showOtherMonths:true,
 		autoSize: true,
 		appendText: '<span class="help-block">(dd-mm-yyyy)</span>',

@@ -60,4 +60,13 @@ class user_model extends ci_model
         return $data[0]['master_flag'];
     }
 
+    public function getNameUser()
+    {
+        $this->db->select('account,mobile,firstname,lastname');
+        $this->db->from('bn_user_profile');
+        $this->db->where('status','A');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
 }
