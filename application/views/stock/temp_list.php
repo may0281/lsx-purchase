@@ -42,11 +42,11 @@
 								</div>
 							</div>
 							<div class="widget-content">
-							<form name="temp" action="">
+							<form name="temp" action="<?php echo base_url(); ?>stock/add_more_item_action">
 								<table class="table table-striped table-bordered table-hover table-checkable datatable">
 									<thead>
 										<tr>
-										    <th></th>
+										    <th><INPUT type="checkbox" onchange="checkAll(this)" name="chk[]" /></th>
 											<th>No</th>
 											<th>Item Code</th>
 											<th>Size</th>
@@ -60,7 +60,7 @@
 									<tbody>
 									<?php  $i=1;foreach ($q as $r) { ?>
 										<tr>
-											<td><input type="checkbox" name="id[]"></td>
+											<td><input type="checkbox"  onchange="checkAll(this)" name="id[]"></td>
 											<td><?php echo $i;?></td>
 											<td><?php echo $r['tmp_item_code'];?></td>
 											<td><?php echo $r['tmp_item_size'];?></td>
@@ -71,6 +71,9 @@
 											<td><?php echo $r['tmp_item_price'];?></td>
 										</tr>
 									<?php $i++; }?>	
+									<tr style="text-align:right">
+									<td colspan="9"><input class="btn btn-sm btn-success" type="button" value="Import"></td>
+									</tr>
 									</tbody>
 								</table>
 								</form>
@@ -84,4 +87,23 @@
     <!-- /.container -->
 </div>
 </div>
+<script>
+ function checkAll(ele) {
+     var checkboxes = document.getElementsByTagName('input');
+     if (ele.checked) {
+         for (var i = 0; i < checkboxes.length; i++) {
+             if (checkboxes[i].type == 'checkbox') {
+                 checkboxes[i].checked = true;
+             }
+         }
+     } else {
+         for (var i = 0; i < checkboxes.length; i++) {
+             console.log(i)
+             if (checkboxes[i].type == 'checkbox') {
+                 checkboxes[i].checked = false;
+             }
+         }
+     }
+ }
+</script>
 </body>

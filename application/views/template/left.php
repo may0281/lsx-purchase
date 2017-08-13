@@ -195,13 +195,13 @@
 							</li>
 						</ul>
 					</li>
-					<li class="">
+					<li class="<?php if(array_get($path,1) == 'project'){echo "current open";} ?>">
 						<a href="javascript:void(0);">
 							<i class="icon-hdd"></i>
 							Project
 						</a>
 						<ul class="sub-menu">
-							<li class="current">
+							<li class="<?php if($path_2 == 'create'){echo "current";} ?>">
 								<a href="<?php echo base_url('project/create');?>">
 									<i class="icon-angle-right"></i>
 									Create New Project
