@@ -162,6 +162,12 @@
 							Purchase Management
 						</a>
 						<ul class="sub-menu">
+							<li class="<?php if($path_2 == ''){echo "current";} ?>">
+								<a href="<?php echo base_url('purchase');?>">
+									<i class="icon-angle-right"></i>
+									Purchase Report
+								</a>
+							</li>
 							<li class="<?php if($path_2 == 'request'){echo "current";} ?>">
 								<a href="<?php echo base_url('purchase/request');?>">
 									<i class="icon-angle-right"></i>
@@ -174,12 +180,7 @@
 									Purchase Approve
 								</a>
 							</li>
-							<li class="<?php if($path_2 == 'report'){echo "current";} ?>">
-								<a href="<?php echo base_url('purchase/report');?>">
-									<i class="icon-angle-right"></i>
-									Purchase Report
-								</a>
-							</li>
+
 							<li class="<?php if($path_2 == 'po'){echo "current";} ?>">
 								<a href="<?php echo base_url('purchase/po');?>">
 									<i class="icon-angle-right"></i>

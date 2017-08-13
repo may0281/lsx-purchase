@@ -100,4 +100,5 @@ class project_model extends ci_model
         $query = $this->db->get();
         return $query->result_array();
     }
+
 }

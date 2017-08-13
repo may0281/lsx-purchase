@@ -53,7 +53,7 @@ class login_model extends ci_model
 
     public function getPermission($role)
     {
-        $this->db->select('major.uri as majorUri,minor.uri as minorUri,b.func_minor_sub_name as action');
+        $this->db->select('a.role_func_id,major.uri as majorUri,minor.uri as minorUri,b.func_minor_sub_name as action');
         $this->db->from('bn_auth_role_func a');
         $this->db->join('bn_func_minor_sub b ' , 'a.func_ref = b.func_minor_sub_ids','left');
         $this->db->join('bn_func_minor minor ' , 'b.func_minor_id = minor.func_minor_ids','left');

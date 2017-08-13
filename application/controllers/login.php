@@ -34,7 +34,7 @@ class login extends CI_Controller {
             $this->session->set_userdata('isSession',true);
             $this->session->set_userdata('adminData',array_get($user,'account'));
             $this->session->set_userdata('role',array_get($user, 'role_id'));
-            $this->getPermission(array_get($user, 'role_id'));
+//            $this->getPermission(array_get($user, 'role_id'));
 
             echo "<script>window.location.assign('".base_url('dashboard')."');</script>";
             exit();
@@ -48,16 +48,7 @@ class login extends CI_Controller {
 
 	}
 
-	protected function getPermission($role = null)
-    {
-        if($role == null)
-        {
-            $permission = array();
-        }
-        $permission = $this->login_model->getPermission($role);
 
-        $this->session->set_userdata('permission',$permission);
-    }
 
 	protected  function getMenu()
     {
