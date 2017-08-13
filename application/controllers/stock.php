@@ -136,17 +136,24 @@ class stock extends CI_Controller {
 	
 		public function import_item()
     {
-		$filename=$_FILES["file"]["tmp_name"];
-		$this->stock_model->importItem($filename);
-		$this->load->view('stock/tracking_order',$data);
-		
+/* 		if (isset($_FILES["file"]) && !empty($_FILES["file"])) { */
+			$filename=$_FILES["file"]["tmp_name"];
+			$this->stock_model->importItem($filename);
+			echo "<script>alert('Import Successfully.'); window.location.assign('".base_url()."index.php/stock/temp_list'); </script>";	
+	/* 	}else{
+			echo "<script>alert('Please Insert File');</script>";	
+		} */
     }
 	
 		public function temp_list()
     {
-		$filename=$_FILES["file"]["tmp_name"];
-		$this->stock_model->importItem($filename);
-		$this->load->view('stock/tracking_order',$data);
+		$data = array(
+            'menu'=> 'Product Temp List',
+            'subMenu'=> 'Product Temp List',
+			 'q' => $this->stock_model->getStockitem_temp()
+        );
+		$this->load->view('template/left');
+		$this->load->view('stock/temp_list',$data);
 		
     }
 }

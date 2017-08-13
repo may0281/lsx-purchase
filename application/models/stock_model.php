@@ -59,6 +59,14 @@ class stock_model extends ci_model
         return $query->result_array();
 	}
 	
+	public function getStockitem_temp()
+	{
+        $this->db->select('*');
+        $this->db->from('temp_import');		
+        $query = $this->db->get();
+        return $query->result_array();
+	}
+	
 	public function getItemby($item_id)
 	{
 		$this->db->select('*');
