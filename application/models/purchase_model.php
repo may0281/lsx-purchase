@@ -14,6 +14,7 @@ class purchase_model extends ci_model
         $this->db->from('project');
 		$this->db->where('status',1);
         $query = $this->db->get();
+        $this->log_model->Logging('purchase_model','success',$this->db->last_query());
         return $query->result_array();
 	}
 
@@ -24,6 +25,7 @@ class purchase_model extends ci_model
         $this->db->join('project','purchase_request.proj_id = project.proj_id');
         $this->db->where('purq_id',$id);
         $query = $this->db->get();
+        $this->log_model->Logging('purchase_model','success',$this->db->last_query());
         return $query->result_array();
 
     }
@@ -33,6 +35,7 @@ class purchase_model extends ci_model
         $this->db->from('purchase_request_item');
         $this->db->where('purq_id',$purchaseID);
         $query = $this->db->get();
+        $this->log_model->Logging('purchase_model','success',$this->db->last_query());
         return $query->result_array();
     }
 
@@ -51,6 +54,7 @@ class purchase_model extends ci_model
 	public function createPurchaseRequest($data)
     {
         $this->db->insert('purchase_request', $data);
+        $this->log_model->Logging('purchase_model','success',$this->db->last_query());
         return $this->db->insert_id();
     }
 
@@ -58,22 +62,26 @@ class purchase_model extends ci_model
     {
         $this->db->where('purq_id',$purqId);
         $this->db->update('purchase_request', $data);
+        $this->log_model->Logging('purchase_model','success',$this->db->last_query());
     }
 
     public function updatePurchaseRequestItem($data,$purqId)
     {
         $this->db->where('purq_item_id',$purqId);
         $this->db->update('purchase_request_item', $data);
+        $this->log_model->Logging('purchase_model','success',$this->db->last_query());
     }
 
     public function deletePurchaseRequestItem($purqItemId)
     {
         $this->db->delete('purchase_request_item', array('purq_item_id' => $purqItemId));
+        $this->log_model->Logging('purchase_model','success',$this->db->last_query());
     }
 
 	public function createPurchaseRequestItem($data)
     {
         $this->db->insert('purchase_request_item', $data);
+        $this->log_model->Logging('purchase_model','success',$this->db->last_query());
         return $this->db->insert_id();
     }
 
