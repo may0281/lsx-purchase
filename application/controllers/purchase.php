@@ -5,7 +5,7 @@ class purchase extends CI_Controller {
     private $purchaseRequest;
 	public function __construct()
 	{
-        error_reporting(0);
+//        error_reporting(0);
 		parent::__construct();
 		if($this->session->userdata('isSession') == false){
             echo "<script> window.location.assign('".base_url()."login?ReturnUrl=".$_SERVER['REQUEST_URI']."');</script>";
@@ -34,12 +34,13 @@ class purchase extends CI_Controller {
             echo $this->load->view('template/400','',true);
             die();
         }
+        $role = $this->session->userdata('role');
         $data = array(
             'allowUpdate' => $this->permission($this->major,$this->minor,$this->update),
             'allowDelete' => $this->permission($this->major,$this->minor,$this->delete),
             'menu'=> $this->menu,
             'subMenu'=> $this->report,
-            'data' => $this->purchase_model->getAllPurchaseRequest(),
+            'data' => $this->purchase_model->getAllPurchaseRequest($role),
         );
         $this->load->view('template/left');
         $this->load->view('purchase/index',$data);
@@ -66,7 +67,6 @@ class purchase extends CI_Controller {
         $this->load->view('purchase/detail',$data);
 
     }
-
 
 	public function request()
     {
@@ -121,28 +121,10 @@ class purchase extends CI_Controller {
                 }
             }
 
-            $logData = array(
-                'username' => $this->session->userdata('adminData'),
-                'func_name' => 'purchase',
-                'action' => 'create',
-                'status' => 'success',
-                'message' => 'Purchase Id = '.$purq_id,
-                'action_date' => date('Y-m-d H:i:s')
-            );
-            $this->log($logData);
 
         }
         catch (\Exception $e)
         {
-            $logData = array(
-                'username' => $this->session->userdata('adminData'),
-                'func_name' => 'purchase',
-                'action' => 'create',
-                'status' => 'fail',
-                'message' => $e->getMessage(),
-                'action_date' => date('Y-m-d H:i:s')
-            );
-            $this->log($logData);
             echo "<script>alert('Opp.!! Something went wrong. Please try again'); history.back(); </script>";
             exit();
         }
@@ -234,28 +216,9 @@ class purchase extends CI_Controller {
                     break;
                 }
             }
-            $logData = array(
-                'username' => $this->session->userdata('adminData'),
-                'func_name' => 'purchase',
-                'action' => 'update',
-                'status' => 'success',
-                'message' => 'Purchase Id = '.$purq_id,
-                'action_date' => date('Y-m-d H:i:s')
-            );
-            $this->log($logData);
-
         }
         catch (\Exception $e)
         {
-            $logData = array(
-                'username' => $this->session->userdata('adminData'),
-                'func_name' => 'purchase',
-                'action' => 'create',
-                'status' => 'fail',
-                'message' => $e->getMessage(),
-                'action_date' => date('Y-m-d H:i:s')
-            );
-            $this->log($logData);
             echo "<script>alert('Opp.!! Something went wrong. Please try again'); history.back(); </script>";
             exit();
         }
@@ -265,6 +228,7 @@ class purchase extends CI_Controller {
         echo "<script>alert('Success.'); window.location.assign('".base_url()."purchase'); </script>";
         exit();
     }
+
     protected function sendPurchaseRequest($message,$action)
     {
         $subject = 'Purchase Request ['.strtoupper($action).']';
@@ -277,10 +241,7 @@ class purchase extends CI_Controller {
         return $result;
     }
 
-    protected function log($data)
-    {
-        $this->db->insert('func_log', $data);
-    }
+
 
     protected function prepareDataMail($data,$action)
     {
@@ -367,5 +328,11 @@ class purchase extends CI_Controller {
 
     }
 
-	
+	public function deletePurchase($id)
+    {
+        $this->db->delete('purchase_request', array('purq_id' => $id));
+        $this->db->delete('purchase_request_item', array('purq_id' => $id));
+        echo "<script>alert('Success.'); window.location.assign('".base_url()."purchase'); </script>";
+        exit();
+    }
 }

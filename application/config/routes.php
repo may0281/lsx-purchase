@@ -29,10 +29,7 @@ $route['purchase/request/create'] = "purchase/createRequest";
 $route['purchase/request/update'] = "purchase/updateRequest";
 $route['purchase/request/update/(:num)'] = "purchase/getUpdate/$1";
 $route['purchase/request/detail/(:num)'] = "purchase/getDetail/$1";
-
-
-
-
+$route['purchase/request/delete/(:num)'] = "purchase/deletePurchase/$1";
 
 /// API ///
 $route['api/item-list'] = "api/itemList";
