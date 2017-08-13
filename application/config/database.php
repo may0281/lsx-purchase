@@ -6,7 +6,7 @@ $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
-$db['default']['password'] = '';
+$db['default']['password'] = '12345678';
 $db['default']['database'] = 'lsx-purchase';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
