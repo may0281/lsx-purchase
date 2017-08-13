@@ -1,7 +1,7 @@
 <?php
 
 class purchase_model extends ci_model
-	{
+{
 	public function __constuct()
 	{
 		parent::__construct();
@@ -44,6 +44,8 @@ class purchase_model extends ci_model
         $this->db->join('project','purchase_request.proj_id = project.proj_id');
         $this->db->order_by('purchase_request.purq_id','desc');
         $query = $this->db->get();
+
+        $this->log_model->Logging('purchase_model','success',$this->db->last_query());
         return $query->result_array();
     }
 	public function createPurchaseRequest($data)

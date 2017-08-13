@@ -103,7 +103,7 @@ $label = array(
                                                 <a href="<?php echo base_url('purchase/request/update/'.$r['purq_id'])?>" class="btn btn-xs bs-tooltip" title="" data-original-title="Edit"><i class="icon-pencil"></i></a>
                                             <?php } ?>
                                             <?php if($allowDelete == true){ ?>
-                                                <a href="javascript:void(0);" class="btn btn-xs bs-tooltip" title="" data-original-title="Delete"><i class="icon-trash"></i></a>
+                                                <a href="<?php echo base_url('purchase/request/delete/'.$r['purq_id'])?>" class="btn btn-xs bs-tooltip" title="" data-original-title="Delete"><i class="icon-trash"></i></a>
                                             <?php } ?>
                                         </span>
                                     </td>
