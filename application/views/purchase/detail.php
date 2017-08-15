@@ -32,7 +32,7 @@
                 <div class="widget invoice">
                     <div class="widget-header">
                         <div class="pull-left">
-                            <h2>Purchase No <span>#<?php echo $data['purq_id'] ?></span></h2>
+                            <h2>Purchase No <span><?php echo $data['purq_code'] ?></span></h2>
                             <strong>Status </strong> : <span><?php echo $data['purq_status'] ?></span>
                         </div>
                     </div>

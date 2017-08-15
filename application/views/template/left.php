@@ -55,6 +55,22 @@
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/plugins.js"></script>
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/plugins.form-components.js"></script>
 
+	<style>
+		#loader {
+			position: fixed;
+			left: 50%;
+			top: 50%;
+			z-index: 9999;
+			margin: -75px 0 0 -75px;
+			border: 5px solid #cccccc;
+			border-radius: 50%;
+			border-top: 5px solid #3498db;
+			width: 80px;
+			height: 80px;
+			-webkit-animation: spin 2s linear infinite;
+			animation: spin 2s linear infinite;
+		}
+	</style>
 	<script>
 		$(document).ready(function(){
 			"use strict";

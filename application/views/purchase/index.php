@@ -6,18 +6,16 @@
 
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/demo/ui_general.js"></script>
 <?php
-
 $label = array(
     'request' => 'label-default',
     'approved' => 'label-success',
-    'unapproved' => 'label-warning',
+    'unapproved' => 'label-danger',
     'pending' => 'label-info',
-    'ordered' => 'label-default',
+    'ordered' => 'label-warning',
     'received' => 'label-primary',
     'delivered' => 'label-primary',
     'reject' => 'label-danger',
 )
-
 ?>
 <div id="container">
     <div id="content">
@@ -62,7 +60,7 @@ $label = array(
                             </div>
                         </div>
                         <div class="widget-content">
-                            <table class="table table-striped table-bordered table-hover table-checkable datatable" data-display-length="30">
+                            <table class="table table-striped table-bordered table-hover table-checkable datatable" data-display-length="30" data-dataTable='{"bSort": false}'>
                                 <thead>
                                 <tr>
                                     <th>#</th>
@@ -81,7 +79,7 @@ $label = array(
                                 <tbody>
                                 <?php  $i=1;foreach ($data as $r) { ?>
                                 <tr>
-                                    <td><?php echo $i;?></td>
+                                    <td><?php echo $r['purq_code'];?></td>
                                     <td><?php echo $r['proj_name'];?></td>
                                     <td><?php echo $r['proj_owner_name'];?></td>
                                     <td><?php echo $r['designer_name'];?></td>
@@ -105,9 +103,10 @@ $label = array(
                                             <?php if($allowDelete == true){ ?>
                                                 <a href="<?php echo base_url('purchase/request/delete/'.$r['purq_id'])?>" class="btn btn-xs bs-tooltip" title="" data-original-title="Delete"><i class="icon-trash"></i></a>
                                             <?php } ?>
+
+                                            <a href="<?php echo base_url('purchase/request/delete/'.$r['purq_id'])?>" class="btn btn-xs bs-tooltip" title="" data-original-title="Change Status"><i class="icon-exchange"></i></a>
                                         </span>
                                     </td>
-
                                 </tr>
                                 <?php $i++; }?>
                             </tbody>

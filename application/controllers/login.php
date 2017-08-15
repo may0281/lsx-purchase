@@ -30,12 +30,9 @@ class login extends CI_Controller {
         if(!empty($q))
         {
             $user =  array_get($q,0);
-
             $this->session->set_userdata('isSession',true);
             $this->session->set_userdata('adminData',array_get($user,'account'));
             $this->session->set_userdata('role',array_get($user, 'role_id'));
-//            $this->getPermission(array_get($user, 'role_id'));
-
             echo "<script>window.location.assign('".base_url('dashboard')."');</script>";
             exit();
 
@@ -47,8 +44,6 @@ class login extends CI_Controller {
         }
 
 	}
-
-
 
 	protected  function getMenu()
     {

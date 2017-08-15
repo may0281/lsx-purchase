@@ -5,11 +5,12 @@ class purchase extends CI_Controller {
     private $purchaseRequest;
 	public function __construct()
 	{
-//        error_reporting(0);
+        error_reporting(0);
 		parent::__construct();
 		if($this->session->userdata('isSession') == false){
             echo "<script> window.location.assign('".base_url()."login?ReturnUrl=".$_SERVER['REQUEST_URI']."');</script>";
 		}
+        $this->load->model('hublibrary_model');
         $this->load->model('purchase_model');
         $this->load->model('project_model');
         $this->load->model('stock_model');
@@ -21,23 +22,32 @@ class purchase extends CI_Controller {
         $this->minor = 'request';
         $this->report = 'report';
         $this->create = 'create';
+        $this->approve = 'approve';
         $this->update = 'update';
         $this->delete = 'delete';
+        $this->change_status = 'change-status';
+        $this->marketting = 'MARKETING';
+        $this->sale = 'SALE';
 	}
 
 	public function index()
 	{
-        $permission = $this->permission($this->major,$this->report,'view');
+        $permission = $this->hublibrary_model->permission($this->major,$this->report,'view');
         if($permission == false)
         {
             echo $this->load->view('template/left','',true);
             echo $this->load->view('template/400','',true);
             die();
         }
-        $role = $this->session->userdata('role');
+        $role = null;
+        if($this->session->userdata('role') == $this->marketting or $this->session->userdata('role') == $this->sale)
+        {
+            $role = $this->session->userdata('role');
+        }
+
         $data = array(
-            'allowUpdate' => $this->permission($this->major,$this->minor,$this->update),
-            'allowDelete' => $this->permission($this->major,$this->minor,$this->delete),
+            'allowUpdate' => $this->hublibrary_model->permission($this->major,$this->minor,$this->update),
+            'allowDelete' => $this->hublibrary_model->permission($this->major,$this->minor,$this->delete),
             'menu'=> $this->menu,
             'subMenu'=> $this->report,
             'data' => $this->purchase_model->getAllPurchaseRequest($role),
@@ -49,7 +59,7 @@ class purchase extends CI_Controller {
 
 	public function getDetail($id)
     {
-        $permission = $this->permission($this->major,$this->report,'view');
+        $permission = $this->hublibrary_model->permission($this->major,$this->report,'view');
         if($permission == false)
         {
             echo $this->load->view('template/left','',true);
@@ -70,7 +80,7 @@ class purchase extends CI_Controller {
 
 	public function request()
     {
-        $permission = $this->permission($this->major,$this->minor,'create');
+        $permission = $this->hublibrary_model->permission($this->major,$this->minor,'create');
         if($permission == false)
         {
             echo $this->load->view('template/left','',true);
@@ -104,6 +114,7 @@ class purchase extends CI_Controller {
         try
         {
             $purq_id = $this->purchase_model->createPurchaseRequest($purchaseData);
+            $this->purchase_model->updatePurchaseCode($purq_id);
             for($i=0; $i < count($items); $i++)
             {
                 if($items[$i])
@@ -137,7 +148,7 @@ class purchase extends CI_Controller {
 
     public function getUpdate($id)
     {
-        $permission = $this->permission($this->major,$this->minor,$this->update);
+        $permission = $this->hublibrary_model->permission($this->major,$this->minor,$this->update);
         if($permission == false)
         {
             echo $this->load->view('template/left','',true);
@@ -241,8 +252,6 @@ class purchase extends CI_Controller {
         return $result;
     }
 
-
-
     protected function prepareDataMail($data,$action)
     {
         $project = $this->project_model->getProjectby($data['proj_id']);
@@ -276,8 +285,9 @@ class purchase extends CI_Controller {
                 }
             }
         }
-
+        $purq_code = 'P'.str_pad($data['proj_id'],5 ,0,STR_PAD_LEFT);
         $message = '
+		Project NO : ' . $purq_code . '
 		Project : ' . $project[0]['proj_name'] . '
 		'.$action.' by : ' . $this->session->userdata('adminData') . '
 		'.$action.' date : ' . date('Y-m-d H:i:s') . '
@@ -311,23 +321,6 @@ class purchase extends CI_Controller {
         return $message;
     }
 
-    protected function permission($major = null,$minor = null,$action = null)
-    {
-        $this->load->model('login_model');
-        $role = $this->session->userdata('role');
-        $permission = $this->login_model->getPermission($role);
-        $status = false;
-        foreach ($permission as $p)
-        {
-            if($p['majorUri'] == $major && $p['minorUri'] == $minor && $p['action'] == $action)
-            {
-                $status = true;
-            }
-        }
-        return $status;
-
-    }
-
 	public function deletePurchase($id)
     {
         $this->db->delete('purchase_request', array('purq_id' => $id));
@@ -335,4 +328,91 @@ class purchase extends CI_Controller {
         echo "<script>alert('Success.'); window.location.assign('".base_url()."purchase'); </script>";
         exit();
     }
+
+    public function approvePurchaseRequest()
+    {
+        $permission = $this->hublibrary_model->permission($this->major,$this->minor,$this->change_status);
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('template/400','',true);
+            die();
+        }
+
+
+        $data = array(
+            'menu'=> $this->menu,
+            'subMenu'=> $this->approve,
+            'data' => $this->purchase_model->getAllPurchaseRequestForApprove('request'),
+        );
+        $this->load->view('template/left');
+        $this->load->view('purchase/approve',$data);
+
+    }
+
+    public function changeStatus()
+    {
+        $id = $this->input->post('purq_id');
+        $status =$this->input->post('status');
+        $purq_comment =$this->input->post('purq_comment');
+        $this->change($id,$status,$purq_comment);
+        header('Content-Type: application/json');
+        $data = array(
+            'code' => 200,
+            'status' => 'Success',
+            'act' => $status,
+            'id' => $id
+        );
+        echo json_encode($data);
+
+    }
+    public function getChangeStatus($id, $status)
+    {
+        $this->change($id,$status);
+        header('Content-Type: application/json');
+        $data = array(
+            'code' => 200,
+            'status' => 'Success',
+            'act' => $status,
+            'id' => $id
+        );
+        echo json_encode($data);
+
+    }
+    public function change($id,$status,$note = null)
+    {
+        $data = $this->purchase_model->getPurchaseById($id);
+        $oldData = $data[0];
+        $oldStatus = $oldData['purq_status'];
+        $purq_code = $oldData['purq_code'];
+        $note = $oldData['purq_comment']."\n" .$note;
+        $email = array($oldData['mkt_account'],$oldData['sale_account']);
+        $message = 'The status purchase no. '.$purq_code.' has been changed.' . "\n\n";
+        $message .= strtoupper($oldStatus). ' TO ' . strtoupper($status) . "\n\n";
+        $message .='Approve Date : ' . date('Y-m-d H:i:s')  . "\n";
+        $message .='Approve By : ' . $this->session->userdata('adminData')  . "\n\n";
+        $message .='Note'  . "\n\n";
+        $message .= $note;
+        $this->purchase_model->changePurchaseStatus($id,$status);
+        $this->purchase_model->changeStatusLog($id,$status);
+        $this->sendEmailUpdateStatus($message,'Change Status',$email);
+    }
+
+    protected function sendEmailUpdateStatus($message,$action,$email = array())
+    {
+        $subject = 'Purchase Request ['.strtoupper($action).']';
+
+        for($i=0; $i<count($email) ; $i++)
+        {
+            $this->email->from('backend.lsx@gmail.com' ,'Purchasing System');
+            $this->email->to($email[$i]);
+            $this->email->subject($subject);
+            $this->email->message($message);
+            $result = $this->email->send();
+        }
+
+
+        return $result;
+    }
+
 }
