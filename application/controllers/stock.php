@@ -145,6 +145,11 @@ class stock extends CI_Controller {
 		} */
     }
 	
+		public function import_item_action()
+    {
+
+    }
+	
 		public function temp_list()
     {
 		$data = array(

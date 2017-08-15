@@ -38,7 +38,7 @@
 			<h4><i class="icon-reorder"></i>Add Manual</h4>
 			</div>
 			<div class="widget-content">
-			<form class="form-horizontal row-border" method="post" action="<?php echo base_url(); ?>stock/add_more_item_action/<?php echo $this->uri->segment(3);?>">
+			<form class="form-horizontal row-border" method="post" action="<?php echo base_url(); ?>stock/add_temp_item/<?php echo $this->uri->segment(3);?>">
 			<!--									<div class="alert alert-info fade in">
 			<i class="icon-remove close" data-dismiss="alert"></i>
 			This are examples of full width input fields. Please find select-boxes and other things below.
