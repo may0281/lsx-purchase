@@ -10,7 +10,7 @@
                         <a href="<?php echo base_url();?>dashboard">DASHBOARD</a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url();?>blog" title=""><?php echo strtoupper($menu); ?></a>
+                        <a href="<?php echo base_url();?>stock/add_item" title=""><?php echo strtoupper($menu); ?></a>
                     </li>
                     <li class="current">
                         <a href="#" title=""><?php echo strtoupper($subMenu) ?></a>
@@ -30,11 +30,18 @@
             <!--=== Managed Tables ===-->
 
             <!--=== Normal ===-->
+			<div class="alert alert-danger fade in">
+			<i class="icon-remove close" data-dismiss="alert"></i>
+			<strong>Error!</strong> พบ Item ที่มีอยู่แล้วใน Stock ไม่สามารถ Import ได้คือ<?php foreach ($t as $item_q) { ?>
+			<?php echo $item_q['tmp_item_code'];?><?php echo "&nbsp;";?>
+			<?php  }?>	
+			</div>
+
             <div class="row">
 					<div class="col-md-12">
 						<div class="widget box">
 							<div class="widget-header">
-								<h4><i class="icon-reorder"></i> Item List in Stock</h4>
+								<h4><i class="icon-reorder"></i>Import Temporary</h4>
 								<div class="toolbar no-padding">
 									<div class="btn-group">
 										<span class="btn btn-xs widget-collapse"><i class="icon-angle-down"></i></span>
@@ -42,11 +49,11 @@
 								</div>
 							</div>
 							<div class="widget-content">
-							<form name="temp" action="<?php echo base_url(); ?>stock/add_more_item_action">
+							<form name="temp" method="post" action="<?php echo base_url(); ?>stock/import_stock_action/<?php echo $this->uri->segment(3); ?>">
 								<table class="table table-striped table-bordered table-hover table-checkable datatable">
 									<thead>
 										<tr>
-										    <th><INPUT type="checkbox" onchange="checkAll(this)" name="chk[]" /></th>
+										    <th><INPUT type="checkbox" onChange="checkAll(this)" name="chk[]" /></th>
 											<th>No</th>
 											<th>Item Code</th>
 											<th>Size</th>
@@ -60,7 +67,7 @@
 									<tbody>
 									<?php  $i=1;foreach ($q as $r) { ?>
 										<tr>
-											<td><input type="checkbox"  onchange="checkAll(this)" name="id[]"></td>
+											<td><input type="checkbox" value="<?php echo $r['tmp_item_id'];?>" name="tmp_item_id[]"></td>
 											<td><?php echo $i;?></td>
 											<td><?php echo $r['tmp_item_code'];?></td>
 											<td><?php echo $r['tmp_item_size'];?></td>
@@ -72,7 +79,7 @@
 										</tr>
 									<?php $i++; }?>	
 									<tr style="text-align:right">
-									<td colspan="9"><input class="btn btn-sm btn-success" type="button" value="Import"></td>
+									<td colspan="9"><input class="btn btn-sm btn-success" type="submit" value="Import to Stock"></td>
 									</tr>
 									</tbody>
 								</table>

@@ -37,46 +37,15 @@
 			<h4><i class="icon-reorder"></i> Add by import file</h4>
 			</div>
 			<div class="widget-content">
-			<form class="form-horizontal row-border" method="post" action="<?php echo base_url(); ?>stock/import_item" enctype="multipart/form-data">
-			<!--									<div class="alert alert-info fade in">
-			<i class="icon-remove close" data-dismiss="alert"></i>
-			This are examples of full width input fields. Please find select-boxes and other things below.
-			</div>-->
+			<form class="form-horizontal row-border" method="post" action="<?php echo base_url(); ?>stock/import_item/1" enctype="multipart/form-data">
 			<div class="form-group">
 			<label class="col-md-2 control-label">File Upload:</label>
 			<div class="col-md-10">
 			<input type="file" name="file" data-style="fileinput">
 			</div>
 			</div>
-			<div align="right"><input class="btn btn-sm btn-primary" type="submit" value="Import"> <input class="btn" type="reset" value="Reset"></div>
+			<div align="left"><a href="<?php echo base_url(); ?>stock/temp_list/1">รายการที่ Import ค้างไว้</a></div><div align="right"><input class="btn btn-sm btn-primary" type="submit" value="Import"> <input class="btn" type="reset" value="Reset"></div>
 			
-			</form>
-			</div>
-			</div>
-			</div>
-			</div>
-			<div class="row">
-			<div class="col-md-12">
-			<div class="widget box">
-			<div class="widget-header">
-			<h4><i class="icon-reorder"></i> Add by Order ID</h4>
-			</div>
-			<div class="widget-content">
-			<form class="form-horizontal row-border" action="<?php echo base_url(); ?>stock/import_item">
-			<!--									<div class="alert alert-info fade in">
-			<i class="icon-remove close" data-dismiss="alert"></i>
-			This are examples of full width input fields. Please find select-boxes and other things below.
-			</div>-->
-			<div class="form-group">
-			<label class="col-md-2 control-label">Select Order ID:</label>
-			<div class="col-md-10">
-			<select name="customer" id="input19" class="select2-select-00 col-md-12 full-width-fix">
-			<option value="">---Select--</option>
-			<option value=""></option>	
-			</select>
-			</div>
-			</div>
-			<div align="right"><input class="btn btn-sm btn-primary" type="submit" value="Submit"> <input class="btn" type="reset" value="Reset"></div>
 			</form>
 			</div>
 			</div>
@@ -91,26 +60,17 @@
 			</div>
 			<div class="widget-content">
 			<form class="form-horizontal row-border" method="post" action="<?php echo base_url(); ?>stock/add_item_action">
-			<!--									<div class="alert alert-info fade in">
-			<i class="icon-remove close" data-dismiss="alert"></i>
-			This are examples of full width input fields. Please find select-boxes and other things below.
-			</div>-->
 			<div class="form-group">
 			<label class="col-md-2 control-label">Item Code:</label>
 			<div class="col-md-10"><input type="text" name="item_code" class="form-control"></div>
 			</div>
-<!--			<div class="form-group">
-			<label class="col-md-2 control-label" for="input19">Type</label>
-			<div class="col-md-10">
-			<select id="input19" class="select2-select-00 col-md-12 full-width-fix">
-			<option value="AK">---Select--</option>
-			<option value="HI">-----</option>
-			</select>
-			</div>
-			</div-->		
 			<div class="form-group">
 			<label class="col-md-2 control-label">Qty:</label>
 			<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="stk_qty"></div>
+			</div>
+			<div class="form-group">
+			<label class="col-md-2 control-label">Min Qty:</label>
+			<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="item_min"></div>
 			</div>
 			<div class="form-group">
 			<label class="col-md-2 control-label">Detail:</label>
