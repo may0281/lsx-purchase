@@ -19,7 +19,7 @@ class stock extends CI_Controller {
     {
 		$data = array(
             'menu'=> 'Stock',
-            'subMenu'=> 'Add Item'
+            'subMenu'=> 'Add New Item'
         );
 
 		$this->load->view('template/left');
@@ -42,6 +42,13 @@ class stock extends CI_Controller {
     {
 		date_default_timezone_set('asia/bangkok');
 		
+		// Check Is Item New
+		$chk_new = $this->stock_model->IsItemNew($this->input->post('item_code'));
+		
+		if($chk_new == '1'){
+			echo "<script>alert('ชออภัย Item ".$this->input->post('item_code')." นีมีอยู่แล้วในระบบ กรุณาเลือก Add More Item ในรายการ Item ที่มีอยู่แล้ว'); window.location.assign('".base_url()."index.php/stock/add_item'); </script>";	
+		}
+		
 		$data_stk = array(
 			'stk_qty'=> $this->input->post('stk_qty'),
 			'stk_unit_price'=> $this->input->post('stk_unit_price'),
@@ -60,22 +67,23 @@ class stock extends CI_Controller {
 			'item_pfilm'=> $this->input->post('item_pfilm'),
 			'item_aica'=> $this->input->post('item_aica'),
 			'item_qty'=> $this->input->post('stk_qty'),
+			'item_min'=> $this->input->post('item_min'),
 			'item_pfilm'=> $this->input->post('item_pfilm'),
 			'item_add_date'=> date('Y-m-d H:i:s'),
+			'stk_id'=> $stock_id,
 			'item_status'=> '1'
 		);
 		 
 		$item_id = $this->stock_model->addItem($data_item);
-		$this->stock_model->updateItemID($stk_id,$item_id);
 		
-		echo "<script>alert('Success.'); window.location.assign('".base_url()."index.php/stock/lists'); </script>";
-		exit();
+		$this->stock_model->updateItemID($stock_id,$item_id);
+		echo "<script>alert('Success.'); window.location.assign('".base_url()."index.php/stock/list_item'); </script>";
+		
     }
 	
 	public function add_more_item_action()
     {
 		date_default_timezone_set('asia/bangkok');
-		
 		$data_stk = array(
 		    'item_id'=> $this->uri->segment(3),
 			'stk_qty'=> $this->input->post('stk_qty'),
@@ -88,14 +96,14 @@ class stock extends CI_Controller {
 		 
 		$stock_id = $this->stock_model->addStock($data_stk);
 		
-		
 		 $data_item = array(
 			'item_qty'=> $this->stock_model->sumItem($this->input->post('stk_qty'),$this->uri->segment(3)),
 			'item_add_date'=> date('Y-m-d H:i:s')
 		);
 		 
 		$this->stock_model->updateQTY($data_item);
-		echo "<script>alert('Success.'); window.location.assign('".base_url()."index.php/stock/lists'); </script>";
+		$this->stock_model->updatePriceItem($this->uri->segment(3),$this->input->post('stk_unit_price'));
+		echo "<script>alert('Success.'); window.location.assign('".base_url()."index.php/stock/list_item'); </script>";
 		exit();
     }
 	
@@ -103,7 +111,7 @@ class stock extends CI_Controller {
     {
 		$data = array(
             'menu'=> 'Stock',
-            'subMenu'=> 'List Item',
+            'subMenu'=> 'Stock Item',
 			 'q' => $this->stock_model->getItemList()
         );
 
@@ -138,27 +146,34 @@ class stock extends CI_Controller {
     {
 /* 		if (isset($_FILES["file"]) && !empty($_FILES["file"])) { */
 			$filename=$_FILES["file"]["tmp_name"];
-			$this->stock_model->importItem($filename);
-			echo "<script>alert('Import Successfully.'); window.location.assign('".base_url()."index.php/stock/temp_list'); </script>";	
-	/* 	}else{
-			echo "<script>alert('Please Insert File');</script>";	
-		} */
-    }
-	
-		public function import_item_action()
-    {
+			if($this->uri->segment(3) == "1"){
+				$this->stock_model->importItem($filename,$this->uri->segment(3));
+			}else{
+				$this->stock_model->importInstockItem($filename,$this->uri->segment(3));
+			}
+			
+			echo "<script>alert('Import Successfully.'); window.location.assign('".base_url()."index.php/stock/temp_list/".$this->uri->segment(3)."'); </script>";	
 
     }
 	
 		public function temp_list()
     {
 		$data = array(
-            'menu'=> 'Product Temp List',
-            'subMenu'=> 'Product Temp List',
-			 'q' => $this->stock_model->getStockitem_temp()
+            'menu'=> 'Add New Item',
+            'subMenu'=> 'Import Temporary',
+			'q' => $this->stock_model->getStockitem_temp($this->uri->segment(3)),
+			't' => $this->stock_model->getStockitem_temp_dup($this->uri->segment(3))
         );
 		$this->load->view('template/left');
 		$this->load->view('stock/temp_list',$data);
-		
     }
+	
+		public function import_stock_action()
+    {
+		if(isset($_POST['tmp_item_id'])){
+		
+			$this->stock_model->importItemStock($_POST['tmp_item_id'],$this->uri->segment(3));
+		}
+
+	}
 }

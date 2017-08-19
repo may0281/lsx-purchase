@@ -46,7 +46,6 @@
 									<thead>
 										<tr>
 											<th>No</th>
-											<th>Stock ID</th>
 											<th>Item Code</th>
 											<th>QTY</th>
 											<th>Unit Price</th>
@@ -58,10 +57,9 @@
 									<?php  $i=1;foreach ($q as $r) { ?>
 										<tr>
 											<td><?php echo $i;?></td>
-											<td><?php echo $r['stk_id'];?></td>
 											<td><?php echo $r['item_code'];?></td>
 											<td><?php echo $r['stk_qty'];?></td>
-											<td><?php echo $r['stk_unit_price'];?></td>
+											<td><?php echo $r['stk_unit_price'];?>$</td>
 											<td><?php echo $r['stk_add_date'];?></td>
 											<td><?php echo $r['stk_add_by'];?></td>
 										</tr>
@@ -73,8 +71,6 @@
 					</div>
 				</div>
         <!-- /Normal -->
-
-
         <!-- /Page Content -->
     </div>
     <!-- /.container -->
