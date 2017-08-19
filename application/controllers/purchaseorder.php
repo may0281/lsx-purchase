@@ -94,7 +94,7 @@ class purchaseorder extends CI_Controller {
 
     public function createPreOrder()
     {
-//        require_once(APPPATH.'controllers/purchase.php');
+        require_once(APPPATH.'controllers/purchase.php');
         $purchase = new purchase();
         $input = $this->input->post();
         $pre_order = array(
@@ -103,7 +103,7 @@ class purchaseorder extends CI_Controller {
             'puror_inquiry_by' => $this->session->userdata('adminData'),
         );
 
-//        $puror_id = $this->purchase_model->createPurchaseOrder($pre_order);
+        $puror_id = $this->purchase_model->createPurchaseOrder($pre_order);
 
         foreach (array_get($input,'item') as $item)
         {
@@ -112,16 +112,15 @@ class purchaseorder extends CI_Controller {
             $purq_id = $exp[1];
             $qty = $this->input->post('suggest-'.$exp[2]);
 
-//            $data =  array(
-//                'puror_id' => $puror_id,
-//                'purq_id' => $purq_id,
-//                'item_code' => $item_code,
-//                'puror_qty' => $qty
-//            );
+            $data =  array(
+                'puror_id' => $puror_id,
+                'purq_id' => $purq_id,
+                'item_code' => $item_code,
+                'puror_qty' => $qty
+            );
 
-//            sd($data);
-            sd($purchase->getChangeStatus($purq_id,'ordered'));
-//            $this->purchase_model->createPurchaseOrderItem($data);
+            $purchase->getChangeStatus($purq_id,'ordered')
+            $this->purchase_model->createPurchaseOrderItem($data);
         }
 
     }
