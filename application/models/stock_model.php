@@ -138,8 +138,7 @@ class stock_model extends ci_model
 
 		fclose($file);
 
-
-
 	}
+
 
 }

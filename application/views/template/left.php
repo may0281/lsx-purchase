@@ -172,43 +172,60 @@
 							</li>
 						</ul>
 					</li>
-					<li class="<?php if(array_get($path,1) == 'purchase'){echo "current open";} ?>">
+
+					<?php
+						$purq_rep_view  = $this->hublibrary_model->permission('purchase','request','view');
+						$purq_req_create  = $this->hublibrary_model->permission('purchase','request','create');
+						$purq_req_change_status = $this->hublibrary_model->permission('purchase','request','change-status');
+						$po_report = $this->hublibrary_model->permission('purchase','po','view');
+						$po_create = $this->hublibrary_model->permission('purchase','po','create');
+					?>
+						<li class="<?php if(array_get($path,1) == 'purchase'){echo "current open";} ?>">
 						<a href="javascript:void(0);">
 							<i class="icon-usd"></i>
 							Purchase Management
 						</a>
 						<ul class="sub-menu">
+							<?php  if($purq_rep_view == true){ ?>
 							<li class="<?php if($path_2 == ''){echo "current";} ?>">
 								<a href="<?php echo base_url('purchase');?>">
 									<i class="icon-angle-right"></i>
 									Purchase Report
 								</a>
 							</li>
+							<?php } ?>
+							<?php  if($purq_req_create == true){ ?>
 							<li class="<?php if($path_2 == 'request'){echo "current";} ?>">
 								<a href="<?php echo base_url('purchase/request');?>">
 									<i class="icon-angle-right"></i>
 									Purchase Request
 								</a>
 							</li>
+							<?php }?>
+							<?php  if($purq_req_change_status == true){ ?>
 							<li class="<?php if($path_2 == 'approve'){echo "current";} ?>">
 								<a href="<?php echo base_url('purchase/approve');?>">
 									<i class="icon-angle-right"></i>
 									Purchase Approve
 								</a>
 							</li>
-
+							<?php } ?>
+							<?php if($po_create){?>
 							<li class="<?php if($path_2 == 'po'){echo "current";} ?>">
-								<a href="<?php echo base_url('purchase/po');?>">
+								<a href="<?php echo base_url('purchase/pre-order');?>">
 									<i class="icon-angle-right"></i>
 									PO
 								</a>
 							</li>
+							<?php } ?>
+							<?php if($po_report){?>
 							<li class="<?php if($path_2 == 'po-report'){echo "current";} ?>">
-								<a href="<?php echo base_url('purchase/po-report');?>">
+								<a href="<?php echo base_url('purchase/pre-order/report');?>">
 									<i class="icon-angle-right"></i>
 									PO report
 								</a>
 							</li>
+							<?php } ?>
 						</ul>
 					</li>
 					<li class="<?php if(array_get($path,1) == 'project'){echo "current open";} ?>">

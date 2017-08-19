@@ -10,7 +10,6 @@ class purchase extends CI_Controller {
 		if($this->session->userdata('isSession') == false){
             echo "<script> window.location.assign('".base_url()."login?ReturnUrl=".$_SERVER['REQUEST_URI']."');</script>";
 		}
-        $this->load->model('hublibrary_model');
         $this->load->model('purchase_model');
         $this->load->model('project_model');
         $this->load->model('stock_model');
@@ -20,7 +19,6 @@ class purchase extends CI_Controller {
         $this->report = 'report';
         $this->major = 'purchase';
         $this->minor = 'request';
-        $this->report = 'report';
         $this->create = 'create';
         $this->approve = 'approve';
         $this->update = 'update';
@@ -28,11 +26,21 @@ class purchase extends CI_Controller {
         $this->change_status = 'change-status';
         $this->marketting = 'MARKETING';
         $this->sale = 'SALE';
+        $this->status = [
+            'request',
+            'approved',
+            'unapproved',
+            'pending',
+            'ordered',
+            'received',
+            'delivered',
+            'reject',
+        ];
 	}
 
 	public function index()
 	{
-        $permission = $this->hublibrary_model->permission($this->major,$this->report,'view');
+        $permission = $this->hublibrary_model->permission($this->major,$this->minor,'view');
         if($permission == false)
         {
             echo $this->load->view('template/left','',true);
@@ -48,6 +56,8 @@ class purchase extends CI_Controller {
         $data = array(
             'allowUpdate' => $this->hublibrary_model->permission($this->major,$this->minor,$this->update),
             'allowDelete' => $this->hublibrary_model->permission($this->major,$this->minor,$this->delete),
+            'allowChangeStatus' => $this->hublibrary_model->permission($this->major,$this->minor,$this->change_status),
+            'status'=> $this->status,
             'menu'=> $this->menu,
             'subMenu'=> $this->report,
             'data' => $this->purchase_model->getAllPurchaseRequest($role),
@@ -59,7 +69,7 @@ class purchase extends CI_Controller {
 
 	public function getDetail($id)
     {
-        $permission = $this->hublibrary_model->permission($this->major,$this->report,'view');
+        $permission = $this->hublibrary_model->permission($this->major,$this->minor,'view');
         if($permission == false)
         {
             echo $this->load->view('template/left','',true);
@@ -325,8 +335,13 @@ class purchase extends CI_Controller {
     {
         $this->db->delete('purchase_request', array('purq_id' => $id));
         $this->db->delete('purchase_request_item', array('purq_id' => $id));
-        echo "<script>alert('Success.'); window.location.assign('".base_url()."purchase'); </script>";
-        exit();
+        header('Content-Type: application/json');
+        $data = array(
+            'code' => 200,
+            'status' => 'Success',
+            'id' => $id
+        );
+        echo json_encode($data);
     }
 
     public function approvePurchaseRequest()
@@ -366,6 +381,7 @@ class purchase extends CI_Controller {
         echo json_encode($data);
 
     }
+
     public function getChangeStatus($id, $status)
     {
         $this->change($id,$status);
@@ -379,6 +395,7 @@ class purchase extends CI_Controller {
         echo json_encode($data);
 
     }
+
     public function change($id,$status,$note = null)
     {
         $data = $this->purchase_model->getPurchaseById($id);
@@ -413,6 +430,11 @@ class purchase extends CI_Controller {
 
 
         return $result;
+    }
+
+    public function ffg()
+    {
+        return 20;
     }
 
 }

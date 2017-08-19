@@ -13,18 +13,7 @@
 <script type="text/javascript" src="<?php echo base_url();?>plugins/noty/jquery.noty.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>plugins/noty/layouts/top.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>plugins/noty/themes/default.js"></script>
-<?php
-$label = array(
-    'request' => 'label-default',
-    'approved' => 'label-success',
-    'unapproved' => 'label-danger',
-    'pending' => 'label-info',
-    'ordered' => 'label-warning',
-    'received' => 'label-primary',
-    'delivered' => 'label-primary',
-    'reject' => 'label-danger',
-)
-?>
+
 <div id="container">
     <div id="content">
         <div class="container">
@@ -68,51 +57,27 @@ $label = array(
                             </div>
                         </div>
                         <div class="widget-content">
-                            <table class="table table-striped table-bordered table-hover table-checkable datatable" data-display-length="30" data-dataTable='{"bSort": false}'>
+                            <table class="table table-bordered table-hover table-checkable datatable" data-display-length="30" data-dataTable='{"bSort": false}'>
                                 <thead>
                                 <tr>
                                     <th>#</th>
-
-                                    <th>Project</th>
-                                    <th>Project Owner</th>
-                                    <th>Designer</th>
-                                    <th>Contractor</th>
-                                    <th>Product Code</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
+                                    <th>Item Code</th>
+                                    <th>Purchase Code</th>
+                                    <th>QTY</th>
                                     <th>Status</th>
                                     <th class="align-center">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <?php  $i=1;foreach ($data as $r) { ?>
-                                <tr id="tr_<?php echo $r['purq_id'];?>">
+                                <?php  $i=1;foreach ($item as $r) { ?>
+                                <tr>
+                                    <td><?php echo $i;?></td>
+                                    <td><?php echo $r['item_code'];?></td>
                                     <td><?php echo $r['purq_code'];?></td>
-                                    <td><?php echo $r['proj_name'];?></td>
-                                    <td><?php echo $r['proj_owner_name'];?></td>
-                                    <td><?php echo $r['designer_name'];?></td>
-                                    <td><?php echo $r['contractor_name'];?></td>
-                                    <td>
-                                        <?php  $purchaseItem = $this->purchase_model->getPurchaseItem($r['purq_id']);
-                                            foreach ($purchaseItem as $purqItem) {
-                                                echo $purqItem['item_code'] . ' = ' . $purqItem['qty'] . '<br>';
-                                            }
-                                        ?>
-                                    </td>
-                                    <td><?php echo date('Y-m-d',strtotime($r['purq_require_start']));?></td>
-                                    <td><?php echo date('Y-m-d',strtotime($r['purq_require_end']));?></td>
-                                    <td><span id="span-status-<?php echo $r['purq_id'];?>" class="label <?php echo $label[$r['purq_status']]; ?>"><?php echo $r['purq_status'];?></span></td>
+                                    <td><?php echo $r['puror_qty'];?></td>
+                                    <td><?php echo $r['puror_status'];?></td>
                                     <td class="align-center">
                                         <span class="btn-group">
-                                            <a href="<?php echo base_url('purchase/request/detail/'.$r['purq_id'])?>" class="btn btn-xs bs-tooltip" title="" data-original-title="Search"><i class="icon-search"></i></a>
-                                            <?php if($allowUpdate == true){ ?>
-                                                <a href="<?php echo base_url('purchase/request/update/'.$r['purq_id'])?>" class="btn btn-xs bs-tooltip" title="" data-original-title="Edit"><i class="icon-pencil"></i></a>
-                                            <?php } ?>
-                                            <?php if($allowDelete == true){ ?>
-                                                <a id="del_<?php echo $r['purq_id'];?>" class="btn btn-xs bs-tooltip confirm-dialog" title="" data-original-title="Delete"><i class="icon-trash"></i></a>
-                                            <?php } ?>
-
-                                            <?php if($allowChangeStatus == true){ ?>
                                             <a data-toggle="modal" href="#change_status_<?php echo $r['purq_id'];?>" id="cha_<?php echo $r['purq_id'];?>" class="btn btn-xs bs-tooltip" title="" data-original-title="Change Status"><i class="icon-exchange"></i></a>
                                             <div class="modal fade" id="change_status_<?php echo $r['purq_id'];?>">
                                                 <form class="form-horizontal row-border" method="post" id="frm_change_status_<?php echo $r['purq_id'];?>"  onsubmit="return checkForm(this);" >
@@ -128,17 +93,16 @@ $label = array(
                                                                 <div class="col-md-10 clearfix">
                                                                     <select name="status" id="status_id" class="col-md-12 select2 full-width-fix required">
                                                                         <option></option>
-                                                                        <?php foreach ($status as $st){ ?>
-                                                                            <option value="<?php echo $st?>" <?php echo ($r['purq_status'] == $st ? 'selected' : '') ?>><?php echo $st;?></option>
-                                                                        <?php } ?>
+                                                                        <option value="ordered" <?php echo ($r['puror_status'] == 'ordered' ? 'selected' : '') ?>>Ordered</option>
+                                                                        <option value="imported" <?php echo ($r['puror_status'] == 'imported' ? 'selected' : '') ?>>Imported</option>
                                                                     </select>
                                                                 </div>
                                                                 <div style="height: 10px; clear: both;" > </div>
                                                                 <label class="col-md-2 control-label" style="clear: both">Note</label>
                                                                 <div class="col-md-10">
-                                                                    <textarea rows="2" cols="5" name="purq_comment" class="form-control"> </textarea>
+                                                                    <textarea rows="2" cols="5" name="puror_note" class="form-control"> </textarea>
                                                                 </div>
-                                                                <input type="hidden" name="purq_id" value="<?php echo $r['purq_id'];?>">
+                                                                <input type="hidden" name="puror_id" value="<?php echo $r['puror_id'];?>">
                                                             </div>
                                                             <div style="clear: both"></div>
                                                             <div class="modal-footer">
@@ -149,7 +113,6 @@ $label = array(
                                                     </div>
                                                 </form>
                                             </div><!-- /.modal -->
-                                            <?php } ?>
                                         </span>
                                     </td>
                                 </tr>
@@ -168,67 +131,14 @@ $label = array(
 
 
 <script  type="text/javascript">
-
-    $("a.confirm-dialog").click(function(e) {
-        var  id = this.id;
-        var purq_id = id.substr(4);
-
-        e.preventDefault();
-        bootbox.confirm("<strong>Are you sure to delete ? </strong>", function(confirmed) {
-            if(confirmed == true)
-            {
-                $('#loader').removeClass('hide');
-                $('.modal').modal('hide');
-                var base_url = window.location.origin;
-                var url = base_url + '/purchase/request/delete/' + purq_id ;
-                $.ajax({
-                    url: url,
-                    type: 'GET',
-                    contentType: false,
-                    processData: false,
-                    success: function(result){
-
-                        if(result.code == 200)
-                        {
-                            console.log(result.act);
-                            noty({
-                                text: 'Success',
-                                type: 'information',
-                                layout: 'top',
-                                timeout: 2000,
-                                modal: 'false'
-                            });
-                            $('#tr_' + result.id).html('');
-                        }
-                    },
-                    error: function(result){
-                        console.log(result);
-                    }
-                }).done(function() {
-                    $('#loader').addClass('hide');
-                });
-            }
-
-        });
-    });
-
     function checkForm(form) {
         var id = form.id;
         var formDataSend = new FormData($('#' + id)[0]);
         var base_url = window.location.origin;
-        var url = base_url + '/purchase/change-status';
+        var url = base_url + '/purchaseorder/change-status';
 
         $('#loader').removeClass('hide');
         $('.modal').modal('hide');
-        var status = [];
-            status['request'] = 'label-default';
-            status['approved'] = 'label-success';
-            status['unapproved'] = 'label-danger';
-            status['pending'] = 'label-info';
-            status['ordered'] = 'label-warning';
-            status['received'] = 'label-primary';
-            status['delivered'] = 'label-primary';
-            status['reject'] = 'label-danger';
 
         $.ajax({
             headers: {
@@ -240,7 +150,7 @@ $label = array(
             contentType: false,
             processData: false,
             success: function(result){
-                $('#span-status-' + result.id).removeClass('label-default label-primary label-info label-success label-danger label-warning').addClass(status[result.act]).html(result.act);
+                $('#status_' + result.id).html(result.puror_status);
                 noty({
                     text: 'Success',
                     type: 'information',
@@ -250,7 +160,6 @@ $label = array(
                 });
             },
             error: function(result){
-                $('.modal').modal('hide');
                 noty({
                     text: 'Opp. Something went wrong. Please try again.',
                     type: 'error',

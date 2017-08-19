@@ -109,7 +109,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('log_model');
+$autoload['model'] = array('log_model','hublibrary_model');
 
 
 /* End of file autoload.php */

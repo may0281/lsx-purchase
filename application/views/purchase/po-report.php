@@ -4,27 +4,26 @@
 <script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/columnfilter/jquery.dataTables.columnFilter.js"></script> <!-- optional -->
 <script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/DT_bootstrap.js"></script>
 
+<script type="text/javascript" src="<?php echo base_url(); ?>plugins/select2/select2.min.js"></script> <!-- Styled select boxes -->
+
 <script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/responsive/datatables.responsive.js"></script> <!-- optional -->
 
 <script type="text/javascript" src="<?php echo base_url();?>plugins/bootbox/bootbox.min.js"></script>
 <!--<script type="text/javascript" src="--><?php //echo base_url();?><!--assets/js/demo/ui_general.js"></script>-->
-<!-- Noty -->
 <script type="text/javascript" src="<?php echo base_url();?>plugins/noty/jquery.noty.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>plugins/noty/layouts/top.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>plugins/noty/themes/default.js"></script>
 <?php
-
 $label = array(
     'request' => 'label-default',
     'approved' => 'label-success',
     'unapproved' => 'label-danger',
-    'pending' => 'label-warning',
-    'ordered' => 'label-primary',
+    'pending' => 'label-info',
+    'ordered' => 'label-warning',
     'received' => 'label-primary',
     'delivered' => 'label-primary',
     'reject' => 'label-danger',
 )
-
 ?>
 <div id="container">
     <div id="content">
@@ -69,63 +68,62 @@ $label = array(
                             </div>
                         </div>
                         <div class="widget-content">
-                            <table id="table-approve" class="table table-striped table-bordered table-hover table-checkable table-responsive datatable" data-display-length="30"  data-dataTable='{"bSort": false}'>
+                            <table class="table table-striped table-bordered table-hover table-checkable datatable" data-display-length="30" data-dataTable='{"bSort": false}'>
                                 <thead>
                                 <tr>
-                                    <th>PurchaseNo</th>
-                                    <th>Project</th>
-                                    <th>Project Owner</th>
-                                    <th>Designer</th>
-                                    <th>Contractor</th>
-                                    <th>Product Code</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
+                                    <th>#</th>
+
+                                    <th>PO Code</th>
+                                    <th>Create By</th>
+                                    <th>Order Date</th>
+                                    <th>Forecasts Date</th>
                                     <th>Status</th>
+                                    <th>Approved by</th>
+                                    <th>Approved Date</th>
                                     <th class="align-center">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <?php  $i=1;foreach ($data as $r) { ?>
-                                <tr>
-                                    <td><?php echo $r['purq_code'];?></td>
-                                    <td><?php echo $r['proj_name'];?></td>
-                                    <td><?php echo $r['proj_owner_name'];?></td>
-                                    <td><?php echo $r['designer_name'];?></td>
-                                    <td><?php echo $r['contractor_name'];?></td>
-                                    <td>
-                                        <?php  $purchaseItem = $this->purchase_model->getPurchaseItem($r['purq_id']);
-                                            foreach ($purchaseItem as $purqItem) {
-                                                echo $purqItem['item_code'] . ' = ' . $purqItem['qty'] . '<br>';
-                                            }
-                                        ?>
-                                    </td>
-                                    <td><?php echo date('Y-m-d',strtotime($r['purq_require_start']));?></td>
-                                    <td><?php echo date('Y-m-d',strtotime($r['purq_require_end']));?></td>
-                                    <td><span id="span-status-<?php echo $r['purq_id']; ?>" class="label <?php echo $label[$r['purq_status']]; ?>"><?php echo $r['purq_status'];?></span></td>
+                                <tr id="tr_<?php echo $r['puror_id'];?>">
+                                    <td><?php echo $i;?></td>
+                                    <td><?php echo $r['puror_code'];?></td>
+                                    <td><?php echo $r['puror_inquiry_by'];?></td>
+                                    <td><?php echo $r['puror_order_date'];?></td>
+                                    <td><?php echo $r['puror_forecasts_date'];?></td>
+                                    <td> <div id="status_<?php echo $r['puror_id'];?>"><?php echo $r['puror_status'];?></div></td>
+                                    <td><?php echo $r['puror_approve_by'];?></td>
+
+                                    <td><span id="span-status-<?php echo $r['purq_id'];?>" class="label <?php echo $label[$r['purq_status']]; ?>"><?php echo $r['purq_status'];?></span></td>
                                     <td class="align-center">
                                         <span class="btn-group">
-                                            <a href="<?php echo base_url('purchase/request/detail/'.$r['purq_id'])?>" class="btn btn-xs bs-tooltip btn-info" title="" data-original-title="View Detail"><i class="icon-search"></i></a>
-
-                                            <a href="<?php echo base_url('purchase/request/update/'.$r['purq_id'])?>" id="app_<?php echo $r['purq_id'];?>" data-value="approved" class="btn btn-xs bs-tooltip btn-success confirm-dialog" title="" data-original-title="Approve">Approve</a>
-
-                                            <?php if($r['purq_status'] != 'pending'){ ?>
-                                                <a data-toggle="modal" href="#pending_<?php echo $r['purq_id'];?>" id="pen_<?php echo $r['purq_id'];?>" class="btn btn-xs bs-tooltip btn-warning" data-original-title="Pending">Pending</a>
-                                                <div class="modal fade" id="pending_<?php echo $r['purq_id'];?>">
-                                                <form class="form-horizontal row-border" method="post" id="frm_pending_<?php echo $r['purq_id'];?>"  onsubmit="return checkForm(this);" >
+                                            <a href="<?php echo base_url('purchase/pre-order/report/'.$r['puror_id'])?>" class="btn btn-xs bs-tooltip" title="" data-original-title="View"><i class="icon-search"></i></a>
+                                            <a href="<?php echo base_url('purchase/pre-order/report/'.$r['puror_id'])?>" class="btn btn-xs bs-tooltip" title="" data-original-title="View"><i class="icon-list"></i></a>
+                                            <a data-toggle="modal" href="#change_status_<?php echo $r['purq_id'];?>" id="cha_<?php echo $r['purq_id'];?>" class="btn btn-xs bs-tooltip" title="" data-original-title="Change Status"><i class="icon-exchange"></i></a>
+                                            <div class="modal fade" id="change_status_<?php echo $r['purq_id'];?>">
+                                                <form class="form-horizontal row-border" method="post" id="frm_change_status_<?php echo $r['purq_id'];?>"  onsubmit="return checkForm(this);" >
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                                <h4 class="modal-title">Are you sure for change status <?php echo $r['purq_code'];?> to <strong style="color: red">pending</strong> ?</h4>
+                                                                <h4 class="modal-title">Change status  <strong><?php echo $r['purq_code'];?> </strong></h4>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <div > </div>
+
+                                                                <label class="col-md-2 control-label">Status<span class="required">*</span></label>
+                                                                <div class="col-md-10 clearfix">
+                                                                    <select name="status" id="status_id" class="col-md-12 select2 full-width-fix required">
+                                                                        <option></option>
+                                                                        <option value="ordered" <?php echo ($r['puror_status'] == 'ordered' ? 'selected' : '') ?>>Ordered</option>
+                                                                        <option value="imported" <?php echo ($r['puror_status'] == 'imported' ? 'selected' : '') ?>>Imported</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div style="height: 10px; clear: both;" > </div>
                                                                 <label class="col-md-2 control-label" style="clear: both">Note</label>
                                                                 <div class="col-md-10">
-                                                                    <textarea rows="2" cols="5" name="purq_comment" class="form-control"> </textarea>
+                                                                    <textarea rows="2" cols="5" name="puror_note" class="form-control"> </textarea>
                                                                 </div>
-                                                                <input type="hidden" name="purq_id" value="<?php echo $r['purq_id'];?>">
-                                                                <input type="hidden" name="status" value="pending">
+                                                                <input type="hidden" name="puror_id" value="<?php echo $r['puror_id'];?>">
                                                             </div>
                                                             <div style="clear: both"></div>
                                                             <div class="modal-footer">
@@ -136,44 +134,7 @@ $label = array(
                                                     </div>
                                                 </form>
                                             </div><!-- /.modal -->
-                                            <?php } ?>
-                                            <?php if($r['purq_status'] != 'unapproved'){ ?>
-                                                <a data-toggle="modal" href="#unapproved_<?php echo $r['purq_id'];?>" id="una_<?php echo $r['purq_id'];?>" class="btn btn-xs bs-tooltip btn-danger" data-original-title="Unapproved">Unapproved</a>
-                                                <div class="modal fade" id="unapproved_<?php echo $r['purq_id'];?>">
-                                                <form class="form-horizontal row-border" method="post" id="frm_unapproved_<?php echo $r['purq_id'];?>" onsubmit="return checkForm(this);" >
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                                <h4 class="modal-title">Are you sure for change status <?php echo $r['purq_code'];?> to <strong style="color: red">unapproved</strong> ?</h4>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <div > </div>
-                                                                <label class="col-md-2 control-label" style="clear: both">Note</label>
-                                                                <div class="col-md-10">
-                                                                    <textarea rows="2" cols="5" name="purq_comment" class="form-control"> </textarea>
-                                                                </div>
-                                                                <input type="hidden" name="purq_id" value="<?php echo $r['purq_id'];?>">
-                                                                <input type="hidden" name="status" value="unapproved">
-                                                            </div>
-                                                            <div style="clear: both"></div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                                <input type="submit" value="Submit" class="btn btn-primary pull-right">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div><!-- /.modal -->
-                                            <?php } ?>
-
                                         </span>
-
-
-
-
-
-
                                     </td>
                                 </tr>
                                 <?php $i++; }?>
@@ -183,29 +144,27 @@ $label = array(
                     </div>
                 </div>
             </div>
-        <!-- /Normal -->
-        <!-- /Page Content -->
         </div>
-    <!-- /.container -->
-
     </div>
 </div>
 <div id="loader" class="hide"></div>
+
+
+
 <script  type="text/javascript">
 
     $("a.confirm-dialog").click(function(e) {
         var  id = this.id;
-        var change_status = $('#' + id).attr('data-value');
         var purq_id = id.substr(4);
 
         e.preventDefault();
-        bootbox.confirm("<strong>Are you sure for change status to " + change_status + "  ? </strong>", function(confirmed) {
+        bootbox.confirm("<strong>Are you sure to delete ? </strong>", function(confirmed) {
             if(confirmed == true)
             {
                 $('#loader').removeClass('hide');
                 $('.modal').modal('hide');
                 var base_url = window.location.origin;
-                var url = base_url + '/purchase/get-change-status/' + purq_id + '/approved';
+                var url = base_url + '/purchase/request/delete/' + purq_id ;
                 $.ajax({
                     url: url,
                     type: 'GET',
@@ -216,8 +175,7 @@ $label = array(
                         if(result.code == 200)
                         {
                             console.log(result.act);
-                            $('#span-status-' + result.id).removeClass('label-default label-danger label-warning').addClass('label-success').html(result.act);
-                            $('#app_' + result.id).removeClass('btn btn-xs btn-success confirm-dialog').html('');
+
                             noty({
                                 text: 'Success',
                                 type: 'information',
@@ -225,6 +183,7 @@ $label = array(
                                 timeout: 2000,
                                 modal: 'false'
                             });
+                            $('#tr_' + result.id).html('');
                         }
                     },
                     error: function(result){
@@ -242,9 +201,11 @@ $label = array(
         var id = form.id;
         var formDataSend = new FormData($('#' + id)[0]);
         var base_url = window.location.origin;
-        var url = base_url + '/purchase/change-status';
+        var url = base_url + '/purchaseorder/change-status';
+
         $('#loader').removeClass('hide');
         $('.modal').modal('hide');
+
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -255,20 +216,7 @@ $label = array(
             contentType: false,
             processData: false,
             success: function(result){
-                console.log(result);
-                if(result.act == 'pending')
-                {
-                    $('#span-status-' + result.id).removeClass('label-default label-danger').addClass('label-warning').html('pending');
-                    $('#pen_' + result.id).removeClass('btn btn-xs btn-success btn-danger').html('');
-                    $('#pending_' + result.id).html('');
-                }
-
-                if(result.act == 'unapproved')
-                {
-                    $('#span-status-' + result.id).removeClass('label-default label-warning').addClass('label-danger').html('unapproved');
-                    $('#una_' + result.id).removeClass('btn btn-xs btn-success btn-warning').html('');
-                    $('#unapproved_' + result.id).html('');
-                }
+                $('#status_' + result.id).html(result.puror_status);
                 noty({
                     text: 'Success',
                     type: 'information',
@@ -278,7 +226,6 @@ $label = array(
                 });
             },
             error: function(result){
-                $('.modal').modal('hide');
                 noty({
                     text: 'Opp. Something went wrong. Please try again.',
                     type: 'error',
@@ -291,9 +238,8 @@ $label = array(
             $('#loader').addClass('hide');
         });
 
-
         return false;
-
     }
+
 </script>
 

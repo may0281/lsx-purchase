@@ -79,6 +79,21 @@ class purchase_model extends ci_model
         return $query->result_array();
     }
 
+    public function getAllPurchaseRequestAndItem($status)
+    {
+        $this->db->select('purchase_request.*,project.proj_name,purchase_request_item.item_code,purchase_request_item.qty,item.item_qty,item.item_min');
+        $this->db->from('purchase_request');
+        $this->db->join('project','purchase_request.proj_id = project.proj_id');
+        $this->db->join('purchase_request_item','purchase_request.purq_id = purchase_request_item.purq_id');
+        $this->db->join('item','purchase_request_item.item_code = item.item_code');
+        $this->db->where('purchase_request.purq_status',$status);
+        $this->db->order_by('purchase_request_item.item_code','desc');
+        $query = $this->db->get();
+
+        $this->log_model->Logging('purchase_model','success',$this->db->last_query());
+        return $query->result_array();
+    }
+
     public function getAllPurchaseRequestForApprove()
     {
         $this->db->select('purchase_request.*,project.proj_name');
@@ -118,6 +133,7 @@ class purchase_model extends ci_model
         $data = array('purq_code' => $purq_code);
         $this->db->where('purq_id',$purqId);
         $this->db->update('purchase_request', $data);
+        $this->log_model->Logging('purchase_model','success',$this->db->last_query());
     }
 
     public function updatePurchaseRequestItem($data,$purqId)
@@ -158,6 +174,62 @@ class purchase_model extends ci_model
         );
         $this->db->insert('purchase_update_status', $data);
         $this->log_model->Logging('purchase_model','success',$this->db->last_query());
+    }
+
+    public function createPurchaseOrder($data)
+    {
+        $this->db->insert('purchase_order', $data);
+        $id = $this->db->insert_id();
+        $this->log_model->Logging('purchase_model','success',$this->db->last_query());
+        $puror_code = 'PO'.str_pad($id,5 ,0,STR_PAD_LEFT);
+        $this->updatePurchaseOrder($id,array('puror_code'=>$puror_code));
+
+        return $id;
+    }
+
+    public function updatePurchaseOrder($puror_id,$data)
+    {
+        $this->db->where('puror_id',$puror_id);
+        $this->db->update('purchase_order', $data);
+        $this->log_model->Logging('purchase_model','success',$this->db->last_query());
+
+    }
+
+    public function createPurchaseOrderItem($data)
+    {
+        $this->db->insert('purchase_order_item', $data);
+        $this->log_model->Logging('purchase_model','success',$this->db->last_query());
+    }
+
+    public function getPurchaseOrder()
+    {
+        $this->db->select('*');
+        $this->db->from('purchase_order');
+        $this->db->order_by('puror_id','desc');
+        $query = $this->db->get();
+        $this->log_model->Logging('purchase_model','success',$this->db->last_query());
+        return $query->result_array();
+    }
+
+    public function getPurchaseOrderByID($id)
+    {
+        $this->db->select('*');
+        $this->db->from('purchase_order');
+        $this->db->where('puror_id',$id);
+        $query = $this->db->get();
+        $this->log_model->Logging('purchase_model','success',$this->db->last_query());
+        return $query->result_array();
+    }
+
+    public function getPurchaseOrderItemByID($id)
+    {
+        $this->db->select('purchase_order_item.*,purchase_request.purq_code');
+        $this->db->from('purchase_order_item');
+        $this->db->join('purchase_request','purchase_order_item.purq_id = purchase_request.purq_id','left');
+        $this->db->where('puror_id',$id);
+        $query = $this->db->get();
+        $this->log_model->Logging('purchase_model','success',$this->db->last_query());
+        return $query->result_array();
     }
 
 

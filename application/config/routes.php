@@ -34,6 +34,14 @@ $route['purchase/approve'] = "purchase/approvePurchaseRequest";
 $route['purchase/change-status'] = "purchase/changeStatus";
 $route['purchase/get-change-status/(:num)/(:any)'] = "purchase/getChangeStatus/$1/$2";
 
+
+$route['purchase/pre-order'] = "purchaseorder/preOrder";
+$route['purchase/pre-order/report'] = "purchaseorder/index";
+$route['purchase/pre-order/create'] = "purchaseorder/createPreOrder";
+$route['purchaseorder/change-status'] = "purchaseorder/changeStatus";
+$route['purchase/pre-order/report/(:any)'] = "purchaseorder/getDetail/$1";
+
+
 /// API ///
 $route['api/item-list'] = "api/itemList";
 
