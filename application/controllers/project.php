@@ -23,13 +23,13 @@ class project extends CI_Controller {
 	
 	public function create()
     {
-		$permission = $this->hublibrary_model->permission($this->major,$this->minor,'create');
-        if($permission == false)
-        {
-            echo $this->load->view('template/left','',true);
-            echo $this->load->view('template/400','',true);
-            die();
-        }
+//		$permission = $this->hublibrary_model->permission($this->major,$this->minor,'create');
+//        if($permission == false)
+//        {
+//            echo $this->load->view('template/left','',true);
+//            echo $this->load->view('template/400','',true);
+//            die();
+//        }
 		
 		$create_by = $this->project_model->getUserlogin($this->session->userdata('adminData'));
 		$customer = $this->project_model->getCustomer();

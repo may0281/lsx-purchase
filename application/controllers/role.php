@@ -10,6 +10,12 @@ class role extends CI_Controller {
             echo "<script> window.location.assign('".base_url()."login?ReturnUrl=".$_SERVER['REQUEST_URI']."');</script>";
 		}
         $this->load->model('role_model');
+        $this->view = 'view';
+        $this->create = 'create';
+        $this->update = 'update';
+        $this->delete = 'delete';
+        $this->change_status = 'change-status';
+
 	}
 
 	public function index()
@@ -46,23 +52,12 @@ class role extends CI_Controller {
         $i=0;
         foreach ($data as $m)
         {
-            $this->db->select('func_minor_sub_ids as minorSubId, func_minor_sub_name as minorSubName');
-            $this->db->from('bn_func_minor_sub');
-            $this->db->where('func_master_id',$m['masterId']);
-            $this->db->where('func_minor_id',$m['minorId']);
-            $q = $this->db->get();
             $menu[$i] = $m;
-
-            $menu[$i]['view'] = 0;
-            $menu[$i]['create'] = 0;
-            $menu[$i]['update'] = 0;
-            $menu[$i]['delete'] = 0;
-            $menu[$i]['change-status'] = 0;
-            foreach ($q->result_array() as $mSub)
-            {
-                $menu[$i][$mSub['minorSubName']] = $mSub['minorSubId'];
-            }
-
+            $menu[$i]['view'] = $this->role_model->getMinorSubID($m['masterId'],$m['minorId'],$this->view);
+            $menu[$i]['create'] = $this->role_model->getMinorSubID($m['masterId'],$m['minorId'],$this->create);
+            $menu[$i]['update'] = $this->role_model->getMinorSubID($m['masterId'],$m['minorId'],$this->update);;
+            $menu[$i]['delete'] = $this->role_model->getMinorSubID($m['masterId'],$m['minorId'],$this->delete);
+            $menu[$i]['change-status'] = $this->role_model->getMinorSubID($m['masterId'],$m['minorId'],$this->change_status);;
             $i++;
         }
         return $menu;

@@ -3,6 +3,8 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>plugins/uniform/jquery.uniform.min.js"></script> <!-- Styled radio and checkboxes -->
 <script type="text/javascript" src="<?php echo base_url(); ?>plugins/select2/select2.min.js"></script> <!-- Styled select boxes -->
 
+<script type="text/javascript" src="<?php echo base_url(); ?>plugins/bootstrap-wysihtml5/wysihtml5.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.min.js"></script>
 <!-- DataTables -->
 <script type="text/javascript" src="<?php echo base_url(); ?>plugins/datatables/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>plugins/datatables/tabletools/TableTools.min.js"></script> <!-- optional -->
@@ -36,14 +38,39 @@
             </div>
         </div>
 
-        <form class="form-horizontal"method="post" action="<?php echo base_url('purchase/pre-order/create')?>">
+        <form class="form-horizontal" method="post" action="<?php echo base_url('purchase/pre-order/create')?>">
             <div class="row">
                 <div class="col-md-12">
+                    <div class="form-group">
+                        <label id="lbl_proj" class="col-md-2 control-label">SHIPPING</label>
+                        <div class="col-md-3">
+                            <input type="text" name="puror_shipping_method"  id="" value="" class="form-control has-error" placeholder="SHIPPING METHOD">
+                            <label id="msg_proj_owner_name" class="errors"></label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" name="puror_shipping_term" id=""  value="" class="form-control" placeholder="SHIPPING TERMS">
+                            <label id="msg_proj_contacts" class="errors"></label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" name="puror_shipping_destination" id=""  value=""  class="form-control" placeholder="DESTINATION">
+                            <label id="msg_proj_mobile" class="errors"></label>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" name="puror_shipping_payment_term" id=""  value=""  class="form-control" placeholder="PAYMENT TERM">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Note</label>
+                        <div class="col-md-10">
+                            <textarea rows="3" cols="5" name="puror_note" class="form-control wysiwyg"></textarea>
+                        </div>
+                    </div>
                     <div class="widget box">
                         <div class="widget-header">
-                            <h4><i class="icon-reorder"></i> REQUEST ITEM</h4>
+                            <h4><i class="icon-reorder"></i>PURCHASE REQUEST ITEM</h4>
 
                         </div>
+
                         <div class="widget-content">
                             <table class="table table-bordered table-hover table-checkable ">
                                 <thead>
@@ -64,7 +91,7 @@
                                 <?php $i=1; foreach ($list as $li){ $suggest = ($li['item_min']-$li['item_qty'])+$li['qty'];  $itemFromPurchase[] = $li['item_code']; ?>
                                     <tr>
                                         <td class="checkbox-column">
-                                            <input type="checkbox" name="item[]" value="<?php echo $li['item_code']; ?>,<?php echo $li['purq_id']; ?>,<?php echo $i ?>" class="uniform">
+                                            <input type="checkbox" name="item[]" value="<?php echo $li['item_code']; ?>,<?php echo $li['purq_id']; ?>,<?php echo $i ?>,<?php echo $li['item_price']?>" class="uniform">
                                         </td>
                                         <td><?php echo $li['item_code']; ?> </td>
                                         <td><?php echo $li['proj_name']; ?> - [ <?php echo $li['purq_code']; ?> ] </td>
@@ -115,7 +142,7 @@
                                         ?>
                                         <tr>
                                             <td class="checkbox-column">
-                                                <input type="checkbox" class="uniform"  name="item[]" value="<?php echo $it['item_code']; ?>, ,<?php echo $k ?>" >
+                                                <input type="checkbox" class="uniform"  name="item[]" value="<?php echo $it['item_code']; ?>, ,<?php echo $k ?>,<?php echo $it['item_price']?>" >
                                             </td>
                                             <td><?php echo $it['item_code']; ?> </td>
                                             <td><?php echo $it['item_qty']; ?> </td>

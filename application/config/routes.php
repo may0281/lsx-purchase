@@ -39,7 +39,8 @@ $route['purchase/pre-order'] = "purchaseorder/preOrder";
 $route['purchase/pre-order/report'] = "purchaseorder/index";
 $route['purchase/pre-order/create'] = "purchaseorder/createPreOrder";
 $route['purchaseorder/change-status'] = "purchaseorder/changeStatus";
-$route['purchase/pre-order/report/(:any)'] = "purchaseorder/getDetail/$1";
+$route['purchase/pre-order/list/(:any)'] = "purchaseorder/getList/$1";
+$route['purchase/pre-order/detail/(:any)'] = "purchaseorder/getDetail/$1";
 
 
 /// API ///

@@ -5,7 +5,7 @@ class purchaseorder extends CI_Controller {
     private $purchaseRequest;
 	public function __construct()
 	{
-//        error_reporting(0);
+        error_reporting(0);
 		parent::__construct();
 		if($this->session->userdata('isSession') == false){
             echo "<script> window.location.assign('".base_url()."login?ReturnUrl=".$_SERVER['REQUEST_URI']."');</script>";
@@ -14,8 +14,8 @@ class purchaseorder extends CI_Controller {
         $this->load->model('project_model');
         $this->load->model('stock_model');
         $this->load->model('user_model');
-        $this->menu = 'Purchase';
-        $this->purchaseOrder = 'Purchase Order';
+        $this->menu = 'Purchase Order';
+        $this->submenu = 'List';
         $this->major = 'purchase';
         $this->minor = 'po';
         $this->create = 'create';
@@ -37,7 +37,7 @@ class purchaseorder extends CI_Controller {
 
         $data = array(
             'menu'=> $this->menu,
-            'subMenu'=> $this->purchaseOrder,
+            'subMenu'=> $this->submenu,
             'data' => $this->purchase_model->getPurchaseOrder(),
         );
 
@@ -57,7 +57,7 @@ class purchaseorder extends CI_Controller {
             die();
         }
         $orderDetail = $this->purchase_model->getPurchaseOrderByID($id);
-        $orderItem = $this->purchase_model->getPurchaseOrderItemByID($id);
+        $orderItem = $this->purchase_model->getPurchaseOrderAndDetailItemByID($id);
         $data = array(
             'menu'=> $this->menu,
             'subMenu'=> $this->report,
@@ -67,6 +67,29 @@ class purchaseorder extends CI_Controller {
 
         $this->load->view('template/left');
         $this->load->view('purchase/po-report-detail',$data);
+
+    }
+
+    public function getList($id)
+    {
+        $permission = $this->hublibrary_model->permission($this->major,$this->minor,'view');
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('template/400','',true);
+            die();
+        }
+        $orderDetail = $this->purchase_model->getPurchaseOrderByID($id);
+        $orderItem = $this->purchase_model->getPurchaseOrderItemByID($id);
+        $data = array(
+            'menu'=> $this->menu,
+            'subMenu'=> $orderDetail[0]['puror_code'],
+            'data' => $orderDetail[0],
+            'item' => $orderItem,
+        );
+
+        $this->load->view('template/left');
+        $this->load->view('purchase/po-report-list',$data);
 
     }
 
@@ -94,34 +117,59 @@ class purchaseorder extends CI_Controller {
 
     public function createPreOrder()
     {
-        require_once(APPPATH.'controllers/purchase.php');
-        $purchase = new purchase();
+
+        $purq_id = null;
         $input = $this->input->post();
         $pre_order = array(
             'puror_order_date' => date('Y-m-d H:i:s'),
             'puror_forecasts_date' => date('Y-m-d H:i:s', strtotime('+50 days')),
             'puror_inquiry_by' => $this->session->userdata('adminData'),
+            'puror_shipping_method' => $input['puror_shipping_method'],
+            'puror_shipping_term' => $input['puror_shipping_term'],
+            'puror_shipping_destination' => $input['puror_shipping_destination'],
+            'puror_shipping_payment_term' => $input['puror_shipping_payment_term'],
+            'puror_note' => $input['puror_note'],
         );
 
         $puror_id = $this->purchase_model->createPurchaseOrder($pre_order);
-
         foreach (array_get($input,'item') as $item)
         {
             $exp = explode(',',$item);
             $item_code = $exp[0];
             $purq_id = $exp[1];
+            $price = $exp[3];
             $qty = $this->input->post('suggest-'.$exp[2]);
 
             $data =  array(
                 'puror_id' => $puror_id,
                 'purq_id' => $purq_id,
                 'item_code' => $item_code,
-                'puror_qty' => $qty
+                'puror_qty' => $qty,
+                'puror_price' => $price
             );
-
-            $purchase->getChangeStatus($purq_id,'ordered')
+            if($purq_id != $old_purq_id and $purq_id != null)
+            {
+                $this->getChangeStatus($purq_id,'ordered');
+            }
             $this->purchase_model->createPurchaseOrderItem($data);
+            $old_purq_id = $purq_id;
         }
+
+        echo "<script>alert('Success.'); window.location.assign('".base_url()."purchase/pre-order/report'); </script>";
+
+    }
+    public function getChangeStatus($id, $status)
+    {
+        require_once(APPPATH.'controllers/purchase.php');
+        $purchase = new purchase();
+        $purchase->change($id,$status);
+        $this->purchase_model->updatePurchaseRequestItemByPurqId(array('purq_item_status'=>$status),$id);
+        $data = array(
+            'code' => 200,
+            'status' => 'Success',
+            'act' => $status,
+            'id' => $id
+        );
 
     }
 

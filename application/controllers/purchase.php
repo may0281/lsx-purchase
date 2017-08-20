@@ -371,6 +371,7 @@ class purchase extends CI_Controller {
         $status =$this->input->post('status');
         $purq_comment =$this->input->post('purq_comment');
         $this->change($id,$status,$purq_comment);
+
         header('Content-Type: application/json');
         $data = array(
             'code' => 200,
@@ -427,14 +428,7 @@ class purchase extends CI_Controller {
             $this->email->message($message);
             $result = $this->email->send();
         }
-
-
         return $result;
-    }
-
-    public function ffg()
-    {
-        return 20;
     }
 
 }

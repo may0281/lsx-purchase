@@ -210,21 +210,22 @@
 								</a>
 							</li>
 							<?php } ?>
-							<?php if($po_create){?>
-							<li class="<?php if($path_2 == 'po'){echo "current";} ?>">
-								<a href="<?php echo base_url('purchase/pre-order');?>">
-									<i class="icon-angle-right"></i>
-									PO
-								</a>
-							</li>
-							<?php } ?>
+
 							<?php if($po_report){?>
 							<li class="<?php if($path_2 == 'po-report'){echo "current";} ?>">
 								<a href="<?php echo base_url('purchase/pre-order/report');?>">
 									<i class="icon-angle-right"></i>
-									PO report
+									Purchase Order report
 								</a>
 							</li>
+							<?php } ?>
+							<?php if($po_create){?>
+								<li class="<?php if($path_2 == 'po'){echo "current";} ?>">
+									<a href="<?php echo base_url('purchase/pre-order');?>">
+										<i class="icon-angle-right"></i>
+										Purchase Order
+									</a>
+								</li>
 							<?php } ?>
 						</ul>
 					</li>

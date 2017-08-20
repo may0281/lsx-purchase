@@ -119,6 +119,24 @@ class role_model extends ci_model
         $this->db->delete('bn_auth_role', array('role_code' => $roleCode));
     }
 
+    public function getMinorSubID($masterId,$minorId,$action)
+    {
+        $id = null;
+        $this->db->select('func_minor_sub_ids as id');
+        $this->db->from('bn_func_minor_sub');
+        $this->db->where('func_master_id',$masterId);
+        $this->db->where('func_minor_id',$minorId);
+        $this->db->where('func_minor_sub_name',$action);
+        $this->db->where('func_minor_sub_status','A');
+        $query = $this->db->get();
+        $result = $query->result_array();
+        if($result)
+        {
+            $id = $result[0]['id'];
+        }
+        return $id;
+    }
+
 
 
 

@@ -81,7 +81,7 @@ class purchase_model extends ci_model
 
     public function getAllPurchaseRequestAndItem($status)
     {
-        $this->db->select('purchase_request.*,project.proj_name,purchase_request_item.item_code,purchase_request_item.qty,item.item_qty,item.item_min');
+        $this->db->select('purchase_request.*,project.proj_name,purchase_request_item.item_code,purchase_request_item.qty,item.item_qty,item.item_min,item.item_price');
         $this->db->from('purchase_request');
         $this->db->join('project','purchase_request.proj_id = project.proj_id');
         $this->db->join('purchase_request_item','purchase_request.purq_id = purchase_request_item.purq_id');
@@ -136,9 +136,16 @@ class purchase_model extends ci_model
         $this->log_model->Logging('purchase_model','success',$this->db->last_query());
     }
 
-    public function updatePurchaseRequestItem($data,$purqId)
+    public function updatePurchaseRequestItem($data,$purqItemId)
     {
-        $this->db->where('purq_item_id',$purqId);
+        $this->db->where('purq_item_id',$purqItemId);
+        $this->db->update('purchase_request_item', $data);
+        $this->log_model->Logging('purchase_model','success',$this->db->last_query());
+    }
+
+    public function updatePurchaseRequestItemByPurqId($data,$purqId)
+    {
+        $this->db->where('purq_id',$purqId);
         $this->db->update('purchase_request_item', $data);
         $this->log_model->Logging('purchase_model','success',$this->db->last_query());
     }
@@ -226,6 +233,17 @@ class purchase_model extends ci_model
         $this->db->select('purchase_order_item.*,purchase_request.purq_code');
         $this->db->from('purchase_order_item');
         $this->db->join('purchase_request','purchase_order_item.purq_id = purchase_request.purq_id','left');
+        $this->db->where('puror_id',$id);
+        $query = $this->db->get();
+        $this->log_model->Logging('purchase_model','success',$this->db->last_query());
+        return $query->result_array();
+    }
+
+    public function getPurchaseOrderAndDetailItemByID($id)
+    {
+        $this->db->select('purchase_order_item.*,item.item_size,item.item_thickness,item.item_pfilm,item.item_aica');
+        $this->db->from('purchase_order_item');
+        $this->db->join('item','purchase_order_item.item_code = item.item_code','left');
         $this->db->where('puror_id',$id);
         $query = $this->db->get();
         $this->log_model->Logging('purchase_model','success',$this->db->last_query());

@@ -1,179 +1,208 @@
-<script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/tabletools/TableTools.min.js"></script> <!-- optional -->
-<script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/colvis/ColVis.min.js"></script> <!-- optional -->
-<script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/columnfilter/jquery.dataTables.columnFilter.js"></script> <!-- optional -->
-<script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/DT_bootstrap.js"></script>
+<style>
+    .pageBreak { page-break-before: always; }
+    @media print
+    {
+        @page { margin: 0; }
+        body  { margin-top: 25px }
+    }
+</style>
+<div id="content"">
+    <div class="container">
+        <!-- Breadcrumbs line -->
+        <div class="crumbs">
+            <ul id="breadcrumbs" class="breadcrumb">
+                <li>
+                    <i class="icon-home"></i>
+                    <a href="<?php echo base_url();?>dashboard">DASHBOARD</a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url($menu);?>" title=""><?php echo strtoupper($menu); ?></a>
+                </li>
+                <li class="current">
+                    <a href="#" title=""><?php echo strtoupper($subMenu) ?></a>
+                </li>
+            </ul>
+        </div>
+        <!-- /Breadcrumbs line -->
 
-<script type="text/javascript" src="<?php echo base_url(); ?>plugins/select2/select2.min.js"></script> <!-- Styled select boxes -->
-
-<script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/responsive/datatables.responsive.js"></script> <!-- optional -->
-
-<script type="text/javascript" src="<?php echo base_url();?>plugins/bootbox/bootbox.min.js"></script>
-<!--<script type="text/javascript" src="--><?php //echo base_url();?><!--assets/js/demo/ui_general.js"></script>-->
-<script type="text/javascript" src="<?php echo base_url();?>plugins/noty/jquery.noty.js"></script>
-<script type="text/javascript" src="<?php echo base_url();?>plugins/noty/layouts/top.js"></script>
-<script type="text/javascript" src="<?php echo base_url();?>plugins/noty/themes/default.js"></script>
-
-<div id="container">
-    <div id="content">
-        <div class="container">
-            <!-- Breadcrumbs line -->
-            <div class="crumbs">
-                <ul id="breadcrumbs" class="breadcrumb">
-                    <li>
-                        <i class="icon-home"></i>
-                        <a href="<?php echo base_url();?>dashboard">DASHBOARD</a>
-                    </li>
-                    <li>
-                        <a href="<?php echo base_url($menu);?>" title=""><?php echo strtoupper($menu); ?></a>
-                    </li>
-                    <li class="current">
-                        <a href="#" title=""><?php echo strtoupper($subMenu) ?></a>
-                    </li>
-                </ul>
-            </div>
-
-            <!--=== Page Header ===-->
-            <div class="page-header">
-                <div class="page-title">
-                    <h3><?php echo strtoupper($subMenu) ?></h3>
-                    <span></span>
-                </div>
-            </div>
-
-            <!--=== Page Content ===-->
-            <!--=== Managed Tables ===-->
-
-            <!--=== Normal ===-->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="widget box">
-                        <div class="widget-header">
-                            <h4><i class="icon-reorder"></i> Purchase Request List</h4>
-                            <div class="toolbar no-padding">
-                                <div class="btn-group">
-                                    <span class="btn btn-xs widget-collapse"><i class="icon-angle-down"></i></span>
-                                </div>
-                            </div>
+        <!--=== Page Content ===-->
+        <div class="row">
+            <!--=== Invoice ===-->
+            <div class="col-md-12">
+                <div class="widget invoice">
+                    <div class="widget-header" style="border: none;">
+                        <div class="pull-left" style="padding-left: 25px">
+                            <img src="<?php echo base_url('assets/img/lsx-logo-0.png')?>" width="60" >
                         </div>
-                        <div class="widget-content">
-                            <table class="table table-bordered table-hover table-checkable datatable" data-display-length="30" data-dataTable='{"bSort": false}'>
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Item Code</th>
-                                    <th>Purchase Code</th>
-                                    <th>QTY</th>
-                                    <th>Status</th>
-                                    <th class="align-center">Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php  $i=1;foreach ($item as $r) { ?>
-                                <tr>
-                                    <td><?php echo $i;?></td>
-                                    <td><?php echo $r['item_code'];?></td>
-                                    <td><?php echo $r['purq_code'];?></td>
-                                    <td><?php echo $r['puror_qty'];?></td>
-                                    <td><?php echo $r['puror_status'];?></td>
-                                    <td class="align-center">
-                                        <span class="btn-group">
-                                            <a data-toggle="modal" href="#change_status_<?php echo $r['purq_id'];?>" id="cha_<?php echo $r['purq_id'];?>" class="btn btn-xs bs-tooltip" title="" data-original-title="Change Status"><i class="icon-exchange"></i></a>
-                                            <div class="modal fade" id="change_status_<?php echo $r['purq_id'];?>">
-                                                <form class="form-horizontal row-border" method="post" id="frm_change_status_<?php echo $r['purq_id'];?>"  onsubmit="return checkForm(this);" >
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                                <h4 class="modal-title">Change status  <strong><?php echo $r['purq_code'];?> </strong></h4>
-                                                            </div>
-                                                            <div class="modal-body">
-
-                                                                <label class="col-md-2 control-label">Status<span class="required">*</span></label>
-                                                                <div class="col-md-10 clearfix">
-                                                                    <select name="status" id="status_id" class="col-md-12 select2 full-width-fix required">
-                                                                        <option></option>
-                                                                        <option value="ordered" <?php echo ($r['puror_status'] == 'ordered' ? 'selected' : '') ?>>Ordered</option>
-                                                                        <option value="imported" <?php echo ($r['puror_status'] == 'imported' ? 'selected' : '') ?>>Imported</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div style="height: 10px; clear: both;" > </div>
-                                                                <label class="col-md-2 control-label" style="clear: both">Note</label>
-                                                                <div class="col-md-10">
-                                                                    <textarea rows="2" cols="5" name="puror_note" class="form-control"> </textarea>
-                                                                </div>
-                                                                <input type="hidden" name="puror_id" value="<?php echo $r['puror_id'];?>">
-                                                            </div>
-                                                            <div style="clear: both"></div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                                <input type="submit" value="Submit" class="btn btn-primary pull-right">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div><!-- /.modal -->
-                                        </span>
-                                    </td>
-                                </tr>
-                                <?php $i++; }?>
-                            </tbody>
-                            </table>
+                        <div class="pull-right" style="padding-right: 25px">
+                            <h3>Purchase Order</h3>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
+                    <table class="table" style="font-size: 10px;">
+                        <tr>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="col-md-12">
+                                    <strong>LSX COMPANY LIMITED</strong> <br>
+                                    <address>
+                                        33  SOI SUKHUMVIT 62,  BANGCHAK,<br>
+                                        PRAKANONG,  BANGKOK  10260 <br>
+                                        THAILAND.
+                                    </address>
+                                    <strong> TO : 	AICA KOGYO CO., LTD.</strong> <br>
+                                    <address>
+                                        2288 NISHIHORIE, KIYOSU-SHI<br>
+                                        AICHI PREFECTURE, 452-0917 <br>
+                                        JAPAN.
+                                    </address>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col-md-12 align-right">
+                                    <address>
+                                        <strong> P.O. Number : <?php  echo $data['puror_code'] ?></span>  <br>
+                                            Date : <?php echo date('F d, Y', strtotime(date('Y-m-d'))); ?> <br>
+                                            Vendor ID : A1001
+                                        </strong> <br>
+                                    </address>
+
+                                    <strong> SHIP TO :	LSX COMPANY LIMITED </strong> <br>
+                                    <address>
+                                        33  SOI SUKHUMVIT 62,  BANGCHAK, <br>
+                                        PRAKANONG,  BANGKOK  10260 <br>
+                                        THAILAND		<br>
+                                    </address>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div style="clear: both"></div>
+                    <div class="col-md-12">
+                        <table class="table"  style="font-size: 10px;">
+                            <thead>
+                            <tr>
+                                <th style="text-align: center;">SHIPPING METHOD	</th>
+                                <th style="text-align: center;">SHIPPING TERMS	</th>
+                                <th style="text-align: center;">DESTINATION	</th>
+                                <th style="text-align: center;">PAYMENT TERM	</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="text-align: center;"><?php echo $data['puror_shipping_method']; ?></td>
+                                    <td style="text-align: center;"><?php echo $data['puror_shipping_term']; ?></td>
+                                    <td style="text-align: center;"><?php echo $data['puror_shipping_destination']; ?></td>
+                                    <td style="text-align: center;"><?php echo $data['puror_shipping_payment_term']; ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="clear: both;padding: 20px;font-size: 10px;"> <strong>Description :</strong>  AICA HIGH PRESSURE LAMINATES	</div>
+                    <div class="col-md-12">
+                        <table class="table table-hover" style="font-size: 10px;">
+                            <thead>
+                            <tr>
+                                <th style="text-align: center;">No</th>
+                                <th style="text-align: center;">QTY</th>
+                                <th style="text-align: center;">ITEM NO.</th>
+                                <th style="text-align: center;">AICA Finish</th>
+                                <th style="text-align: center;">P. Film</th>
+                                <th style="text-align: center;">Size</th>
+                                <th style="text-align: center;">Thickness</th>
+                                <th style="text-align: right;">Unit Price</th>
+                                <th style="text-align: right;">Total Amount</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php $items = $this->purchase_model->getPurchaseItem($data['purq_id']); ?>
+                            <?php  $total_sheets=0;$total_amount=0; $i=1; foreach ($item as $it){ $amount = ($it['puror_qty']*$it['puror_price']); ?>
+                                <tr>
+                                    <td style="text-align: center;"><?php echo $i; ?></td>
+                                    <td style="text-align: center;"><?php echo $it['puror_qty'] ?></td>
+                                    <td style="text-align: center;"><?php echo $it['item_code'] ?></td>
+                                    <td style="text-align: center;"><?php echo $it['item_aica'] ?></td>
+                                    <td style="text-align: center;"><?php echo ($it['item_pfilm']) ? $it['item_pfilm'] : '-'; ?></td>
+                                    <td style="text-align: center;"><?php echo $it['item_size'] ?></td>
+                                    <td style="text-align: center;"><?php echo $it['item_thickness'] ?></td>
+                                    <td style="text-align: right;"><?php echo $it['puror_price'] ?></td>
+                                    <td style="text-align: right;"><?php echo number_format($amount,2) ?></td>
+                                </tr>
+                                <?php $total_sheets += $it['puror_qty']; $total_amount += $amount; $i++; }  ?>
+                            <tr style="font-weight: bold">
+                                <td colspan="3" style="text-align: center;font-size: 12px">Total <?php echo number_format($total_sheets); ?> Sheets </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: right;font-size: 12px">Amount</td>
+                                <td style="text-align: right;font-size: 12px"><?php echo number_format($total_amount,2) ?></td>
+                            </tr>
+                            <tr style="font-weight: bold">
+                                <td colspan="3" style="text-align: center;font-size: 12px"> </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: right;font-size: 12px"></td>
+                                <td style="text-align: right;font-size: 12px"></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row padding-top-10px">
+                        <div class="col-md-8">
+                            <div style="padding-left: 20px;font-size: 10px">
+                                <p><strong>Notes: </strong> <?php echo $data['puror_note'] ?></p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 align-right">
+                            <div style="padding-left: 20px">
+                            </div>
+
+                        </div>
+                    </div>
+                    <table class="table" style="border-top: 0px solid #fff;">
+                        <tr style="border-top: 2px solid #fff;">
+                            <td width="70%">
+                                <div class="well">
+                                    <p style="font-size: 8px"> 1. Enter this order in accordance with the prices, terms, delivery method, and specifications  listed above. <br>
+                                        2. Price CIF Bangkok indicating FOB Value, Freight Charges and Insurance Premium Separately <br>
+                                        3. Protection of Material in Transit. All articles delivered on this order to be packed adequately <br>
+                                        to prevent any damage in shipment and storage. All packages to be properly indentified.<br>
+                                        4. Seller must execute acknowledgment copy hereof and return to buyer.<br>
+                                        Buyer expressly limits acceptance to the terms stated herin and any additional or different terms<br>
+                                        proposed by seller shall not be binding on buyer, whether of not they would materially<br>
+                                        alter this order, and are rejected.<br>
+                                        5. Please notify us immediately if you are unable to ship as specified.<br>
+                                        6. Send all correspondence to: Mr. Kriengkrai.T or Ms. Sineenard.S <br>
+                                        LSX Company Limited  33 Soi Sukhumvit 62, Bangchak, Prakanong, Bangkok 10260, THAILAND<br>
+                                        7. Delivery date of goods to LSX Co., Ltd. within_________________________________			<br>
+                                    </p>
+                                </div>
+                            </td>
+                            <td width="30%">
+                                <div style="padding-left: 50px">
+                                    <p><strong>LSX COMPANY LIMITED</strong></p>
+                                    <p style="padding-top: 50px;border: 1px solid #dddddd;"></p>
+                                    <p style="font-size: 12px">(Mr.Kriengkrai  Tienpothong)</p>
+                                    <p style="font-size: 12px;padding-left: 30px">Managing Director</p>
+                                    <p style="font-size: 12px;padding-left: 20px">Date ( <?php echo date('F d, Y', strtotime(date('Y-m-d'))); ?> )</p>
+                                </div>
+                                <div class="buttons align-right" >
+                                    <a class="btn btn-default btn-lg" href="javascript:void(0);" onclick="javascript:window.print();"><i class="icon-print"></i> Print</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div> <!-- /.widget box -->
+            </div> <!-- /.col-md-12 -->
+            <!-- /Invoice -->
+        </div> <!-- /.row -->
+        <!-- /Page Content -->
     </div>
+    <!-- /.container -->
+
 </div>
-<div id="loader" class="hide"></div>
-
-
-
-<script  type="text/javascript">
-    function checkForm(form) {
-        var id = form.id;
-        var formDataSend = new FormData($('#' + id)[0]);
-        var base_url = window.location.origin;
-        var url = base_url + '/purchaseorder/change-status';
-
-        $('#loader').removeClass('hide');
-        $('.modal').modal('hide');
-
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-            },
-            url: url,
-            data: formDataSend,
-            type: 'POST',
-            contentType: false,
-            processData: false,
-            success: function(result){
-                $('#status_' + result.id).html(result.puror_status);
-                noty({
-                    text: 'Success',
-                    type: 'information',
-                    layout: 'top',
-                    timeout: 2000,
-                    modal: 'false'
-                });
-            },
-            error: function(result){
-                noty({
-                    text: 'Opp. Something went wrong. Please try again.',
-                    type: 'error',
-                    layout: 'top',
-                    timeout: 2000,
-                    modal: 'false'
-                });
-            }
-        }).done(function() {
-            $('#loader').addClass('hide');
-        });
-
-        return false;
-    }
-
-</script>
-
