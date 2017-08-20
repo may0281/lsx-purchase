@@ -49,6 +49,14 @@
 	<script type="text/javascript" src="<?php echo base_url();?>plugins/cookie/jquery.cookie.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url();?>plugins/slimscroll/jquery.slimscroll.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url();?>plugins/slimscroll/jquery.slimscroll.horizontal.min.js"></script>
+	
+		<!-- Charts -->
+	<script type="text/javascript" src="<?php echo base_url();?>plugins/sparkline/jquery.sparkline.min.js"></script>
+	<script type="text/javascript" src="<?php echo base_url();?>plugins/flot/jquery.flot.min.js"></script>
+	<script type="text/javascript" src="<?php echo base_url();?>plugins/flot/jquery.flot.time.min.js"></script>
+	
+	<script type="text/javascript" src="<?php echo base_url();?>plugins/daterangepicker/moment.min.js"></script>
+	<script type="text/javascript" src="<?php echo base_url();?>plugins/fullcalendar/fullcalendar.min.js"></script>
 
 	<!-- App -->
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/app.js"></script>
@@ -82,6 +90,7 @@
 	</script>
 
 	<!-- Demo JS -->
+<!--	<script type="text/javascript" src="<?php echo base_url();?>assets/js/demo/charts/chart_filled_blue.js"></script>-->
 
 
 </head>
