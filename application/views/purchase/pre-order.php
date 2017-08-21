@@ -119,7 +119,6 @@
                     <div class="widget box">
                         <div class="widget-header">
                             <h4><i class="icon-reorder"></i> STOCK ITEM LESS THAN MINIMUM</h4>
-
                         </div>
                         <div class="widget-content">
                             <table class="table table-bordered table-hover table-checkable">
@@ -137,7 +136,8 @@
                                 </thead>
                                 <tbody>
                                 <?php $k=$i;
-                                foreach ($item as $it){ $suggest = ($it['item_min']-$it['item_qty']);
+
+                                foreach ($item['unOrdered'] as $it){ $suggest = ($it['item_min']-$it['item_qty']);
                                     if (!in_array($it['item_code'], $itemFromPurchase)) {
                                         ?>
                                         <tr>
@@ -154,6 +154,63 @@
                                             </td>
                                         </tr>
                                     <?php $k++; } } ?>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="widget box">
+                        <div class="widget-header">
+                            <h4><i class="icon-reorder"></i> STOCK ITEM LESS THAN MINIMUM [ IN PURCHASE ORDER ]</h4>
+                        </div>
+                        <div class="widget-content">
+                            <table class="table table-bordered table-hover table-checkable">
+                                <thead>
+                                <tr>
+                                    <th class="checkbox-column">
+                                        <input type="checkbox" class="uniform" >
+                                    </th>
+                                    <th>Item Code</th>
+                                    <th>Purchase Code </th>
+                                    <th>In Stock</th>
+                                    <th>Minimum</th>
+                                    <th>Suggest</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php $j=$k;
+
+                                foreach ($item['ordered'] as $it_o){ $suggest = ($it_o['item_min']-$it_o['item_qty']);
+                                    if (!in_array($it_o['item_code'], $itemFromPurchase)) {
+                                        ?>
+                                        <tr>
+                                            <td class="checkbox-column">
+                                                <input type="checkbox" class="uniform"  name="item[]" value="<?php echo $it_o['item_code']; ?>, ,<?php echo $j ?>,<?php echo $it_o['item_price']?>" >
+                                            </td>
+                                            <td><?php echo $it_o['item_code']; ?> </td>
+                                            <td><?php
+                                                    foreach ($it_o['purchaseCode'] as $purorCode)
+                                                    {
+                                                        echo '<p>'.$purorCode['puror_code'] . ' = [' . $purorCode['puror_qty'] .'] <span class="label label-default" >'.date('Y M d',strtotime($purorCode['puror_forecasts_date'])). '</span><br> </p>';
+                                                    }
+
+                                                ?>
+                                            </td>
+                                            <td><?php echo $it_o['item_qty']; ?> </td>
+                                            <td><?php echo $it_o['item_min']; ?> </td>
+                                            <td>
+                                                <span class="filter_column filter_text">
+                                                    <input type="text" name="suggest-<?php echo $j ?>" class="text_filter form-control" placeholder="<?php echo $suggest; ?>" value="<?php echo $suggest?>">
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    <?php $j++; } } ?>
 
                                 </tbody>
                             </table>

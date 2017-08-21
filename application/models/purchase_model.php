@@ -250,6 +250,18 @@ class purchase_model extends ci_model
         return $query->result_array();
     }
 
+    public function checkOrdered($item_code)
+    {
+        $this->db->select('purchase_order_item.puror_qty,puror_code,puror_forecasts_date');
+        $this->db->from('purchase_order_item');
+        $this->db->join('purchase_order','purchase_order_item.puror_id = purchase_order.puror_id','left');
+        $this->db->where('item_code',$item_code);
+        $this->db->where('puror_item_status','ordered');
+        $query = $this->db->get();
+        $this->log_model->Logging('purchase_model','success',$this->db->last_query());
+        return $query->result_array();
+    }
+
 
 
 

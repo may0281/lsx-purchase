@@ -104,11 +104,13 @@ class purchaseorder extends CI_Controller {
         }
         $allItem = $this->stock_model->getItemList();
         $item = $this->prepareQTYLessThanMinimum($allItem);
+        $res = $this->checkOrdered($item);
+//        sd($res);
         $data = array(
             'menu' => $this->menu,
             'subMenu' => $this->purchaseOrder,
             'action' => $this->create,
-            'item' =>$item,
+            'item' =>$res,
             'list' => $this->purchase_model->getAllPurchaseRequestAndItem('approved'),
         );
         $this->load->view('template/left');
@@ -158,6 +160,7 @@ class purchaseorder extends CI_Controller {
         echo "<script>alert('Success.'); window.location.assign('".base_url()."purchase/pre-order/report'); </script>";
 
     }
+
     public function getChangeStatus($id, $status)
     {
         require_once(APPPATH.'controllers/purchase.php');
@@ -184,6 +187,7 @@ class purchaseorder extends CI_Controller {
         }
         return $isLessThan;
     }
+
     public function changeStatus()
     {
         $id = $this->input->post('puror_id');
@@ -205,6 +209,32 @@ class purchaseorder extends CI_Controller {
         );
         echo json_encode($data);
 
+    }
+
+    protected function checkOrdered($item)
+    {
+        $ordered  = array();
+        $unOrdered = array();
+        foreach ($item as $i)
+        {
+            $purchaseOrderCode = $this->purchase_model->checkOrdered($i['item_code']);
+            if($purchaseOrderCode)
+            {
+                $i['purchaseCode'] = $purchaseOrderCode;
+                $ordered[] = $i;
+            }
+            else
+            {
+                $unOrdered[] = $i;
+            }
+        }
+
+        $data = array(
+            'ordered' => $ordered,
+            'unOrdered' => $unOrdered
+        );
+
+        return $data;
     }
 
 
