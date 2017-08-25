@@ -30,7 +30,7 @@
             <!--=== Managed Tables ===-->
 
 			<!--=== Normal ===-->
-			<div class="row">
+<!--			<div class="row">
 			<div class="col-md-12">
 			<div class="widget box">
 			<div class="widget-header">
@@ -50,8 +50,10 @@
 			</div>
 			</div>
 			</div>
-			</div>
-			
+			</div>-->
+<!--			<div align="right" style="margin:20px">
+			<a href="<?php echo base_url(); ?>stock/import_by_order" class="btn btn-inverse">นำข้อมูลเข้า</a>
+			</div>-->
 			<div class="row">
 			<div class="col-md-12">
 			<div class="widget box">
