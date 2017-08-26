@@ -132,16 +132,7 @@ class stock extends CI_Controller {
         $this->load->view('stock/stock_item',$data);
     }
 	
-	public function tracking_order()
-    {
-		$data = array(
-            'menu'=> 'Stock',
-            'subMenu'=> 'Tracking Order'
-        );
-
-		$this->load->view('template/left');
-        $this->load->view('stock/tracking_order',$data);
-    }
+	
 	
 		public function import_item()
     {

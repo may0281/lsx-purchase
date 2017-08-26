@@ -279,7 +279,7 @@
 						</ul>
 					</li>
 						<li class="">
-						<a href="<?php echo base_url('stock/tracking_order');?>">
+						<a href="<?php echo base_url('tracking');?>">
 							<i class="icon-barcode"></i>
 							Tracking Order
 						</a>
