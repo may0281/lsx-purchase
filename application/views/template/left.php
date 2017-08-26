@@ -62,6 +62,10 @@
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/app.js"></script>
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/plugins.js"></script>
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/plugins.form-components.js"></script>
+	
+	
+	
+	
 
 	<style>
 		#loader {
@@ -274,6 +278,18 @@
 								<a href="<?php echo base_url('stock/list_item');?>">
 									<i class="icon-angle-right"></i>
 									Stock Item
+								</a>
+							</li>
+							<li>
+								<a href="<?php echo base_url(); ?>stock/import_by_order">
+									<i class="icon-angle-right"></i>
+									Import Item
+								</a>
+							</li>
+							<li>
+								<a href="<?php echo base_url(); ?>stock/export_by_order">
+									<i class="icon-angle-right"></i>
+									Export Item
 								</a>
 							</li>
 						</ul>

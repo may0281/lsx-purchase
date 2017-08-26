@@ -4,12 +4,13 @@ class stock extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-//		error_reporting(0);
+		//error_reporting(0);
 		if($this->session->userdata('isSession') == false){
 
             echo "<script> window.location.assign('".base_url()."login?ReturnUrl=".$_SERVER['REQUEST_URI']."');</script>";
 		}
         $this->load->model('project_model');
+		$this->load->model('purchase_model');
 		$this->load->model('stock_model');
 		$this->load->model('hublibrary_model');
 	}
@@ -175,8 +176,14 @@ class stock extends CI_Controller {
 				$test_sent  = 1;
 				$query = $this->db->query("SELECT `item_code`,`item_qty`,`item_min` FROM `item` where `item_qty`<`item_min`");
 				
-				$topic = "ระบบแจ้งเตือนสินค้าใกล้หมด Stock ณ.วันที่ ".date('Y-m-d')."";
-				$message = '<br><br>ระบบแจ้งเตือนสินค้าใกล้หมด Stock ณ.วันที่ '.date('Y-m-d').'';
+				$topic = "ระบบแจ้งเตือนสินค้าใกล้หมด Stock ณ.วันที่ ".date('d/m/Y')."";
+				$message ='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>';
+				$message .= '<br><br>ระบบแจ้งเตือนสินค้าใกล้หมด Stock ณ.วันที่ '.date('d/m/Y').'';
 				
 				$message .= '<table width="500" border="0" cellspacing="2" cellpadding="2">
 							  <tr>
@@ -200,7 +207,9 @@ class stock extends CI_Controller {
 					}
 					$i++;
 					
-				$message .= "</table>";
+				$message .= '</table>';
+				$message .= '</body></html>';
+
 			
 					if($test_sent == "1"){
 						$this->sendMail($message,$topic);
@@ -218,4 +227,93 @@ class stock extends CI_Controller {
 
         return $result;
     }
+	
+	public function export_by_order()
+    {
+	
+		if($this->uri->segment(3) == 'search'){
+		
+			$data["proj_id"] = $this->input->post('proj_id');
+			$data["proj_owner_name"] = $this->input->post('proj_owner_name');
+			$data["purq_id"] = $this->input->post('purq_id');
+		
+		}else{
+			$data["proj_id"] = "";
+			$data["proj_owner_name"] = "";
+			$data["purq_id"] = "";
+		}
+		
+		
+			
+		$data = array(
+            'menu'=> 'STOCK ITEM',
+            'subMenu'=> 'Export by Purchase Request',
+			'pj' => $this->stock_model->getPJ(),
+			'own' => $this->stock_model->getOwner(),
+			'pur' => $this->stock_model->getPurchaseRequest(),
+			'q' => $this->stock_model->exportSearch($data),
+			'proj_id' => $this->input->post('proj_id'),
+			'proj_owner_name' => $this->input->post('proj_owner_name'),
+			'purq_id' => $this->input->post('purq_id'),
+        );
+		$this->load->view('template/left');
+		$this->load->view('stock/export_by_order',$data);
+    }
+	
+	public function export_by_order_sum()
+    {
+		$data = array(
+            'menu'=> 'Export by Order',
+            'subMenu'=> 'Confirm Export',
+			'q' => $this->stock_model->getExportItem($this->uri->segment(3))
+        );
+		$this->load->view('template/left');
+		$this->load->view('stock/export_by_order_sum',$data);
+    }
+	
+	public function export_item_action()
+    {
+		$this->stock_model->UpdateExportItem($this->uri->segment(3));
+		echo "<script>alert('Export Successfully.'); window.location.assign('".base_url()."index.php/stock/export_by_order'); </script>";	
+	}
+	
+	
+	public function import_by_order()
+    {
+		if($this->uri->segment(3) == 'search'){
+		
+			$data["puror_code"] = $this->input->post('puror_code');
+		
+		}else{
+			$data["puror_code"] = "";
+		}
+			
+		$data = array(
+            'menu'=> 'STOCK ITEM',
+            'subMenu'=> 'Import by Purchase Order',
+			'po' => $this->stock_model->getPO(),
+			'q' => $this->stock_model->importSearch($data),
+			'puror_code' => $this->input->post('puror_code'),
+        );
+		$this->load->view('template/left');
+		$this->load->view('stock/import_by_order',$data);
+    }
+	
+		public function import_by_order_sum()
+    {
+		$data = array(
+            'menu'=> 'Import by Order',
+            'subMenu'=> 'Confirm Import',
+			'q' => $this->stock_model->getImportItem($this->uri->segment(3))
+        );
+		$this->load->view('template/left');
+		$this->load->view('stock/import_by_order_sum',$data);
+    }
+	
+		public function import_item_action()
+    {
+		$this->stock_model->UpdateImportItem($this->uri->segment(3));
+		echo "<script>alert('Import Successfully.'); window.location.assign('".base_url()."index.php/stock/import_by_order'); </script>";	
+	}
+	
 }

@@ -15,7 +15,7 @@ class automate extends CI_Controller {
 				
 				$topic = "ระบบแจ้งเตือนสินค้าใกล้หมด Stock ณ.วันที่ ".date('d/m/Y')."";
 
-				$message = '<br><br>ระบบแจ้งเตือนสินค้าใกล้หมด Stock ณ.วันที่ '.date('d/m/Y').'';
+				$message = '<br><br>ระบบแจ้งเตือนสินค้าใกล้หมด Stock ณ.วันที่ '.date('d/m/Y').'<br><br>';
 				
 				$message .= '<table width="500" border="0" cellspacing="2" cellpadding="2">
 							  <tr>
@@ -36,14 +36,18 @@ class automate extends CI_Controller {
 						<td>".$row->item_qty."</td>
 						<td>".$row->item_min."</td>
 					  </tr>";
+					  $i++;
 					}
-					$i++;
+					
 					
 				$message .= '</table>';*/
 
 			
 					if($test_sent == "1"){
 						$this->sendMail($message,$topic);
+						
+						
+						
 					}
 				}
 	}

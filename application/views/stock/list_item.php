@@ -97,7 +97,7 @@
 									<?php $i++; }?>	
 									</tbody>
 								</table>
-								<div align="right"><input class="btn btn-sm btn-primary" type="submit" value="เบิกสินค้า">
+								<div align="right"><!--<input class="btn btn-sm btn-primary" type="button"  onclick="window.location.href='<?php echo base_url(); ?>stock/export_by_order'" value="เบิกสินค้า">-->
 									<input class="btn btn-sm btn-inverse" type="submit" value="Export"></div>
 							</div>
 						</div>
