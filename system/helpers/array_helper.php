@@ -53,7 +53,7 @@ if (! function_exists('array_add')) {
             // to hold the next value, allowing us to create the arrays to hold final
             // values at the correct depth. Then we'll keep digging into the array.
             if (! isset($array[$key]) || ! is_array($array[$key])) {
-                $array[$key] = [];
+                $array[$key] = array();
             }
 
             $array = &$array[$key];
@@ -374,9 +374,9 @@ if (! function_exists('class_uses_recursive')) {
             $class = get_class($class);
         }
 
-        $results = [];
+        $results = array();
 
-        foreach (array_merge([$class => $class], class_parents($class)) as $class) {
+        foreach (array_merge(array($class => $class), class_parents($class)) as $class) {
             $results += trait_uses_recursive($class);
         }
 
@@ -471,7 +471,7 @@ if (! function_exists('data_set')) {
 
         if (($segment = array_shift($segments)) === '*') {
             if (! Arr::accessible($target)) {
-                $target = [];
+                $target = array();
             }
 
             if ($segments) {
@@ -486,7 +486,7 @@ if (! function_exists('data_set')) {
         } elseif (Arr::accessible($target)) {
             if ($segments) {
                 if (! Arr::exists($target, $segment)) {
-                    $target[$segment] = [];
+                    $target[$segment] = array();
                 }
 
                 data_set($target[$segment], $segments, $value, $overwrite);
@@ -496,7 +496,7 @@ if (! function_exists('data_set')) {
         } elseif (is_object($target)) {
             if ($segments) {
                 if (! isset($target->{$segment})) {
-                    $target->{$segment} = [];
+                    $target->{$segment} = array();
                 }
 
                 data_set($target->{$segment}, $segments, $value, $overwrite);
@@ -504,7 +504,7 @@ if (! function_exists('data_set')) {
                 $target->{$segment} = $value;
             }
         } else {
-            $target = [];
+            $target = array();
 
             if ($segments) {
                 data_set($target[$segment], $segments, $value, $overwrite);
@@ -548,11 +548,11 @@ if (! function_exists('sd')) {
      */
     function sd()
     {
-        array_map(function ($x) {
-            (new Dumper)->dump($x);
-        }, func_get_args());
-
-        die(1);
+//        array_map(function ($x) {
+//            (new Dumper)->dump($x);
+//        }, func_get_args());
+//
+//        die(1);
     }
 }
 
@@ -564,13 +564,13 @@ if (! function_exists('s')) {
      * @param  mixed
      * @return void
      */
-    function s()
-    {
-        array_map(function ($x) {
-            (new Dumper)->dump($x);
-        }, func_get_args());
-
-    }
+//    function s()
+//    {
+//        array_map(function ($x) {
+//            (new Dumper)->dump($x);
+//        }, func_get_args());
+//
+//    }
 }
 
 if (! function_exists('dd')) {
@@ -580,14 +580,14 @@ if (! function_exists('dd')) {
      * @param  mixed
      * @return void
      */
-    function dd()
-    {
-        array_map(function ($x) {
-            (new Dumper)->dump($x);
-        }, func_get_args());
-
-        die(1);
-    }
+//    function dd()
+//    {
+//        array_map(function ($x) {
+//            (new Dumper)->dump($x);
+//        }, func_get_args());
+//
+//        die(1);
+//    }
 }
 if(!function_exists('d')){
     /**
@@ -596,13 +596,13 @@ if(!function_exists('d')){
      * @param  mixed
      * @return void
      */
-    function d()
-    {
-        array_map(function ($x) {
-            (new Dumper)->dump($x);
-        }, func_get_args());
-
-    }
+//    function d()
+//    {
+//        array_map(function ($x) {
+//            (new Dumper)->dump($x);
+//        }, func_get_args());
+//
+//    }
 
 }
 

@@ -396,27 +396,24 @@ class stock_model extends ci_model
         $query = $this->db->get();
         return $query->result_array();
 	}
-	
-	
-		public function exportSearch($data)
+
+    public function exportSearch($data)
 	{
-		$this->db->select('purchase_request.*,project.*,bn_user_profile.*');
+		$this->db->select('purchase_request.*,project.*');
         $this->db->from('purchase_request');
-        $this->db->join('project','purchase_request.proj_id = project.proj_id');
+        $this->db->join('project','purchase_request.proj_id = project.proj_id','left');
 		$this->db->join('bn_user_profile', 'bn_user_profile.account = purchase_request.proj_owner_name');
-		$this->db->like('purchase_request.proj_id',$data["proj_id"]); 
-		$this->db->like('purchase_request.proj_owner_name',$data["proj_owner_name"]); 
+		$this->db->like('purchase_request.proj_id',$data["proj_id"]);
+		$this->db->like('purchase_request.proj_owner_name',$data["proj_owner_name"]);
 		$this->db->like('purchase_request.purq_id',$data["purq_id"]); 
-		$this->db->where('purchase_request.purq_status',"received");
-		$this->db->or_where('purchase_request.purq_status',"approved");
+		$this->db->where_in('purchase_request.purq_status',array("received","approved"));
 		$query = $this->db->get();
-		
         return $query->result_array();
 	}
 	
-		public function getExportItem($purq_id)
+    public function getExportItem($purq_id)
 	{
-$this->db->select('purchase_request_item.item_code,bn_user_profile.firstname,bn_user_profile.lastname,bn_user_profile.lastname,item.*,purchase_request_item.qty,purchase_request_item.purq_item_status');
+        $this->db->select('purchase_request_item.item_code,bn_user_profile.firstname,bn_user_profile.lastname,bn_user_profile.lastname,item.*,purchase_request_item.qty,purchase_request_item.purq_item_status');
         $this->db->from('purchase_request_item');
         $this->db->join('purchase_request','purchase_request_item.purq_id = purchase_request.purq_id');
 		$this->db->join('bn_user_profile', 'bn_user_profile.account = purchase_request.proj_owner_name');
@@ -476,7 +473,7 @@ $this->db->select('purchase_request_item.item_code,bn_user_profile.firstname,bn_
 		
 		// Update purchase_order_item
 		$data_puroi = array(
-            'puror_status'=> 'received'
+            'puror_item_status'=> 'received'
         );
 		$this->db->where('puror_id', $puror_id);
 		$this->db->update('purchase_order_item', $data_puroi); 	
@@ -523,13 +520,12 @@ $this->db->select('purchase_request_item.item_code,bn_user_profile.firstname,bn_
 	
 		public function getImportItem($puror_id)
 	{
-$this->db->select('purchase_order_item.item_code,purchase_order_item.puror_qty,item.*,');
+        $this->db->select('purchase_order_item.item_code,purchase_order_item.puror_qty,item.*,');
         $this->db->from('purchase_order_item');
         $this->db->join('item','item.item_code = purchase_order_item.item_code');
 		$this->db->where('purchase_order_item.puror_id',$puror_id);
-		$this->db->where('purchase_order_item.puror_status',"ordered");
+		$this->db->where('purchase_order_item.puror_item_status',"ordered");
 		$query = $this->db->get();
-		
         return $query->result_array();
 	}
 }

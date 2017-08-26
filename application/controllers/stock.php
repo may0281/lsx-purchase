@@ -4,7 +4,7 @@ class stock extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		//error_reporting(0);
+		error_reporting(0);
 		if($this->session->userdata('isSession') == false){
 
             echo "<script> window.location.assign('".base_url()."login?ReturnUrl=".$_SERVER['REQUEST_URI']."');</script>";

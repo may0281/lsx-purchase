@@ -32,11 +32,9 @@ class project extends CI_Controller {
 //        }
 		
 		$create_by = $this->project_model->getUserlogin($this->session->userdata('adminData'));
-		$customer = $this->project_model->getCustomer();
         $data = array(
             'menu'=> 'Project',
             'subMenu'=> 'Create Project',
-			'customer'=> $customer,
 			'create_by'=> $create_by,
             'q' => $this->project_model->getProjectList()
         );
@@ -81,19 +79,7 @@ class project extends CI_Controller {
     {
 		 $proj_name = $this->input->post('name');
 		 $proj_owner = $this->input->post('create_by');
-		 
-		 if($this->input->post('new_customer') == "" && $this->input->post('customer') != ""){
-			$cus_id = $this->input->post('customer');
-			
-		 }else if($this->input->post('new_customer') != "" && $this->input->post('customer') != ""){
-			$cus_id = $this->input->post('customer');
-			
-		 }else if($this->input->post('new_customer') != "" && $this->input->post('customer') == ""){
-		 	$cus_id = $this->project_model->updateCustomer($this->input->post('new_customer'));
-		 }else{
-			echo "<script>alert('Please select customer.'); window.location.assign('".base_url()."index.php/project/create'); </script>";
-			exit();
-		 }
+
 		
 		 $proj_about  = $this->input->post('detail');
 
@@ -101,7 +87,6 @@ class project extends CI_Controller {
 		 $data = array(
             'proj_name'=> $proj_name,
             'proj_owner'=> $this->project_model->getUserlogin($this->session->userdata('adminData')),
-			'cus_id'=> $cus_id,
 			'proj_createdate'=> date('Y-m-d H:i:s'),
 			'proj_about'=> $proj_about,
 			'status'=> '1'

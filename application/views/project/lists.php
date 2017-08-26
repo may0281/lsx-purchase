@@ -47,7 +47,6 @@
 										<tr>
 											<th>No</th>
 											<th>Name</th>
-											<th>Customer</th>
 											<th>Create date</th>
 											<th>Action</th>
 											<th></th>
@@ -58,7 +57,6 @@
 										<tr>
 											<td class="checkbox-column"><?php echo $i;?></td>
 											<td><?php echo $r['proj_name'];?></td>
-											<td><?php echo $this->project_model->getCustomername($r['cus_id']);?></td>
 											<td><?php echo $r['proj_createdate'];?></td>
 											<td><span class="btn-group">
 													<a href="<?php echo base_url();?>project/edit/<?php echo $r['proj_id'];?>" class="btn btn-xs bs-tooltip" title="Edit"><i class="icon-pencil"></i></a>

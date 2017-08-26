@@ -38,11 +38,6 @@
 							</div>
 							<div class="widget-content">
 								<form class="form-horizontal row-border" method="post"  action="<?php echo base_url(); ?>project/create_action">
-<!--									<div class="alert alert-info fade in">
-										<i class="icon-remove close" data-dismiss="alert"></i>
-										This are examples of full width input fields. Please find select-boxes and other things below.
-									</div>-->
-
 									<div class="form-group">
 										<label class="col-md-2 control-label">Project Name:</label>
 										<div class="col-md-10"><input type="text" name="name" class="form-control"></div>
@@ -51,21 +46,7 @@
 										<label class="col-md-2 control-label">Create By:</label>
 										<div class="col-md-10"><input type="text" name="create_by" class="form-control" value="<?php echo $create_by; ?>" disabled="disabled"></div>
 									</div>
-									<div class="form-group">
-										<label class="col-md-2 control-label" for="input19">Customer</label>
-										<div class="col-md-10">
-											<select name="customer" id="input19" class="select2-select-00 col-md-12 full-width-fix">
-													<option value="">---Select--</option>
-													<?php foreach ($customer as $r) { ?>
-													<option value="<?php echo $r['cus_id'];?>"><?php echo $r['cus_name'];?></option>
-													<?php } ?>
-											</select>
-										</div>
-									</div>			
-									<div class="form-group">
-										<label class="col-md-2 control-label"></label>
-										<div class="col-md-10"><input class="btn btn-sm btn-primary" id="Add" type="button" value="Others Customer"></div>
-									</div>
+
 									<div class="form-group" id="other_customer" style="display:none">
 									<label class="col-md-2 control-label">Customer Name:</label>
 										<div class="col-md-10"><input type="text" name="new_customer" id="new_customer" class="form-control"></div>
@@ -75,19 +56,15 @@
 										<div class="col-md-10"><textarea rows="4" cols="5" name="detail" class="form-control"></textarea></div>
 									</div>
 
-	<div class="form-group" style="float:right; margin-right:20px; margin-top:20px;">
-	<input class="btn btn-sm btn-primary" type="submit" value="Save"> <input class="btn" type="reset" value="Reset">
-	</div>
+									<div class="form-group" style="float:right; margin-right:20px; margin-top:20px;">
+										<input class="btn btn-sm btn-primary" type="submit" value="Save"> <input class="btn" type="reset" value="Reset">
+									</div>
 
 								</form>
 							</div>
 						</div>
 					</div>
 				</div>
-        <!-- /Normal -->
-
-
-        <!-- /Page Content -->
     </div>
     <!-- /.container -->
 
