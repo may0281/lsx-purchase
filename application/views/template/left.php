@@ -171,20 +171,20 @@
 							</li>
 						</ul>
 					</li>
-					<li class="<?php if(array_get($path,1) == 'sale'){echo "current open";} ?>">
-						<a href="javascript:void(0);">
-							<i class="icon-group"></i>
-							Marketing & Sale
-						</a>
-						<ul class="sub-menu">
-							<li class="<?php if($path_2 == 'report'){echo "current";} ?>">
-								<a href="<?php echo base_url('sale/report');?>">
-									<i class="icon-angle-right"></i>
-									Report
-								</a>
-							</li>
-						</ul>
-					</li>
+<!--					<li class="--><?php //if(array_get($path,1) == 'sale'){echo "current open";} ?><!--">-->
+<!--						<a href="javascript:void(0);">-->
+<!--							<i class="icon-group"></i>-->
+<!--							Marketing & Sale-->
+<!--						</a>-->
+<!--						<ul class="sub-menu">-->
+<!--							<li class="--><?php //if($path_2 == 'report'){echo "current";} ?><!--">-->
+<!--								<a href="--><?php //echo base_url('sale/report');?><!--">-->
+<!--									<i class="icon-angle-right"></i>-->
+<!--									Report-->
+<!--								</a>-->
+<!--							</li>-->
+<!--						</ul>-->
+<!--					</li>-->
 
 					<?php
 						$purq_rep_view  = $this->hublibrary_model->permission('purchase','request','view');
@@ -226,14 +226,14 @@
 
 							<?php if($po_report){?>
 							<li class="<?php if($path_2 == 'po-report'){echo "current";} ?>">
-								<a href="<?php echo base_url('purchase/pre-order/report');?>">
+								<a href="<?php echo base_url('purchase/po-report');?>">
 									<i class="icon-angle-right"></i>
 									Purchase Order report
 								</a>
 							</li>
 							<?php } ?>
 							<?php if($po_create){?>
-								<li class="<?php if($path_2 == 'po'){echo "current";} ?>">
+								<li class="<?php if($path_2 == 'pre-order'){echo "current";} ?>">
 									<a href="<?php echo base_url('purchase/pre-order');?>">
 										<i class="icon-angle-right"></i>
 										Purchase Order

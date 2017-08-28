@@ -68,13 +68,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php  $i=1;foreach ($item as $r) { ?>
+                                    <?php  $i=1;foreach ($item as $r) {  ?>
                                         <tr>
                                             <td><?php echo $i;?></td>
                                             <td><?php echo $r['item_code'];?></td>
                                             <td><?php echo $r['purq_code'];?></td>
                                             <td><?php echo $r['puror_qty'];?></td>
-                                            <td><?php echo $r['puror_status'];?></td>
+                                            <td><?php echo $r['puror_item_status'];?></td>
                                             <td class="align-center">
                                                 <span class="btn-group">
                                                 <a data-toggle="modal" href="#change_status_<?php echo $r['purq_id'];?>" id="cha_<?php echo $r['purq_id'];?>" class="btn btn-xs bs-tooltip" title="" data-original-title="Change Status"><i class="icon-exchange"></i></a>
@@ -92,8 +92,8 @@
                                                                     <div class="col-md-10 clearfix">
                                                                         <select name="status" id="status_id" class="col-md-12 select2 full-width-fix required">
                                                                             <option></option>
-                                                                            <option value="ordered" <?php echo ($r['puror_status'] == 'ordered' ? 'selected' : '') ?>>Ordered</option>
-                                                                            <option value="imported" <?php echo ($r['puror_status'] == 'imported' ? 'selected' : '') ?>>Imported</option>
+                                                                            <option value="ordered" <?php echo ($r['puror_item_status'] == 'ordered' ? 'selected' : '') ?>>Ordered</option>
+                                                                            <option value="received" <?php echo ($r['puror_item_status'] == 'received' ? 'selected' : '') ?>>Received</option>
                                                                         </select>
                                                                     </div>
                                                                     <div style="height: 10px; clear: both;" > </div>

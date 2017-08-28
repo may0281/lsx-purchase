@@ -101,7 +101,7 @@
                                         <td>
                                             <?php if($li['item_code'] == $oldItem){  $suggest = $li['qty']; } ?>
                                             <span class="filter_column filter_text">
-                                                <input type="text" name="suggest-<?php echo $i ?>" class="text_filter form-control" placeholder="<?php echo $suggest; ?>" value="<?php echo $suggest?>">
+                                                <input type="text" name="suggest-<?php echo $i ?>" class="text_filter form-control" placeholder="<?php echo $suggest; ?>" value="<?php echo ($suggest>0)? $suggest : 0; ?>">
                                             </span>
                                         </td>
                                     </tr>

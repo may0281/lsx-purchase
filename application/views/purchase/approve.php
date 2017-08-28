@@ -13,18 +13,16 @@
 <script type="text/javascript" src="<?php echo base_url();?>plugins/noty/layouts/top.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>plugins/noty/themes/default.js"></script>
 <?php
-
 $label = array(
     'request' => 'label-default',
     'approved' => 'label-success',
     'unapproved' => 'label-danger',
     'pending' => 'label-warning',
-    'ordered' => 'label-primary',
+    'ordered' => 'label-info',
     'received' => 'label-primary',
     'delivered' => 'label-primary',
     'reject' => 'label-danger',
 )
-
 ?>
 <div id="container">
     <div id="content">

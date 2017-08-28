@@ -105,7 +105,6 @@ class purchaseorder extends CI_Controller {
         $allItem = $this->stock_model->getItemList();
         $item = $this->prepareQTYLessThanMinimum($allItem);
         $res = $this->checkOrdered($item);
-//        sd($res);
         $data = array(
             'menu' => $this->menu,
             'subMenu' => $this->purchaseOrder,
@@ -156,8 +155,7 @@ class purchaseorder extends CI_Controller {
             $this->purchase_model->createPurchaseOrderItem($data);
             $old_purq_id = $purq_id;
         }
-
-        echo "<script>alert('Success.'); window.location.assign('".base_url()."purchase/pre-order/report'); </script>";
+        echo "<script>alert('Success.'); window.location.assign('".base_url()."purchase/po-report/detail/".$puror_id."');</script>";
 
     }
 

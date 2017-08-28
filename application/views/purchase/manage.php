@@ -66,9 +66,22 @@
         <!--=== Page Header ===-->
         <div class="page-header">
             <div class="page-title">
-                <h3><?php echo strtoupper($subMenu) ?></h3>
+                <h3><?php echo strtoupper($subMenu) ?> <?php if($action == 'update'){ echo " : " . $data['purq_code'];  } ?></h3>
                 <span></span>
             </div>
+
+            <?php if($action == 'update'){ ?>
+                <ul class="page-stats">
+                    <li>
+                        Request By : <?php echo array_get($data,'purq_create_by');?> <br>
+                        Create Date : <?php echo array_get($data,'purq_create_date');?>
+                    </li>
+                    <li>
+                        Update By : <?php echo array_get($data,'purq_update_by');?> <br>
+                        Update Date : <?php echo array_get($data,'purq_update_date');?>
+                    </li>
+                </ul>
+            <?php }?>
         </div>
         <!-- /Page Header -->
 
@@ -87,8 +100,11 @@
                                 <div class="col-md-5 clearfix">
                                     <select name="proj_id" id="proj_id" class="col-md-12 select2 full-width-fix required">
                                         <option></option>
+
                                         <?php foreach ($projects as $project){ ?>
-                                            <option value="<?php echo array_get($project,'proj_id')?>" <?php echo ($data['proj_id'] == array_get($project,'proj_id') ? 'selected' : '') ?>><?php echo array_get($project,'proj_name');?></option>
+                                            <?php if($action == 'create'){ $selected = ($this->input->get('p') == array_get($project,'proj_id'))  ? 'selected' : null; } ?>
+                                            <?php if($action == 'update'){ $selected = ($data['proj_id'] == array_get($project,'proj_id'))  ? 'selected' : null; } ?>
+                                            <option value="<?php echo array_get($project,'proj_id')?>" <?php echo $selected; ?>  ><?php echo array_get($project,'proj_name');?></option>
                                         <?php } ?>
                                     </select>
                                     <label id="msg_proj" class="errors"> </label>
@@ -107,75 +123,70 @@
                                 </div>
                             </div>
                             <?php } ?>
-                            <?php if($action == 'update'){
-                                $purchaseItem = $this->purchase_model->getPurchaseItem($data['purq_id']);
-                                ?>
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">Require Date <span class="required">*</span></label>
-                                <div class="col-md-5">
-                                    <input type="text" name="purq_require_start" id="purq_require_start" value="<?php echo date('Y-m-d',strtotime($data['purq_require_start'])); ?>" class="form-control datepicker required" placeholder="Start Date">
-                                    <label id="msg_purq_require_start" class="control-label errors"> </label>
+                            <?php if($action == 'update'){ $purchaseItem = $this->purchase_model->getPurchaseItem($data['purq_id']); ?>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">Require Date <span class="required">*</span></label>
+                                    <div class="col-md-5">
+                                        <input type="text" name="purq_require_start" id="purq_require_start" value="<?php echo date('Y-m-d',strtotime($data['purq_require_start'])); ?>" class="form-control datepicker required" placeholder="Start Date">
+                                        <label id="msg_purq_require_start" class="control-label errors"> </label>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="text" name="purq_require_end" id="purq_require_end" value="<?php echo date('Y-m-d',strtotime($data['purq_require_end'])); ?>" class="form-control datepicker required" placeholder="End Date">
+                                        <label id="msg_purq_require_end" class="errors"> </label>
+                                    </div>
                                 </div>
-                                <div class="col-md-5">
-                                    <input type="text" name="purq_require_end" id="purq_require_end" value="<?php echo date('Y-m-d',strtotime($data['purq_require_end'])); ?>" class="form-control datepicker required" placeholder="End Date">
-                                    <label id="msg_purq_require_end" class="errors"> </label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">PRODUCT CODE</label>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-1 control-label"></label>
-                                <label class="col-md-1 control-label">Delete</label>
-                                <label class="col-md-2 control-label" style="text-align: center"> ITEM CODE</label>
-                                <label class="col-md-2 control-label" style="text-align: center"> QTY</label>
-                                <label class="col-md-2 control-label" style="text-align: center"> Size</label>
-                                <label class="col-md-1 control-label" style="text-align: center"> Thickness</label>
-                                <label class="col-md-2 control-label" style="text-align: center"> Film</label>
-                                <label class="col-md-1 control-label" style="text-align: center"> Aica</label>
-                                <div style="clear: both ; height: 10px" ></div>
-
-                                <?php $k=1; $j=1; foreach ($purchaseItem as $it){ ?>
-                                <div class="" id="item-list-<?php echo $j;?>" data-value="<?php echo $j;?>">
-                                    <label class="col-md-1 control-label"><?php echo $k; ?> </label>
-                                    <div class="col-md-1" style="text-align: center">
-                                        <label class="checkbox"><input type="checkbox" name="delete[]" value="<?php echo $it['purq_item_id'] ?>" class="uniform"> </label>
-                                    </div>
-                                    <input type="hidden" name="purchase_item[]" value="<?php echo $it['purq_item_id'] ?>">
-                                    <div class="col-md-2 clearfix">
-                                        <select name="purchase_item_list[]" id="item-<?php echo $j ?>" class="col-md-12 select2 full-width-fix required item_list">
-                                            <option></option>
-                                            <?php foreach ($items as $item){ ?>
-                                                <option value="<?php echo array_get($item,'item_code')?>" <?php echo ($it['item_code'] == $item['item_code']) ? 'selected' : ''; ?> data-size="<?php echo array_get($item,'item_size'); ?>" data-thickness="<?php echo array_get($item,'item_thickness'); ?>" data-film="<?php echo array_get($item,'item_pfilm'); ?>" data-aica="<?php echo array_get($item,'item_aica'); ?>"><?php echo array_get($item,'item_code');?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <input type="text" id="purchase-item-<?php echo $j ?>-qty" name="purchase_item_qty[]" value="<?php echo $it['qty']?>" placeholder="QTY" class="form-control purchase_qty" >
-                                        <label id="purchase_msg_qty_<?php echo $j ?>" class="errors"></label>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <input type="text" id="item-<?php echo $j ?>-size" disabled="disabled"  value="<?php echo $item['item_size']; ?>" placeholder="Size" class="form-control" >
-                                    </div>
-                                    <div class="col-md-1">
-                                        <input type="text" id="item-<?php echo $j ?>-thickness" disabled="disabled" value="<?php echo $item['item_thickness']; ?>" placeholder="Thickness" class="form-control" >
-                                    </div>
-                                    <div class="col-md-2">
-                                        <input type="text" id="item-<?php echo $j ?>-film" disabled="disabled" value="<?php echo $item['item_pfilm']; ?>" placeholder="Film" class="form-control" >
-                                    </div>
-                                    <div class="col-md-1">
-                                        <input type="text" id="item-<?php echo $j ?>-aica" disabled="disabled" value="<?php echo $item['item_aica']; ?>" placeholder="Aica Finish" class="form-control" >
-                                    </div>
+                                <div class="form-group"><label class="col-md-2 control-label">PRODUCT CODE</label></div>
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label"></label>
+                                    <label class="col-md-1 control-label">Delete</label>
+                                    <label class="col-md-3 control-label" style="text-align: center"> ITEM CODE</label>
+                                    <label class="col-md-1 control-label" style="text-align: center"> QTY</label>
+                                    <label class="col-md-2 control-label" style="text-align: center"> Size</label>
+                                    <label class="col-md-1 control-label" style="text-align: center"> Thickness</label>
+                                    <label class="col-md-2 control-label" style="text-align: center"> Film</label>
+                                    <label class="col-md-1 control-label" style="text-align: center"> Aica</label>
                                     <div style="clear: both ; height: 10px" ></div>
+
+                                    <?php $k=1; $j=1; foreach ($purchaseItem as $it){ ?>
+                                    <div class="" id="item-list-<?php echo $j;?>" data-value="<?php echo $j;?>">
+                                        <label class="col-md-1 control-label"><?php echo $k; ?> </label>
+                                        <div class="col-md-1" style="text-align: center">
+                                            <label class="checkbox"><input type="checkbox" name="delete[]" value="<?php echo $it['purq_item_id'] ?>" class="uniform"> </label>
+                                        </div>
+                                        <input type="hidden" name="purchase_item[]" value="<?php echo $it['purq_item_id'] ?>">
+                                        <div class="col-md-3 clearfix">
+                                            <select name="purchase_item_list[]" id="purchase-item-list-<?php echo $j ?>" class="col-md-12 select2 full-width-fix required item_list">
+                                                <option></option>
+                                                <?php foreach ($items as $item){ ?>
+                                                    <option value="<?php echo array_get($item,'item_code')?>" <?php echo ($it['item_code'] == $item['item_code']) ? 'selected' : ''; ?> data-size="<?php echo array_get($item,'item_size'); ?>" data-thickness="<?php echo array_get($item,'item_thickness'); ?>" data-film="<?php echo array_get($item,'item_pfilm'); ?>" data-aica="<?php echo array_get($item,'item_aica'); ?>"><?php echo array_get($item,'item_code');?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <input type="text" id="purchase-item-list-<?php echo $j ?>-qty" name="purchase_item_qty[]" value="<?php echo $it['qty']?>" class="form-control purchase_qty" >
+                                            <label id="purchase_msg_qty_<?php echo $j ?>" class="errors"></label>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input type="text" id="purchase-item-list-<?php echo $j ?>-size" disabled="disabled"  value="<?php echo $it['item_size']; ?>" class="form-control" >
+                                        </div>
+                                        <div class="col-md-1">
+                                            <input type="text" id="purchase-item-list-<?php echo $j ?>-thickness" disabled="disabled" value="<?php echo $it['item_thickness']; ?>" class="form-control" >
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input type="text" id="purchase-item-list-<?php echo $j ?>-film" disabled="disabled" value="<?php echo $it['item_pfilm']; ?>" class="form-control" >
+                                        </div>
+                                        <div class="col-md-1">
+                                            <input type="text" id="purchase-item-list-<?php echo $j ?>-aica" disabled="disabled" value="<?php echo $it['item_aica']; ?>" class="form-control" >
+                                        </div>
+                                        <div style="clear: both ; height: 10px" ></div>
+                                    </div>
+                                    <?php $k++; $j++; } ?>
                                 </div>
-                                <?php $k++; $j++; } ?>
-                            </div>
                             <?php } ?>
                             <div class="form-group">
                                 <label class="col-md-2 control-label"></label>
-                                <label class="col-md-2 control-label" style="text-align: center"> ITEM CODE</label>
-                                <label class="col-md-2 control-label" style="text-align: center"> QTY</label>
+                                <label class="col-md-3 control-label" style="text-align: center"> ITEM CODE</label>
+                                <label class="col-md-1 control-label" style="text-align: center"> QTY</label>
                                 <label class="col-md-2 control-label" style="text-align: center"> Size</label>
                                 <label class="col-md-1 control-label" style="text-align: center"> Thickness</label>
                                 <label class="col-md-2 control-label" style="text-align: center"> Film</label>
@@ -185,7 +196,7 @@
                                 <?php for($i=1; $i<= 30;$i++) {?>
                                 <div class="<?php if($i<2){echo 'count-form';}?> <?php if($i>1){echo 'hidden';}?>" id="item-list-<?php echo $i;?>" data-value="<?php echo $i;?>">
                                     <label class="col-md-2 control-label"><?php if($i==1){ ?>Product Code <?php }?> [<?php echo $i;?>] <?php if($i==1){ ?> <span class="required">*</span><?php }?></label>
-                                    <div class="col-md-2 clearfix">
+                                    <div class="col-md-3 clearfix">
                                         <select name="item_id[]" id="item-<?php echo $i ?>" class="col-md-12 select2 full-width-fix required item_list">
                                             <option></option>
                                             <?php foreach ($items as $item){ ?>
@@ -193,7 +204,7 @@
                                             <?php } ?>
                                         </select>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-1">
                                         <input type="text" id="item-<?php echo $i ?>-qty" name="qty[]" value="" placeholder="QTY" class="form-control qty" >
                                         <label id="msg_qty_<?php echo $i ?>" class="errors"></label>
                                     </div>
@@ -338,17 +349,12 @@
 </div>
 <script>
     $(document).ready(function() {
-
-        //===== Date Pickers & Time Pickers & Color Pickers =====//
         $(".datepicker").datepicker({
-            // defaultDate: +7,
             showOtherMonths: true,
             autoSize: true,
-//            appendText: '<span class="help-block">(yyyy-mm-dd)</span>',
             dateFormat: 'yy-mm-dd'
         });
     });
-
     $('#proj_id').change(function () {
         $('#msg_proj').html('');
         $('#proj_id').removeClass('has-error');
@@ -379,7 +385,6 @@
         $('#designer_name').removeClass('input-error');
         $('#msg_project').html('');
     });
-
     $('#proj_contacts').keypress(function() {
         $('#proj_contacts').removeClass('input-error');
         $('#msg_proj_contacts').html('');
@@ -420,11 +425,14 @@
     });
 
     $('.item_list').change(function () {
+        console.log(this.id)
         var data_size = $('#' + this.id +' option:selected').attr('data-size');
+        console.log(data_size);
         var data_thickness = $('#' + this.id+' option:selected').attr('data-thickness');
         var data_film = $('#' + this.id+' option:selected').attr('data-film');
         var data_aica = $('#' + this.id+' option:selected').attr('data-aica');
-        $('#' + this.id + '-size').val(data_size).attr('disabled','disabled');
+
+        $('#' + this.id + '-size').prop("disabled", false).val(data_size).attr('disabled','disabled');
         $('#' + this.id + '-thickness').val(data_thickness).attr('disabled','disabled');
         $('#' + this.id + '-film').val(data_film).attr('disabled','disabled');
         $('#' + this.id + '-aica').val(data_aica).attr('disabled','disabled');
@@ -438,6 +446,7 @@
         $('#item-1-aica').removeClass('input-error');
     });
 
+
     $('.qty').keypress(function () {
         var res = this.id.substr(5, 1);
         $('#msg_qty_'+res).html('');
@@ -445,7 +454,7 @@
     });
 
     $('.purchase_qty').keypress(function () {
-        var res = this.id.substr(14, 1);
+        var res = this.id.substr(19, 1);
         $('#purchase-item-'+res+'-qty').removeClass('input-error');
         $('#purchase_msg_qty_'+res).html('');
 
@@ -516,20 +525,37 @@
 
         if(form.id== 'update')
         {
-            var item = $("select[name='purchase_item_list[]']").map(function(){return $(this).val();}).get();
-            var qty = $("input[name='purchase_item_qty[]']").map(function(){return $(this).val();}).get();
+            var item_old = $("select[name='purchase_item_list[]']").map(function(){return $(this).val();}).get();
+            var qty_old = $("input[name='purchase_item_qty[]']").map(function(){return $(this).val();}).get();
 
+
+            for(var i =0; i<=item_old.length; i++)
+            {
+                var id = i+1;
+                if(item_old[i] && qty_old[i] == '' )
+                {
+                    console.lod(qty_old[i]);
+                    $('#purchase-item-'+id+'-qty').addClass('input-error');
+                    $('#purchase_msg_qty_'+id).html(error_msg);
+                    status = false;
+                }
+            }
+
+
+            var item = $("select[name='item_id[]']").map(function(){return $(this).val();}).get();
+            var qty = $("input[name='qty[]']").map(function(){return $(this).val();}).get();
 
             for(var i =0; i<=item.length; i++)
             {
                 var id = i+1;
                 if(item[i] && qty[i] == '')
                 {
-                    $('#purchase-item-'+id+'-qty').addClass('input-error');
-                    $('#purchase_msg_qty_'+id).html(error_msg);
+                    $('#item-'+id+'-qty').addClass('input-error');
+                    $('#msg_qty_'+id).html(error_msg);
                     status = false;
                 }
             }
+
         }
 
 

@@ -26,7 +26,7 @@ class purchase extends CI_Controller {
         $this->change_status = 'change-status';
         $this->marketting = 'MARKETING';
         $this->sale = 'SALE';
-        $this->status = [
+        $this->status = array(
             'request',
             'approved',
             'unapproved',
@@ -35,7 +35,7 @@ class purchase extends CI_Controller {
             'received',
             'delivered',
             'reject',
-        ];
+        );
 	}
 
 	public function index()
@@ -114,9 +114,13 @@ class purchase extends CI_Controller {
     public function createRequest()
     {
         $purchaseData = $this->input->post();
-        $purchaseData['purq_create_by'] = $this->session->userdata('adminData');
-        $purchaseData['purq_create_date'] = date('Y-m-d H:i:s');
-        $purchaseData['purq_status'] = 'request';
+        $otherData = array(
+            'purq_create_by' => $this->session->userdata('adminData'),
+            'purq_create_date' => date('Y-m-d H:i:s'),
+            'purq_status' => 'request'
+
+        );
+        $purchaseData = array_merge($purchaseData,$otherData);
         unset($purchaseData['item_id']);
         unset($purchaseData['qty']);
         $items = $this->input->post('item_id');

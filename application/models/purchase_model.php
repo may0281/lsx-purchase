@@ -31,8 +31,9 @@ class purchase_model extends ci_model
     }
     public function getPurchaseItem($purchaseID)
     {
-        $this->db->select('*');
+        $this->db->select('purchase_request_item.*,item_size,item_thickness,item_pfilm,item_aica');
         $this->db->from('purchase_request_item');
+        $this->db->join('item','purchase_request_item.item_code = item.item_code','left');
         $this->db->where('purq_id',$purchaseID);
         $query = $this->db->get();
         $this->log_model->Logging('purchase_model','success',$this->db->last_query());

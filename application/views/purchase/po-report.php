@@ -18,8 +18,8 @@ $label = array(
     'request' => 'label-default',
     'approved' => 'label-success',
     'unapproved' => 'label-danger',
-    'pending' => 'label-info',
-    'ordered' => 'label-warning',
+    'pending' => 'label-warning',
+    'ordered' => 'label-info',
     'received' => 'label-primary',
     'delivered' => 'label-primary',
     'reject' => 'label-danger',
@@ -94,8 +94,8 @@ $label = array(
 
                                     <td class="align-center">
                                         <span class="btn-group">
-                                            <a href="<?php echo base_url('purchase/pre-order/detail/'.$r['puror_id'])?>" class="btn btn-xs bs-tooltip" title="" data-original-title="View"><i class="icon-search"></i></a>
-                                            <a href="<?php echo base_url('purchase/pre-order/list/'.$r['puror_id'])?>" class="btn btn-xs bs-tooltip" title="" data-original-title="View List"><i class="icon-list"></i></a>
+                                            <a href="<?php echo base_url('purchase/po-report/detail/'.$r['puror_id'])?>" class="btn btn-xs bs-tooltip" title="" data-original-title="View"><i class="icon-search"></i></a>
+                                            <a href="<?php echo base_url('purchase/po-report/list/'.$r['puror_id'])?>" class="btn btn-xs bs-tooltip" title="" data-original-title="View List"><i class="icon-list"></i></a>
                                             <a data-toggle="modal" href="#change_status_<?php echo $r['purq_id'];?>" id="cha_<?php echo $r['purq_id'];?>" class="btn btn-xs bs-tooltip" title="" data-original-title="Change Status"><i class="icon-exchange"></i></a>
                                             <div class="modal fade" id="change_status_<?php echo $r['purq_id'];?>">
                                                 <form class="form-horizontal row-border" method="post" id="frm_change_status_<?php echo $r['purq_id'];?>"  onsubmit="return checkForm(this);" >
@@ -112,7 +112,7 @@ $label = array(
                                                                     <select name="status" id="status_id" class="col-md-12 select2 full-width-fix required">
                                                                         <option></option>
                                                                         <option value="ordered" <?php echo ($r['puror_status'] == 'ordered' ? 'selected' : '') ?>>Ordered</option>
-                                                                        <option value="imported" <?php echo ($r['puror_status'] == 'imported' ? 'selected' : '') ?>>Imported</option>
+                                                                        <option value="received" <?php echo ($r['puror_status'] == 'received' ? 'selected' : '') ?>>Received</option>
                                                                     </select>
                                                                 </div>
                                                                 <div style="height: 10px; clear: both;" > </div>

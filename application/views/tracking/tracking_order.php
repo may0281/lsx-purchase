@@ -15,15 +15,15 @@
 <script type="text/javascript" src="<?php echo base_url();?>plugins/noty/themes/default.js"></script>
 <?php
 $label = array(
-	'request' => 'label-default',
-	'approved' => 'label-success',
-	'unapproved' => 'label-danger',
-	'pending' => 'label-info',
-	'ordered' => 'label-warning',
-	'received' => 'label-primary',
-	'delivered' => 'label-primary',
-	'reject' => 'label-danger',
-);
+    'request' => 'label-default',
+    'approved' => 'label-success',
+    'unapproved' => 'label-danger',
+    'pending' => 'label-warning',
+    'ordered' => 'label-info',
+    'received' => 'label-primary',
+    'delivered' => 'label-primary',
+    'reject' => 'label-danger',
+)
 ?>
 
 

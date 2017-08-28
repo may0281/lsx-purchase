@@ -18,8 +18,8 @@ $label = array(
     'request' => 'label-default',
     'approved' => 'label-success',
     'unapproved' => 'label-danger',
-    'pending' => 'label-info',
-    'ordered' => 'label-warning',
+    'pending' => 'label-warning',
+    'ordered' => 'label-info',
     'received' => 'label-primary',
     'delivered' => 'label-primary',
     'reject' => 'label-danger',
@@ -104,7 +104,7 @@ $label = array(
                                     <td><span id="span-status-<?php echo $r['purq_id'];?>" class="label <?php echo $label[$r['purq_status']]; ?>"><?php echo $r['purq_status'];?></span></td>
                                     <td class="align-center">
                                         <span class="btn-group">
-                                            <a href="<?php echo base_url('purchase/request/detail/'.$r['purq_id'])?>" class="btn btn-xs bs-tooltip" title="" data-original-title="Search"><i class="icon-search"></i></a>
+                                            <a href="<?php echo base_url('purchase/request/detail/'.$r['purq_id'])?>" class="btn btn-xs bs-tooltip" title="" data-original-title="View"><i class="icon-search"></i></a>
                                             <?php if($allowUpdate == true){ ?>
                                                 <a href="<?php echo base_url('purchase/request/update/'.$r['purq_id'])?>" class="btn btn-xs bs-tooltip" title="" data-original-title="Edit"><i class="icon-pencil"></i></a>
                                             <?php } ?>
