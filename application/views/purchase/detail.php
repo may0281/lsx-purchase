@@ -1,9 +1,9 @@
 <style>
     .pageBreak { page-break-before: always; }
-    @media print {
-        a[href]:after {
-            content: none !important;
-        }
+    @media print
+    {
+        @page { margin: 0; }
+        body  { margin-top: 25px }
     }
 </style>
 <div id="content">
@@ -125,7 +125,7 @@
                                         <tbody>
                                         <tr>
                                             <td>Contractor</td>
-                                            <td><?php echo $data['designer_name'] ?></td>
+                                            <td><?php echo $data['contractor_name'] ?></td>
                                         </tr>
                                         <tr>
                                             <td>Contact Name</td>

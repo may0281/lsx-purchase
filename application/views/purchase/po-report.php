@@ -47,7 +47,7 @@ $label = array(
             <!--=== Page Header ===-->
             <div class="page-header">
                 <div class="page-title">
-                    <h3><?php echo strtoupper($subMenu) ?></h3>
+                    <h3> Purchase Order List</h3>
                     <span></span>
                 </div>
             </div>
@@ -60,7 +60,7 @@ $label = array(
                 <div class="col-md-12">
                     <div class="widget box">
                         <div class="widget-header">
-                            <h4><i class="icon-reorder"></i> Purchase Request List</h4>
+                            <h4><i class="icon-reorder"></i> Purchase Order List</h4>
                             <div class="toolbar no-padding">
                                 <div class="btn-group">
                                     <span class="btn btn-xs widget-collapse"><i class="icon-angle-down"></i></span>

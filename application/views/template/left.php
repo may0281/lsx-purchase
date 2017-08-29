@@ -152,6 +152,7 @@
 							<i class="icon-dashboard"></i>
 							Dashboard
 						</a>
+					</li>
 					<li class="<?php if(array_get($path,1) == 'authen'){echo "current open";} ?>">
 						<a href="javascript:void(0);">
 							<i class="icon-sitemap"></i>
@@ -200,7 +201,7 @@
 						</a>
 						<ul class="sub-menu">
 							<?php  if($purq_rep_view == true){ ?>
-							<li class="<?php if($path_2 == ''){echo "current";} ?>">
+							<li class="<?php if($path_2 == 'report' || $path_2 == ''){echo "current";} ?>">
 								<a href="<?php echo base_url('purchase');?>">
 									<i class="icon-angle-right"></i>
 									Purchase Report
@@ -294,12 +295,14 @@
 							</li>
 						</ul>
 					</li>
-						<li class="">
-						<a href="<?php echo base_url('tracking');?>">
+
+					<li class="<?php if(array_get($path,1) == 'tracking'){echo "current open";} ?>">
+						<a href="<?php echo base_url('tracking')?>">
 							<i class="icon-barcode"></i>
 							Tracking Order
 						</a>
 					</li>
+
 				</ul>
 				<!-- /Navigation -->
 				<div class="sidebar-widget align-center">

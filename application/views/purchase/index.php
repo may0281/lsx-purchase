@@ -47,7 +47,7 @@ $label = array(
             <!--=== Page Header ===-->
             <div class="page-header">
                 <div class="page-title">
-                    <h3><?php echo strtoupper($subMenu) ?></h3>
+                    <h3>Purchase Request Report</h3>
                     <span></span>
                 </div>
             </div>
@@ -89,9 +89,9 @@ $label = array(
                                 <tr id="tr_<?php echo $r['purq_id'];?>">
                                     <td><?php echo $r['purq_code'];?></td>
                                     <td><?php echo $r['proj_name'];?></td>
-                                    <td><?php echo $r['proj_owner_name'];?></td>
-                                    <td><?php echo $r['designer_name'];?></td>
-                                    <td><?php echo $r['contractor_name'];?></td>
+                                    <td><?php echo $r['proj_owner_name'];?><br><?php echo $r['proj_contacts'];?><br><?php echo $r['proj_mobile'];?><br><?php echo $r['proj_email'];?></td>
+                                    <td><?php echo $r['designer_name'];?><br><?php echo $r['designer_contacts'];?><br><?php echo $r['designer_mobile'];?><br><?php echo $r['designer_email'];?></td>
+                                    <td><?php echo $r['contractor_name'];?><br><?php echo $r['contractor_contacts'];?><br><?php echo $r['contractor_mobile'];?><br><?php echo $r['contractor_email'];?></td>
                                     <td>
                                         <?php  $purchaseItem = $this->purchase_model->getPurchaseItem($r['purq_id']);
                                             foreach ($purchaseItem as $purqItem) {
@@ -104,7 +104,9 @@ $label = array(
                                     <td><span id="span-status-<?php echo $r['purq_id'];?>" class="label <?php echo $label[$r['purq_status']]; ?>"><?php echo $r['purq_status'];?></span></td>
                                     <td class="align-center">
                                         <span class="btn-group">
-                                            <a href="<?php echo base_url('purchase/request/detail/'.$r['purq_id'])?>" class="btn btn-xs bs-tooltip" title="" data-original-title="View"><i class="icon-search"></i></a>
+                                            <a href="<?php echo base_url('purchase/report/'.$r['purq_id'])?>" class="btn btn-xs bs-tooltip" title="" data-original-title="View"><i class="icon-search"></i></a>
+                                            <a href="<?php echo base_url('purchase/report/list/'.$r['purq_id'].'/'.$r['purq_code'])?>" class="btn btn-xs bs-tooltip" title="" data-original-title="List"><i class="icon-list"></i></a>
+
                                             <?php if($allowUpdate == true){ ?>
                                                 <a href="<?php echo base_url('purchase/request/update/'.$r['purq_id'])?>" class="btn btn-xs bs-tooltip" title="" data-original-title="Edit"><i class="icon-pencil"></i></a>
                                             <?php } ?>

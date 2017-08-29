@@ -24,7 +24,7 @@
                     </li>
                 </ul>
                 <ul class="crumb-buttons">
-                    <li><a href="<?php echo base_url(); ?>authen/create-role" title=""><i class="icon-plus"></i><span>ADD ROLE</span></a></li>
+                    <li><a href="<?php echo base_url(); ?>authen/init-role/create" title=""><i class="icon-plus"></i><span>ADD ROLE</span></a></li>
 
                 </ul>
             </div>
@@ -74,7 +74,7 @@
                                     <td><?php echo $r['create_by'];?> <br> <?php echo $r['create_date'];?> </td>
                                     <td><?php echo $r['update_by'];?> <br> <?php echo $r['update_date'];?> </td>
 
-                                    <td data-hide="phone,tablet"><a href="<?php echo base_url(); ?>authen/update-role/<?php echo $r['role_code']; ?>" title="Edit">Edit </a></td>
+                                    <td data-hide="phone,tablet"><a href="<?php echo base_url(); ?>authen/init-role/update/<?php echo $r['role_code']; ?>" title="Edit">Edit </a></td>
                                     <td data-hide="phone,tablet"><a href="<?php echo base_url(); ?>authen/delete-role/<?php echo $r['role_code']; ?>" title="Del">Del </a></td>
                                 </tr>
                         <?php $i++; }?>

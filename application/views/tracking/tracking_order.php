@@ -49,7 +49,7 @@ $label = array(
 			<!--=== Page Header ===-->
 			<div class="page-header">
 				<div class="page-title">
-					<h3><?php echo strtoupper($subMenu) ?></h3>
+					<h3>ประมาณการสินค้าเข้า</h3>
 					<span></span>
 				</div>
 			</div>
@@ -62,7 +62,7 @@ $label = array(
 				<div class="col-md-12">
 					<div class="widget box">
 						<div class="widget-header">
-							<h4><i class="icon-reorder"></i> Purchase Request List</h4>
+							<h4><i class="icon-reorder"></i> ประมาณการสินค้าเข้า</h4>
 							<div class="toolbar no-padding">
 								<div class="btn-group">
 									<span class="btn btn-xs widget-collapse"><i class="icon-angle-down"></i></span>
@@ -75,15 +75,14 @@ $label = array(
 								<tr>
 									<th>No</th>
 									<th>Item</th>
+									<th>Order QTY</th>
+									<th>PO No.</th>
+									<th>Order Date</th>
+									<th>Forecast Date</th>
 									<th>Project</th>
 									<th>Purchase</th>
 									<th>Req. Qty</th>
-									<th>OrderNo</th>
-									<th>Order QTY</th>
-									<th>Order Date</th>
-									<th>Forecast Date</th>
-
-									<th>Status</th>
+									<th>Request ETD</th>
 								</tr>
 								</thead>
 								<tbody>
@@ -91,15 +90,19 @@ $label = array(
 									<tr>
 										<td><?php echo $i; ?></td>
 										<td><?php echo $it['item_code']; ?></td>
-										<td><?php echo $it['proj_name']; ?></td>
-										<td><?php echo $it['purq_code']; ?></td>
-										<td><?php echo $it['request_qty']; ?></td>
-										<td><?php echo $it['puror_code']; ?></td>
 										<td><?php echo $it['order_qty']; ?></td>
+										<td><?php echo $it['puror_code']; ?></td>
 										<td><?php echo $it['puror_order_date']; ?></td>
 										<td><?php echo $it['puror_forecasts_date']; ?></td>
 
-										<td><span class="label label-warning"><?php echo $it['status'] ?></span></td>
+										<td><?php echo $it['proj_name']; ?></td>
+										<td><?php echo $it['purq_code']; ?></td>
+										<td><?php echo $it['request_qty']; ?></td>
+
+
+
+
+										<td><span class="label label-warning"><?php echo $it['purq_require_end'] ?></span></td>
 									</tr>
 									<?php $i++;} ?>
 

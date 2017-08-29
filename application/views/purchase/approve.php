@@ -102,7 +102,7 @@ $label = array(
                                     <td><span id="span-status-<?php echo $r['purq_id']; ?>" class="label <?php echo $label[$r['purq_status']]; ?>"><?php echo $r['purq_status'];?></span></td>
                                     <td class="align-center">
                                         <span class="btn-group">
-                                            <a href="<?php echo base_url('purchase/request/detail/'.$r['purq_id'])?>" class="btn btn-xs bs-tooltip btn-info" title="" data-original-title="View Detail"><i class="icon-search"></i></a>
+                                            <a href="<?php echo base_url('purchase/report/'.$r['purq_id'])?>" class="btn btn-xs bs-tooltip btn-info" title="" data-original-title="View Detail"><i class="icon-search"></i></a>
 
                                             <a href="<?php echo base_url('purchase/request/update/'.$r['purq_id'])?>" id="app_<?php echo $r['purq_id'];?>" data-value="approved" class="btn btn-xs bs-tooltip btn-success confirm-dialog" title="" data-original-title="Approve">Approve</a>
 

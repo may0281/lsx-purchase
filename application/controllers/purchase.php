@@ -88,6 +88,29 @@ class purchase extends CI_Controller {
 
     }
 
+    public function getList($id,$code)
+    {
+        $permission = $this->hublibrary_model->permission($this->major,$this->minor,'view');
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('template/400','',true);
+            die();
+        }
+        $purchaseDetail = $this->purchase_model->getPurchaseItemAndPo($id);
+//        sd($purchaseDetail);
+        $data = array(
+            'menu'=> $this->menu,
+            'subMenu'=> $this->report,
+            'purq_code'=> $code,
+            'data' => $purchaseDetail
+        );
+
+        $this->load->view('template/left');
+        $this->load->view('purchase/list',$data);
+
+    }
+
 	public function request()
     {
         $permission = $this->hublibrary_model->permission($this->major,$this->minor,'create');
