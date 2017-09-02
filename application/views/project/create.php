@@ -51,7 +51,7 @@
 										<label class="col-md-2 control-label">Create By:</label>
 										<div class="col-md-10"><input type="text" name="create_by" class="form-control" value="<?php echo $create_by; ?>" disabled="disabled"></div>
 									</div>
-									<div class="form-group">
+<!--									<div class="form-group">
 										<label class="col-md-2 control-label" for="input19">Customer</label>
 										<div class="col-md-10">
 											<select name="customer" id="input19" class="select2-select-00 col-md-12 full-width-fix">
@@ -61,11 +61,11 @@
 													<?php } ?>
 											</select>
 										</div>
-									</div>			
-									<div class="form-group">
+									</div>-->			
+<!--									<div class="form-group">
 										<label class="col-md-2 control-label"></label>
 										<div class="col-md-10"><input class="btn btn-sm btn-primary" id="Add" type="button" value="Others Customer"></div>
-									</div>
+									</div>-->
 									<div class="form-group" id="other_customer" style="display:none">
 									<label class="col-md-2 control-label">Customer Name:</label>
 										<div class="col-md-10"><input type="text" name="new_customer" id="new_customer" class="form-control"></div>
@@ -94,12 +94,11 @@
 </div>
 </div>
 <script>
-	$(function () {
+/*	$(function () {
 	  $('#Add').on('click', function () {
-	//	$('<p>Text</p>').appendTo('#other_company');
 		 $("#other_customer").toggle();
 	  });
 	});
-	
+	*/
 </script>
 </body>

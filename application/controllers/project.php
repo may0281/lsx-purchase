@@ -82,7 +82,7 @@ class project extends CI_Controller {
 		 $proj_name = $this->input->post('name');
 		 $proj_owner = $this->input->post('create_by');
 		 
-		 if($this->input->post('new_customer') == "" && $this->input->post('customer') != ""){
+/*		 if($this->input->post('new_customer') == "" && $this->input->post('customer') != ""){
 			$cus_id = $this->input->post('customer');
 			
 		 }else if($this->input->post('new_customer') != "" && $this->input->post('customer') != ""){
@@ -93,7 +93,7 @@ class project extends CI_Controller {
 		 }else{
 			echo "<script>alert('Please select customer.'); window.location.assign('".base_url()."index.php/project/create'); </script>";
 			exit();
-		 }
+		 }*/
 		
 		 $proj_about  = $this->input->post('detail');
 
@@ -101,7 +101,7 @@ class project extends CI_Controller {
 		 $data = array(
             'proj_name'=> $proj_name,
             'proj_owner'=> $this->project_model->getUserlogin($this->session->userdata('adminData')),
-			'cus_id'=> $cus_id,
+		//	'cus_id'=> $cus_id,
 			'proj_createdate'=> date('Y-m-d H:i:s'),
 			'proj_about'=> $proj_about,
 			'status'=> '1'
@@ -115,7 +115,7 @@ class project extends CI_Controller {
     {
 		 $proj_name = $this->input->post('name');
 		 $proj_id = $this->input->post('proj_id');
-		 if($this->input->post('new_customer') == "" && $this->input->post('customer') != ""){
+/*		 if($this->input->post('new_customer') == "" && $this->input->post('customer') != ""){
 			$cus_id = $this->input->post('customer');
 			
 		 }else if($this->input->post('new_customer') != "" && $this->input->post('customer') != ""){
@@ -126,13 +126,13 @@ class project extends CI_Controller {
 		 }else{
 			echo "<script>alert('Please select customer.'); window.location.assign('".base_url()."index.php/project/create'); </script>";
 			exit();
-		 }
+		 }*/
 		
 		 $proj_about  = $this->input->post('detail');
 		 date_default_timezone_set('asia/bangkok');
 		 $data = array(
             'proj_name'=> $proj_name,
-			'cus_id'=> $cus_id,
+		//	'cus_id'=> $cus_id,
 			'proj_about'=> $proj_about,
 			'status'=> '1'
          );
