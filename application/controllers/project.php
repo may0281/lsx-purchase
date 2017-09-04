@@ -23,13 +23,13 @@ class project extends CI_Controller {
 	
 	public function create()
     {
-//		$permission = $this->hublibrary_model->permission($this->major,$this->minor,'create');
-//        if($permission == false)
-//        {
-//            echo $this->load->view('template/left','',true);
-//            echo $this->load->view('template/400','',true);
-//            die();
-//        }
+		$permission = $this->hublibrary_model->permission($this->major,$this->minor,'create');
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('template/400','',true);
+            die();
+        }
 		
 		$create_by = $this->project_model->getUserlogin($this->session->userdata('adminData'));
         $data = array(
@@ -100,24 +100,12 @@ class project extends CI_Controller {
     {
 		 $proj_name = $this->input->post('name');
 		 $proj_id = $this->input->post('proj_id');
-		 if($this->input->post('new_customer') == "" && $this->input->post('customer') != ""){
-			$cus_id = $this->input->post('customer');
-			
-		 }else if($this->input->post('new_customer') != "" && $this->input->post('customer') != ""){
-			$cus_id = $this->input->post('customer');
-			
-		 }else if($this->input->post('new_customer') != "" && $this->input->post('customer') == ""){
-		 	$cus_id = $this->project_model->updateCustomer($this->input->post('new_customer'));
-		 }else{
-			echo "<script>alert('Please select customer.'); window.location.assign('".base_url()."index.php/project/create'); </script>";
-			exit();
-		 }
+
 		
 		 $proj_about  = $this->input->post('detail');
 		 date_default_timezone_set('asia/bangkok');
 		 $data = array(
             'proj_name'=> $proj_name,
-			'cus_id'=> $cus_id,
 			'proj_about'=> $proj_about,
 			'status'=> '1'
          );

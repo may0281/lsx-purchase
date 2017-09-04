@@ -59,12 +59,5 @@
 
 </div>
 </div>
-<script>
-	$(function () {
-	  $('#Add').on('click', function () {
-	//	$('<p>Text</p>').appendTo('#other_company');
-		 $("#other_customer").toggle();
-	  });
-	});
-</script>
+
 </body>
