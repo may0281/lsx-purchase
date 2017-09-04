@@ -440,7 +440,7 @@ class purchase extends CI_Controller {
         $message .= $note;
         $this->purchase_model->changePurchaseStatus($id,$status);
         $this->purchase_model->changeStatusLog($id,$status);
-        $this->sendEmailUpdateStatus($message,'Change Status',$email);
+      //  $this->sendEmailUpdateStatus($message,'Change Status',$email);
     }
 
     protected function sendEmailUpdateStatus($message,$action,$email = array())

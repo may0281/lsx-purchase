@@ -4,7 +4,7 @@ class stock extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		error_reporting(0);
+	//	error_reporting(0);
 		if($this->session->userdata('isSession') == false){
 
             echo "<script> window.location.assign('".base_url()."login?ReturnUrl=".$_SERVER['REQUEST_URI']."');</script>";
@@ -69,6 +69,7 @@ class stock extends CI_Controller {
 			'item_pfilm'=> $this->input->post('item_pfilm'),
 			'item_aica'=> $this->input->post('item_aica'),
 			'item_qty'=> $this->input->post('stk_qty'),
+			'item_price'=> $this->input->post('stk_unit_price'),
 			'item_min'=> $this->input->post('item_min'),
 			'item_pfilm'=> $this->input->post('item_pfilm'),
 			'item_add_date'=> date('Y-m-d H:i:s'),
@@ -113,7 +114,7 @@ class stock extends CI_Controller {
     {
 		$data = array(
             'menu'=> 'Stock',
-            'subMenu'=> 'Stock Item',
+            'subMenu'=> 'Stock Item List',
 			 'q' => $this->stock_model->getItemList()
         );
 
@@ -125,7 +126,7 @@ class stock extends CI_Controller {
     {
 		$data = array(
             'menu'=> 'Stock List',
-            'subMenu'=> 'Stock List',
+            'subMenu'=> 'Detail Importing',
 			 'q' => $this->stock_model->getStockitem()
         );
 
@@ -233,21 +234,33 @@ class stock extends CI_Controller {
 	
 		if($this->uri->segment(3) == 'search'){
 		
-			$data["proj_id"] = $this->input->post('proj_id');
+			$data = array(
+              'proj_id'=> $this->input->post('proj_id'),
+          	  'proj_owner_name'=> $this->input->post('proj_owner_name'),
+			  'purq_id'=> $this->input->post('purq_id')
+			);
+			
+/*			$data["proj_id"] = $this->input->post('proj_id');
 			$data["proj_owner_name"] = $this->input->post('proj_owner_name');
-			$data["purq_id"] = $this->input->post('purq_id');
+			$data["purq_id"] = $this->input->post('purq_id');*/
 		
 		}else{
-			$data["proj_id"] = "";
+/*			$data["proj_id"] = "";
 			$data["proj_owner_name"] = "";
-			$data["purq_id"] = "";
+			$data["purq_id"] = "";*/
+			
+			$data = array(
+              'proj_id'=> "",
+          	  'proj_owner_name'=> "",
+			  'purq_id'=> ""
+			);
 		}
 		
 		
 			
 		$data = array(
             'menu'=> 'STOCK ITEM',
-            'subMenu'=> 'Export by Purchase Request',
+            'subMenu'=> 'เบิกสินค้า',
 			'pj' => $this->stock_model->getPJ(),
 			'own' => $this->stock_model->getOwner(),
 			'pur' => $this->stock_model->getPurchaseRequest(),
@@ -263,8 +276,8 @@ class stock extends CI_Controller {
 	public function export_by_order_sum()
     {
 		$data = array(
-            'menu'=> 'Export by Order',
-            'subMenu'=> 'Confirm Export',
+            'menu'=> 'เบิกสินค้า',
+            'subMenu'=> 'ยืนยันเบิกสินค้า',
 			'q' => $this->stock_model->getExportItem($this->uri->segment(3))
         );
 		$this->load->view('template/left');
@@ -290,7 +303,7 @@ class stock extends CI_Controller {
 			
 		$data = array(
             'menu'=> 'STOCK ITEM',
-            'subMenu'=> 'Import by Purchase Order',
+            'subMenu'=> 'Update Stock',
 			'po' => $this->stock_model->getPO(),
 			'q' => $this->stock_model->importSearch($data),
 			'puror_code' => $this->input->post('puror_code'),

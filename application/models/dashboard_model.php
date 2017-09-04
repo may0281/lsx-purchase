@@ -20,7 +20,7 @@ class dashboard_model extends ci_model
 	
 		public function getRequeststatus()
 	{
-		$query = $this->db->query("SELECT COUNT(`purq_id`) as total FROM purchase_request where `purq_status` ='request';");
+		$query = $this->db->query("SELECT COUNT(`purq_id`) as total FROM purchase_request;");
 		$row = $query->row();
 
 		if (isset($row))

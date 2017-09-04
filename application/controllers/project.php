@@ -23,13 +23,13 @@ class project extends CI_Controller {
 	
 	public function create()
     {
-//		$permission = $this->hublibrary_model->permission($this->major,$this->minor,'create');
-//        if($permission == false)
-//        {
-//            echo $this->load->view('template/left','',true);
-//            echo $this->load->view('template/400','',true);
-//            die();
-//        }
+/*		$permission = $this->hublibrary_model->permission($this->major,$this->minor,'create');
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('template/400','',true);
+            die();
+        }*/
 		
 		$create_by = $this->project_model->getUserlogin($this->session->userdata('adminData'));
         $data = array(
@@ -49,7 +49,7 @@ class project extends CI_Controller {
             'menu'=> 'Project',
             'subMenu'=> 'Edit',
 			'proj_id'=> $proj_id,
-			'customerList'=> $this->project_model->getCustomer(),
+		//	'customerList'=> $this->project_model->getCustomer(),
 			'ProjectData'=> $this->project_model->getProjectby($proj_id)
         );
         $this->load->view('template/left');
@@ -68,7 +68,7 @@ class project extends CI_Controller {
         $data = array(
             'menu'=> 'Project',
             'subMenu'=> 'Project List',
-            'q' => $this->project_model->getProjectList()
+            'q' => $this->project_model->getProjectList($this->project_model->getUserAccount($this->session->userdata('adminData')))
         );
         $this->load->view('template/left');
         $this->load->view('project/lists',$data);
@@ -78,7 +78,7 @@ class project extends CI_Controller {
 	public function create_action()
     {
 		 $proj_name = $this->input->post('name');
-		 $proj_owner = $this->input->post('create_by');
+		 $proj_owner = $this->project_model->getUserAccount($this->session->userdata('adminData'));
 
 		
 		 $proj_about  = $this->input->post('detail');
@@ -86,7 +86,7 @@ class project extends CI_Controller {
 		 date_default_timezone_set('asia/bangkok');
 		 $data = array(
             'proj_name'=> $proj_name,
-            'proj_owner'=> $this->project_model->getUserlogin($this->session->userdata('adminData')),
+            'proj_owner'=> $proj_owner,
 			'proj_createdate'=> date('Y-m-d H:i:s'),
 			'proj_about'=> $proj_about,
 			'status'=> '1'
@@ -100,7 +100,7 @@ class project extends CI_Controller {
     {
 		 $proj_name = $this->input->post('name');
 		 $proj_id = $this->input->post('proj_id');
-		 if($this->input->post('new_customer') == "" && $this->input->post('customer') != ""){
+/*		 if($this->input->post('new_customer') == "" && $this->input->post('customer') != ""){
 			$cus_id = $this->input->post('customer');
 			
 		 }else if($this->input->post('new_customer') != "" && $this->input->post('customer') != ""){
@@ -111,13 +111,13 @@ class project extends CI_Controller {
 		 }else{
 			echo "<script>alert('Please select customer.'); window.location.assign('".base_url()."index.php/project/create'); </script>";
 			exit();
-		 }
+		 }*/
 		
 		 $proj_about  = $this->input->post('detail');
 		 date_default_timezone_set('asia/bangkok');
 		 $data = array(
             'proj_name'=> $proj_name,
-			'cus_id'=> $cus_id,
+		//	'cus_id'=> $cus_id,
 			'proj_about'=> $proj_about,
 			'status'=> '1'
          );

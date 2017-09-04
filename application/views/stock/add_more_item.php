@@ -1,4 +1,4 @@
-<body>
+
 <?php $data = $item_code[0]; ?>
 <div id="container">
     <div id="content">
@@ -11,7 +11,7 @@
                         <a href="<?php echo base_url();?>dashboard">DASHBOARD</a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url();?>blog" title=""><?php echo strtoupper($menu); ?></a>
+                        <a href="<?php echo base_url();?>stock/list_item" title=""><?php echo strtoupper($menu); ?></a>
                     </li>
                     <li class="current">
                         <a href="#" title=""><?php echo strtoupper($subMenu) ?></a>

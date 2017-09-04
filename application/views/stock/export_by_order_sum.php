@@ -26,7 +26,7 @@
                         <a href="<?php echo base_url();?>dashboard">DASHBOARD</a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url();?>blog" title=""><?php echo strtoupper($menu); ?></a>
+                        <a href="<?php echo base_url();?>stock/export_by_order" title=""><?php echo strtoupper($menu); ?></a>
                     </li>
                     <li class="current">
                         <a href="#" title=""><?php echo strtoupper($subMenu) ?></a>
@@ -102,7 +102,7 @@
 									<?php $i++; }?>	
 									</tbody>
 								</table>
-								<div align="right"><input class="btn btn-sm btn-inverse" type="submit" value="ยืนยัน Export" style="margin:10px" onclick="window.location.href='<?php echo base_url(); ?>stock/export_item_action/<?php echo $this->uri->segment(3); ?>'" <?php if($dis =='1'){ echo 'disabled="disabled"'; } ?>></div>
+								<div align="right"><input class="btn btn-sm btn-inverse" type="submit" value="ยืนยัน" style="margin:10px" onclick="window.location.href='<?php echo base_url(); ?>stock/export_item_action/<?php echo $this->uri->segment(3); ?>'" <?php if($dis =='1'){ echo 'disabled="disabled"'; } ?>></div>
 							</div>
 							</div>
 						</div>

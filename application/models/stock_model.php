@@ -51,6 +51,7 @@ class stock_model extends ci_model
         $this->db->select('*');
         $this->db->from('item');
 		$this->db->where('item_status',1);
+		$this->db->order_by('item_id','DESC');
         $query = $this->db->get();
         return $query->result_array();
 	}
@@ -148,8 +149,9 @@ class stock_model extends ci_model
 				if (isset($emapData[2])) { $item_3=$emapData[2]; }
 				if (isset($emapData[3])) { $item_4=$emapData[3]; }
 				
-				$chk_temp = $this->checkDuplicate_temp($item_1.'-'.$item_2.'-'.$item_3.'-'.$item_4,$tmp_type);
-				$chk_dup = $this->checkDuplicate_item($item_1.'-'.$item_2.'-'.$item_3.'-'.$item_4);
+				$item = trim($item_1.'-'.$item_2.'-'.$item_3.'-'.$item_4);
+				$chk_temp = $this->checkDuplicate_temp($item,$tmp_type);
+				$chk_dup = $this->checkDuplicate_item($item);
 
 				if($chk_dup == "0"){
 					$data['duplicate'] = 0;
@@ -157,7 +159,19 @@ class stock_model extends ci_model
 					$data['duplicate'] = 1;
 				}
 
-				$data['tmp_item_code'] = $item_1.'-'.$item_2.'-'.$item_3.'-'.$item_4;
+				$data = array(
+            			'tmp_item_code'=> $item,
+           				'tmp_item_aica'=> $emapData[4],
+						'tmp_item_pfilm'=> $emapData[5],
+						'tmp_item_size'=> $emapData[6],
+						'tmp_item_thickness'=> $emapData[7],
+						'tmp_item_price'=> $emapData[8],
+						'tmp_item_qty'=> $emapData[9],
+						'tmp_item_min'=> $emapData[10],
+						'tmp_type'=> $tmp_type
+       			 );
+				
+/*				$data['tmp_item_code'] = $item;
 				$data['tmp_item_aica'] = $emapData[4];
 				$data['tmp_item_pfilm'] = $emapData[5];
 				$data['tmp_item_size'] = $emapData[6];
@@ -165,12 +179,13 @@ class stock_model extends ci_model
 				$data['tmp_item_price'] = $emapData[8];
 				$data['tmp_item_qty'] = $emapData[9];
 				$data['tmp_item_min'] = $emapData[10];
-				$data['tmp_type'] = $tmp_type;
+				$data['tmp_type'] = $tmp_type;*/
 
 				if($chk_temp == "0"){
 					$this->db->set($data);
 					$this->db->insert('temp_import');
 				}
+				$data['tmp_item_code'] = NULL;
 			}
 			$i++;
 		}
@@ -198,7 +213,7 @@ class stock_model extends ci_model
 					$data['duplicate'] = 1;
 				}
 
-				$data['tmp_item_code'] = $item_1.'-'.$item_2.'-'.$item_3.'-'.$item_4;
+/*				$data['tmp_item_code'] = $item_1.'-'.$item_2.'-'.$item_3.'-'.$item_4;
 				$data['tmp_item_aica'] = $emapData[4];
 				$data['tmp_item_pfilm'] = $emapData[5];
 				$data['tmp_item_size'] = $emapData[6];
@@ -206,7 +221,19 @@ class stock_model extends ci_model
 				$data['tmp_item_price'] = $emapData[8];
 				$data['tmp_item_qty'] = $emapData[9];
 				$data['tmp_item_min'] = $emapData[10];
-				$data['tmp_type'] = $tmp_type;
+				$data['tmp_type'] = $tmp_type;*/
+				
+				$data = array(
+				  'tmp_item_code'=> $item_1.'-'.$item_2.'-'.$item_3.'-'.$item_4,
+				  'tmp_item_aica'=> $emapData[4],
+				  'tmp_item_pfilm'=> $emapData[5],
+				  'tmp_item_size'=> $emapData[6],
+				  'tmp_item_thickness'=> $emapData[7],
+				  'tmp_item_price'=> $emapData[8],
+				  'tmp_item_qty'=> $emapData[9],
+				  'tmp_item_min'=> $emapData[10],
+				  'tmp_type'=> $tmp_type
+				 );
 
 				if($chk_temp == "0"){
 					$this->db->set($data);
@@ -239,7 +266,7 @@ class stock_model extends ci_model
 			$this->db->select('tmp_item_code');
 			$this->db->from('temp_import');
 			$this->db->where('tmp_item_code',$item_code);
-			$this->db->where('tmp_type',$item_code);
+			//$this->db->where('tmp_type',$item_code);
 			$query = $this->db->get();
 
 			$row = $query->row();
@@ -286,7 +313,7 @@ class stock_model extends ci_model
 
 				if ($query->num_rows() > 0)
 				{
-					$data['item_code'] = $row->tmp_item_code;
+/*					$data['item_code'] = $row->tmp_item_code;
 					$data['item_size'] = $row->tmp_item_size;
 					$data['item_thickness']	= $row->tmp_item_thickness;
 					$data['item_pfilm'] = $row->tmp_item_pfilm;
@@ -295,7 +322,20 @@ class stock_model extends ci_model
 					$data['item_price'] = $row->tmp_item_price;
 					$data['item_min'] = $row->tmp_item_min;
 					$data['item_add_date'] = date('Y-m-d H:i:s');
-					$data['item_status'] = 1;
+					$data['item_status'] = 1;*/
+					
+					$data = array(
+           			 'item_code'=> $row->tmp_item_code,
+            		 'item_size'=> $row->tmp_item_size,
+					 'item_thickness'=> $row->tmp_item_thickness,
+					 'item_pfilm'=> $row->tmp_item_pfilm,
+					 'item_aica'=> $row->tmp_item_aica,
+					 'item_qty'=> $row->tmp_item_qty,
+					 'item_price'=> $row->tmp_item_price,
+					 'item_min'=> $row->tmp_item_min,
+					 'item_add_date'=> date('Y-m-d H:i:s'),
+					 'item_status'=> '1'
+        			);
 
 					$this->db->trans_start();
 					$this->db->set($data);

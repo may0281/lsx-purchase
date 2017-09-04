@@ -11,7 +11,7 @@
                         <a href="<?php echo base_url();?>dashboard">DASHBOARD</a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url();?>blog" title=""><?php echo strtoupper($menu); ?></a>
+                        <a href="<?php echo base_url();?>project/lists" title=""><?php echo strtoupper($menu); ?></a>
                     </li>
                     <li class="current">
                         <a href="#" title=""><?php echo strtoupper($subMenu) ?></a>
@@ -45,6 +45,10 @@
 									<label class="col-md-2 control-label">Create By:</label>
 									<div class="col-md-10"><input type="text" name="create_by" class="form-control" value="<?php echo array_get($data,'proj_owner');?>" disabled="disabled"></div>
 								</div>
+								<div class="form-group">
+										<label class="col-md-2 control-label">Detail:</label>
+										<div class="col-md-10"><textarea rows="4" cols="5" name="detail" class="form-control"><?php echo array_get($data,'proj_about');?></textarea></div>
+									</div>
 								<div class="form-group" style="float:right; margin-right:20px; margin-top:20px;">
 									<input name="proj_id" type="hidden" value="<?php echo array_get($data,'proj_id'); ?>">
 									<input class="btn btn-sm btn-primary" type="submit" value="Edit"> <input class="btn" type="reset" value="Reset">

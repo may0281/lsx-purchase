@@ -44,7 +44,7 @@
 								<ul class="stats"> <!-- .no-dividers -->
 									<li>
 										<strong><?php echo $c_request;?></strong>
-										<small>Total Requesting</small>
+										<small>Total Request</small>
 									</li>
 									<li class="light hidden-xs">
 										<strong><?php echo $c_approve;?></strong>
@@ -75,7 +75,13 @@ $(document).ready(function(){
 	// Sample Data
 	
 	<?php 
+	
+	//print_r($chart);
+	
 	foreach ($chart as $r) {
+	
+	
+	
 	 	if($r["month"] == "1"){
 			$jan = "[1262304000000, ".$r["total"]."]";
 		}else{
@@ -147,8 +153,12 @@ $(document).ready(function(){
 		}else{
 			$dec = "[1291161600000, 0]";
 		}
+		
+/*		$r["month"] = NULL;
+		$r["total"] = NULL;*/
+		
 	 }
-
+//echo $aug;
 	?>
 	
 	

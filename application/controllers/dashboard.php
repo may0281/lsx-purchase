@@ -19,6 +19,7 @@ class dashboard extends CI_Controller {
 	
 	public function index()
 	{
+	//	$this->dashboard_model->updateChart();
         $data = array(
             'menu'=> 'dashboard',
 			'chart' => $this->dashboard_model->getChart(),

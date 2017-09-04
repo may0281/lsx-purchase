@@ -278,19 +278,19 @@
 							<li>
 								<a href="<?php echo base_url('stock/list_item');?>">
 									<i class="icon-angle-right"></i>
-									Stock Item
+									Stock Item List
 								</a>
 							</li>
 							<li>
 								<a href="<?php echo base_url(); ?>stock/import_by_order">
 									<i class="icon-angle-right"></i>
-									Import Item
+									Update Stock
 								</a>
 							</li>
 							<li>
 								<a href="<?php echo base_url(); ?>stock/export_by_order">
 									<i class="icon-angle-right"></i>
-									Export Item
+									เบิกสินค้า
 								</a>
 							</li>
 						</ul>

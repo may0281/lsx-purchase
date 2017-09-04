@@ -30,7 +30,7 @@
                         <a href="<?php echo base_url();?>dashboard">DASHBOARD</a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url();?>blog" title=""><?php echo strtoupper($menu); ?></a>
+                        <a href="<?php echo base_url();?>stock/list_item" title=""><?php echo strtoupper($menu); ?></a>
                     </li>
                     <li class="current">
                         <a href="#" title=""><?php echo strtoupper($subMenu) ?></a>
@@ -51,8 +51,7 @@
 
             <!--=== Normal ===-->
 			
-			<div class="row">
-            <!--=== Validation Example 1 ===-->
+<!--			<div class="row">
             <div class="col-md-12">
                 <div class="widget box">
                     <div class="widget-header">
@@ -79,9 +78,8 @@
                         </form>
                     </div>
                 </div>
-                <!-- /Validation Example 1 -->
             </div>
-        </div>
+        </div>-->
 			
             <div class="row">
                 <div class="col-md-12">
@@ -115,7 +113,7 @@
                                     <td><?php echo $r['puror_inquiry_by'];?></td>
                                     <td class="align-center">
                                         <span class="btn-group">
-                               			<a href="<?php echo base_url('stock/import_by_order_sum/'.$r['puror_id'].''); ?>">Import</a>
+                               			<a href="<?php echo base_url('stock/import_by_order_sum/'.$r['puror_id'].''); ?>">Confirm Update</a>
                                         </span>
                                     </td>
                                 </tr>
