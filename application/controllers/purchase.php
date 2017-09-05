@@ -27,13 +27,6 @@ class purchase extends CI_Controller {
         $this->marketting = 'MARKETING';
         $this->sale = 'SALE';
         $this->status = array(
-            'request',
-            'approved',
-            'unapproved',
-            'pending',
-            'ordered',
-            'received',
-            'delivered',
             'reject',
         );
 	}
@@ -151,7 +144,7 @@ class purchase extends CI_Controller {
         try
         {
             $purq_id = $this->purchase_model->createPurchaseRequest($purchaseData);
-            $this->purchase_model->updatePurchaseCode($purq_id);
+            $purchase_code = $this->purchase_model->updatePurchaseCode($purq_id);
             for($i=0; $i < count($items); $i++)
             {
                 if($items[$i])
@@ -177,7 +170,7 @@ class purchase extends CI_Controller {
             exit();
         }
 
-        $dataEmail = $this->prepareDataMail($this->input->post(),$this->create);
+        $dataEmail = $this->prepareDataMail($this->input->post(),$purchase_code,$this->create);
         $this->sendPurchaseRequest($dataEmail,$this->create);
         echo "<script>alert('Success.'); window.location.assign('".base_url()."purchase'); </script>";
         exit();
@@ -212,6 +205,7 @@ class purchase extends CI_Controller {
         $purchaseData['purq_update_by'] = $this->session->userdata('adminData');
         $purchaseData['purq_update_date'] = date('Y-m-d H:i:s');
         unset($purchaseData['purq_id']);
+        unset($purchaseData['purq_code']);
         unset($purchaseData['purchase_item']);
         unset($purchaseData['purchase_item_list']);
         unset($purchaseData['purchase_item_qty']);
@@ -227,7 +221,7 @@ class purchase extends CI_Controller {
         $qty = $this->input->post('qty');
         try
         {
-            $this->purchase_model->updatePurchaseRequest($purchaseData,$purq_id);
+//            $this->purchase_model->updatePurchaseRequest($purchaseData,$purq_id);
             for($j=0; $j<count($purchase_item); $j++)
             {
                 $purchaseDataItem = array(
@@ -236,7 +230,7 @@ class purchase extends CI_Controller {
                     'qty' => $purchase_item_qty[$j],
 
                 );
-                $this->purchase_model->updatePurchaseRequestItem($purchaseDataItem,$purchase_item[$j]);
+//                $this->purchase_model->updatePurchaseRequestItem($purchaseDataItem,$purchase_item[$j]);
 
             }
 
@@ -271,7 +265,7 @@ class purchase extends CI_Controller {
             exit();
         }
 
-        $dataEmail = $this->prepareDataMail($this->input->post(),$this->update);
+        $dataEmail = $this->prepareDataMail($this->input->post(),$this->input->post('purq_code'),$this->update);
         $this->sendPurchaseRequest($dataEmail,$this->update);
         echo "<script>alert('Success.'); window.location.assign('".base_url()."purchase'); </script>";
         exit();
@@ -280,19 +274,30 @@ class purchase extends CI_Controller {
     protected function sendPurchaseRequest($message,$action)
     {
         $subject = 'Purchase Request ['.strtoupper($action).']';
+        $config = array (
+            'mailtype' => 'html',
+            'charset'  => 'utf-8',
+            'priority' => '1'
+        );
+        $this->email->initialize($config);
         $this->email->from('backend.lsx@gmail.com' ,'Purchasing System');
-        $this->email->to('maya.skyt@gmail.com');
+        $this->email->to(array('maya.skyt@gmail.com'));
         $this->email->subject($subject);
+//        $this->email->set_header('Content-Type', "text/html; charset=UTF-8\r\n");
+
         $this->email->message($message);
+        $this->email->set_alt_message($message);
+
         $result = $this->email->send();
 
         return $result;
     }
 
-    protected function prepareDataMail($data,$action)
+    protected function prepareDataMail($data,$purchase_code,$action)
     {
         $project = $this->project_model->getProjectby($data['proj_id']);
         $items = $data['item_id'];
+
         $purchase_item = $data['purchase_item'];
         $qty = $data['qty'];
         $itemMessage = null;
@@ -322,39 +327,49 @@ class purchase extends CI_Controller {
                 }
             }
         }
-        $purq_code = 'P'.str_pad($data['proj_id'],5 ,0,STR_PAD_LEFT);
-        $message = '
-		Project NO : ' . $purq_code . '
-		Project : ' . $project[0]['proj_name'] . '
-		'.$action.' by : ' . $this->session->userdata('adminData') . '
-		'.$action.' date : ' . date('Y-m-d H:i:s') . '
-		Request date : ' . $data['purq_require_start'] . ' - '.  $data['purq_require_end']. '
-		Project owner name : ' . $data['proj_owner_name'] . '		
-		Project contacts : ' . $data['proj_contacts'] . '		
-		Project mobile : ' . $data['proj_mobile'] . '		
-		Project email : ' . $data['proj_email'] . '		
-		Designer name : ' . $data['designer_name'] . '		
-		Designer contacts : ' . $data['designer_contacts'] . '		
-		Designer mobile : ' . $data['designer_mobile'] . '		
-		Designer email : ' . $data['designer_email'] . '		
-		Contractor name : ' . $data['contractor_name'] . '		
-		Contractor contacts : ' . $data['contractor_contacts'] . '		
-		Contractor mobile : ' . $data['contractor_mobile'] . '		
-		Contractor email : ' . $data['contractor_email'] . '		
-		Marketing account : ' . $data['mkt_account'] . '		
-		Marketing mobile : ' . $data['mkt_mobile'] . '		
-		Sale account : ' . $data['sale_account'] . '		
-		Sale mobile : ' . $data['sale_mobile'] . "\n".'	
-			
-		=========================== Purchase ITEM =========================== '
+        $data['purq_code'] = $purchase_code;
+        $data['project_name'] = $project[0]['proj_name'];
+        $data['action'] = $action;
+        $data['action_by'] = $this->session->userdata('adminData');
+//        $message = '
+//		Purchase NO : ' . $purq_code . '
+//		Project : ' . $project[0]['proj_name'] . '
+//		'.$action.' by : ' . $this->session->userdata('adminData') . '
+//		'.$action.' date : ' . date('Y-m-d H:i:s') . '
+//		Request date : ' . $data['purq_require_start'] . ' - '.  $data['purq_require_end']. '
+//		Project owner name : ' . $data['proj_owner_name'] . '
+//		Project contacts : ' . $data['proj_contacts'] . '
+//		Project mobile : ' . $data['proj_mobile'] . '
+//		Project email : ' . $data['proj_email'] . '
+//		Designer name : ' . $data['designer_name'] . '
+//		Designer contacts : ' . $data['designer_contacts'] . '
+//		Designer mobile : ' . $data['designer_mobile'] . '
+//		Designer email : ' . $data['designer_email'] . '
+//		Contractor name : ' . $data['contractor_name'] . '
+//		Contractor contacts : ' . $data['contractor_contacts'] . '
+//		Contractor mobile : ' . $data['contractor_mobile'] . '
+//		Contractor email : ' . $data['contractor_email'] . '
+//		Marketing account : ' . $data['mkt_account'] . '
+//		Marketing mobile : ' . $data['mkt_mobile'] . '
+//		Sale account : ' . $data['sale_account'] . '
+//		Sale mobile : ' . $data['sale_mobile'] . "\n".'
+//
+//		=========================== Purchase ITEM =========================== '
+//
+//            ."\n" . $purchase_itemMessage . "\n". '
+//
+//        =========================== New ITEM =========================== '
+//            ."\n" . $itemMessage . "\n". '
+//
+//		* Note : ' .$data['purq_comment']. '
+//		** email from purchasing system **';
+//        $data = array();
+        $message = $this->load->view('email/purchase-request',$data,true);
+//        echo $message;
+//        exit();
 
-            ."\n" . $purchase_itemMessage . "\n". '
-        
-        =========================== New ITEM =========================== '
-            ."\n" . $itemMessage . "\n". '
 
-		* Note : ' .$data['purq_comment']. '
-		** email from purchasing system **';
+
         return $message;
     }
 
@@ -434,11 +449,12 @@ class purchase extends CI_Controller {
         $email = array($oldData['mkt_account'],$oldData['sale_account']);
         $message = 'The status purchase no. '.$purq_code.' has been changed.' . "\n\n";
         $message .= strtoupper($oldStatus). ' TO ' . strtoupper($status) . "\n\n";
-        $message .='Approve Date : ' . date('Y-m-d H:i:s')  . "\n";
-        $message .='Approve By : ' . $this->session->userdata('adminData')  . "\n\n";
+        $message .='Change Date : ' . date('Y-m-d H:i:s')  . "\n";
+        $message .='Change By : ' . $this->session->userdata('adminData')  . "\n\n";
         $message .='Note'  . "\n\n";
         $message .= $note;
         $this->purchase_model->changePurchaseStatus($id,$status);
+        $this->purchase_model->changePurchaseItemStatus($id,$status);
         $this->purchase_model->changeStatusLog($id,$status);
       //  $this->sendEmailUpdateStatus($message,'Change Status',$email);
     }

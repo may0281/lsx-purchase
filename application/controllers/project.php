@@ -12,7 +12,7 @@ class project extends CI_Controller {
 		$this->load->model('hublibrary_model');
         $this->load->model('project_model');
 		$this->major="project";
-		$this->minor="lists";
+		$this->minor="init-project";
 	}
 
 
@@ -23,13 +23,21 @@ class project extends CI_Controller {
 	
 	public function create()
     {
+<<<<<<< HEAD
 /*		$permission = $this->hublibrary_model->permission($this->major,$this->minor,'create');
+=======
+		$permission = $this->hublibrary_model->permission($this->major,$this->minor,'create');
+>>>>>>> 4c131a8cd2a377cf1658d9b7687d1c51166fea52
         if($permission == false)
         {
             echo $this->load->view('template/left','',true);
             echo $this->load->view('template/400','',true);
             die();
+<<<<<<< HEAD
         }*/
+=======
+        }
+>>>>>>> 4c131a8cd2a377cf1658d9b7687d1c51166fea52
 		
 		$create_by = $this->project_model->getUserlogin($this->session->userdata('adminData'));
         $data = array(
@@ -42,14 +50,17 @@ class project extends CI_Controller {
         $this->load->view('project/create',$data);
     }
 	
-	public function edit()
+	public function edit($proj_id)
     {
-		$proj_id = $this->uri->segment(3);
+
         $data = array(
             'menu'=> 'Project',
             'subMenu'=> 'Edit',
 			'proj_id'=> $proj_id,
+<<<<<<< HEAD
 		//	'customerList'=> $this->project_model->getCustomer(),
+=======
+>>>>>>> 4c131a8cd2a377cf1658d9b7687d1c51166fea52
 			'ProjectData'=> $this->project_model->getProjectby($proj_id)
         );
         $this->load->view('template/left');
@@ -65,6 +76,14 @@ class project extends CI_Controller {
 	
 	public function lists()
     {
+        $permission = $this->hublibrary_model->permission($this->major,$this->minor,'view');
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('template/400','',true);
+            die();
+        }
+
         $data = array(
             'menu'=> 'Project',
             'subMenu'=> 'Project List',
@@ -100,6 +119,7 @@ class project extends CI_Controller {
     {
 		 $proj_name = $this->input->post('name');
 		 $proj_id = $this->input->post('proj_id');
+<<<<<<< HEAD
 /*		 if($this->input->post('new_customer') == "" && $this->input->post('customer') != ""){
 			$cus_id = $this->input->post('customer');
 			
@@ -113,11 +133,16 @@ class project extends CI_Controller {
 			exit();
 		 }*/
 		
+=======
+>>>>>>> 4c131a8cd2a377cf1658d9b7687d1c51166fea52
 		 $proj_about  = $this->input->post('detail');
 		 date_default_timezone_set('asia/bangkok');
 		 $data = array(
             'proj_name'=> $proj_name,
+<<<<<<< HEAD
 		//	'cus_id'=> $cus_id,
+=======
+>>>>>>> 4c131a8cd2a377cf1658d9b7687d1c51166fea52
 			'proj_about'=> $proj_about,
 			'status'=> '1'
          );

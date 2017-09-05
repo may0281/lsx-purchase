@@ -115,7 +115,7 @@ $label = array(
                                             <?php } ?>
 
                                             <?php if($allowChangeStatus == true){ ?>
-                                            <a data-toggle="modal" href="#change_status_<?php echo $r['purq_id'];?>" id="cha_<?php echo $r['purq_id'];?>" class="btn btn-xs bs-tooltip" title="" data-original-title="Change Status"><i class="icon-exchange"></i></a>
+                                            <a data-toggle="modal" href="#change_status_<?php echo $r['purq_id'];?>" id="cha_<?php echo $r['purq_id'];?>" class="btn btn-xs bs-tooltip" title="" data-original-title="Reject"><i class="icon-exchange"></i></a>
                                             <div class="modal fade" id="change_status_<?php echo $r['purq_id'];?>">
                                                 <form class="form-horizontal row-border" method="post" id="frm_change_status_<?php echo $r['purq_id'];?>"  onsubmit="return checkForm(this);" >
                                                     <div class="modal-dialog">
@@ -129,9 +129,9 @@ $label = array(
                                                                 <label class="col-md-2 control-label">Status<span class="required">*</span></label>
                                                                 <div class="col-md-10 clearfix">
                                                                     <select name="status" id="status_id" class="col-md-12 select2 full-width-fix required">
-                                                                        <option></option>
+
                                                                         <?php foreach ($status as $st){ ?>
-                                                                            <option value="<?php echo $st?>" <?php echo ($r['purq_status'] == $st ? 'selected' : '') ?>><?php echo $st;?></option>
+                                                                            <option value="<?php echo $st?>" ><?php echo $st;?></option>
                                                                         <?php } ?>
                                                                     </select>
                                                                 </div>

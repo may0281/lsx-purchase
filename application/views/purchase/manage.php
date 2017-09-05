@@ -332,6 +332,7 @@
                             <div class="form-actions">
                                 <?php if($action == 'update'){ ?>
                                     <input type="hidden" name="purq_id" value="<?php echo $data['purq_id']?>">
+                                    <input type="hidden" name="purq_code" value="<?php echo $data['purq_code']?>">
                                 <?php }?>
                                 <input type="submit" value="<?php echo strtoupper($subMenu) ?>" class="btn btn-primary pull-right">
                             </div>

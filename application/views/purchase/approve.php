@@ -162,16 +162,9 @@ $label = array(
                                                         </div>
                                                     </div>
                                                 </form>
-                                            </div><!-- /.modal -->
+                                            </div>
                                             <?php } ?>
-
                                         </span>
-
-
-
-
-
-
                                     </td>
                                 </tr>
                                 <?php $i++; }?>

@@ -148,6 +148,8 @@ class purchase_model extends ci_model
         $this->db->where('purq_id',$purqId);
         $this->db->update('purchase_request', $data);
         $this->log_model->Logging('purchase_model','success',$this->db->last_query());
+
+        return $purq_code;
     }
 
     public function updatePurchaseRequestItem($data,$purqItemId)
@@ -182,6 +184,12 @@ class purchase_model extends ci_model
     {
         $this->db->where('purq_id',$purqId);
         $this->db->update('purchase_request', array('purq_status'=>$status));
+        $this->log_model->Logging('purchase_model','success',$this->db->last_query());
+    }
+    public function changePurchaseItemStatus($purqId,$status)
+    {
+        $this->db->where('purq_id',$purqId);
+        $this->db->update('purchase_request_item', array('purq_item_status'=>$status));
         $this->log_model->Logging('purchase_model','success',$this->db->last_query());
     }
 
