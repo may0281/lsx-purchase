@@ -12,7 +12,7 @@ class project extends CI_Controller {
 		$this->load->model('hublibrary_model');
         $this->load->model('project_model');
 		$this->major="project";
-		$this->minor="lists";
+		$this->minor="init-project";
 	}
 
 
@@ -42,14 +42,13 @@ class project extends CI_Controller {
         $this->load->view('project/create',$data);
     }
 	
-	public function edit()
+	public function edit($proj_id)
     {
-		$proj_id = $this->uri->segment(3);
+
         $data = array(
             'menu'=> 'Project',
             'subMenu'=> 'Edit',
 			'proj_id'=> $proj_id,
-			'customerList'=> $this->project_model->getCustomer(),
 			'ProjectData'=> $this->project_model->getProjectby($proj_id)
         );
         $this->load->view('template/left');
@@ -65,6 +64,14 @@ class project extends CI_Controller {
 	
 	public function lists()
     {
+        $permission = $this->hublibrary_model->permission($this->major,$this->minor,'view');
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('template/400','',true);
+            die();
+        }
+
         $data = array(
             'menu'=> 'Project',
             'subMenu'=> 'Project List',
@@ -100,8 +107,6 @@ class project extends CI_Controller {
     {
 		 $proj_name = $this->input->post('name');
 		 $proj_id = $this->input->post('proj_id');
-
-		
 		 $proj_about  = $this->input->post('detail');
 		 date_default_timezone_set('asia/bangkok');
 		 $data = array(

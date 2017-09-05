@@ -46,6 +46,7 @@ class project_model extends ci_model
 	{
         $this->db->select('firstname,lastname');
         $this->db->from('bn_user_profile');
+        $this->db->where('account',$adminData);
         $query = $this->db->get();
 		$row = $query->row();
 		
