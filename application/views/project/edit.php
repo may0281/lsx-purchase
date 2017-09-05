@@ -45,17 +45,14 @@
 									<label class="col-md-2 control-label">Create By:</label>
 									<div class="col-md-10"><input type="text" name="create_by" class="form-control" value="<?php echo array_get($data,'proj_owner');?>" disabled="disabled"></div>
 								</div>
-<<<<<<< HEAD
 								<div class="form-group">
 										<label class="col-md-2 control-label">Detail:</label>
 										<div class="col-md-10"><textarea rows="4" cols="5" name="detail" class="form-control"><?php echo array_get($data,'proj_about');?></textarea></div>
 									</div>
-=======
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Detail:</label>
                                     <div class="col-md-10"><textarea rows="4" cols="5" name="detail" class="form-control"><?php echo array_get($data,'proj_about');?></textarea></div>
                                 </div>
->>>>>>> 4c131a8cd2a377cf1658d9b7687d1c51166fea52
 								<div class="form-group" style="float:right; margin-right:20px; margin-top:20px;">
 									<input name="proj_id" type="hidden" value="<?php echo array_get($data,'proj_id'); ?>">
 									<input class="btn btn-sm btn-primary" type="submit" value="Edit"> <input class="btn" type="reset" value="Reset">

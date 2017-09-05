@@ -79,11 +79,8 @@
 													<a href="<?php echo base_url();?>project/edit/<?php echo $r['proj_id'];?>" class="btn btn-xs bs-tooltip" title="Edit"><i class="icon-pencil"></i></a>
 													<a href="<?php echo base_url();?>project/del/<?php echo $r['proj_id'];?>" class="btn btn-xs bs-tooltip" title="Delete"><i class="icon-trash"></i></a>
 												</span></td>
-<<<<<<< HEAD
 												<td><input type="button" class="btn btn-sm btn-inverse" value="Request Purchase" onclick="location.href='<?php echo base_url();?>purchase/request?p=18'"><!--<?php echo nbs(5);?><input type="button" class="btn btn-sm btn" value="List Request Purchase">--><!--purchase/request?p=18--></td>
-=======
 												<td><input type="button" class="btn btn-sm btn-inverse" value="Request Purchase"><!--<?php echo nbs(5);?><input type="button" class="btn btn-sm btn" value="List Request Purchase">--></td>
->>>>>>> 4c131a8cd2a377cf1658d9b7687d1c51166fea52
 										</tr>
 									<?php $i++; }?>	
 									</tbody>
