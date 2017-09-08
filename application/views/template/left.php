@@ -252,10 +252,10 @@
 							<li class="<?php if($path_2 == 'create'){echo "current";} ?>">
 								<a href="<?php echo base_url('project/create');?>">
 									<i class="icon-angle-right"></i>
-									Create New Project
+									Create Project
 								</a>
 							</li>
-							<li class="<?php if($path_2 == 'lists'){echo "current";} ?>">
+							<li class="<?php if($path_2 == 'lists' || $path_2 == 'edit'){echo "current";} ?>">
 								<a href="<?php echo base_url('project/lists');?>">
 									<i class="icon-angle-right"></i>
 									Project List

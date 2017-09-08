@@ -155,10 +155,7 @@ class purchase extends CI_Controller {
                     );
                     $this->purchase_model->createPurchaseRequestItem($purchaseItem);
                 }
-
             }
-
-
         }
         catch (\Exception $e)
         {
