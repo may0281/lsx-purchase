@@ -229,7 +229,7 @@
 							<li class="<?php if($path_2 == 'po-report'){echo "current";} ?>">
 								<a href="<?php echo base_url('purchase/po-report');?>">
 									<i class="icon-angle-right"></i>
-									Purchase Order report
+									Purchase Order Report
 								</a>
 							</li>
 							<?php } ?>

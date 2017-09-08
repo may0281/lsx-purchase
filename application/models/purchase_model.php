@@ -262,10 +262,11 @@ class purchase_model extends ci_model
 
     public function getPurchaseOrderAndDetailItemByID($id)
     {
-        $this->db->select('purchase_order_item.*,item.item_size,item.item_thickness,item.item_pfilm,item.item_aica');
+        $this->db->select('purchase_order_item.item_code,sum(purchase_order_item.puror_qty) as puror_qty,purchase_order_item.puror_price ,item.item_size,item.item_thickness,item.item_pfilm,item.item_aica');
         $this->db->from('purchase_order_item');
         $this->db->join('item','purchase_order_item.item_code = item.item_code','left');
         $this->db->where('puror_id',$id);
+        $this->db->group_by('purchase_order_item.item_code,purchase_order_item.puror_price');
         $query = $this->db->get();
         $this->log_model->Logging('purchase_model','success',$this->db->last_query());
         return $query->result_array();

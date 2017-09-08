@@ -15,7 +15,7 @@ class purchaseorder extends CI_Controller {
         $this->load->model('stock_model');
         $this->load->model('user_model');
         $this->menu = 'Purchase Order';
-        $this->submenu = 'List';
+        $this->submenu = 'Report';
         $this->major = 'purchase';
         $this->minor = 'po';
         $this->create = 'create';
@@ -107,7 +107,7 @@ class purchaseorder extends CI_Controller {
         $res = $this->checkOrdered($item);
         $data = array(
             'menu' => $this->menu,
-            'subMenu' => $this->purchaseOrder,
+            'subMenu' => $this->create,
             'action' => $this->create,
             'item' =>$res,
             'list' => $this->purchase_model->getAllPurchaseRequestAndItem('approved'),
