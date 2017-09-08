@@ -91,7 +91,6 @@ class purchase extends CI_Controller {
             die();
         }
         $purchaseDetail = $this->purchase_model->getPurchaseItemAndPo($id);
-//        sd($purchaseDetail);
         $data = array(
             'menu'=> $this->menu,
             'subMenu'=> $this->report,
@@ -221,7 +220,7 @@ class purchase extends CI_Controller {
         $qty = $this->input->post('qty');
         try
         {
-//            $this->purchase_model->updatePurchaseRequest($purchaseData,$purq_id);
+            $this->purchase_model->updatePurchaseRequest($purchaseData,$purq_id);
             for($j=0; $j<count($purchase_item); $j++)
             {
                 $purchaseDataItem = array(
@@ -230,7 +229,7 @@ class purchase extends CI_Controller {
                     'qty' => $purchase_item_qty[$j],
 
                 );
-//                $this->purchase_model->updatePurchaseRequestItem($purchaseDataItem,$purchase_item[$j]);
+                $this->purchase_model->updatePurchaseRequestItem($purchaseDataItem,$purchase_item[$j]);
 
             }
 
@@ -283,8 +282,6 @@ class purchase extends CI_Controller {
         $this->email->from('backend.lsx@gmail.com' ,'Purchasing System');
         $this->email->to(array('maya.skyt@gmail.com'));
         $this->email->subject($subject);
-//        $this->email->set_header('Content-Type', "text/html; charset=UTF-8\r\n");
-
         $this->email->message($message);
         $this->email->set_alt_message($message);
 
@@ -296,80 +293,11 @@ class purchase extends CI_Controller {
     protected function prepareDataMail($data,$purchase_code,$action)
     {
         $project = $this->project_model->getProjectby($data['proj_id']);
-        $items = $data['item_id'];
-
-        $purchase_item = $data['purchase_item'];
-        $qty = $data['qty'];
-        $itemMessage = null;
-        $purchase_itemMessage = null;
-        for($i=0; $i < count($items); $i++)
-        {
-            if($items[$i])
-            {
-                $itemMessage .="\n" .$items[$i] .' : ' .$qty[$i];
-            }
-            else
-            {
-                break;
-            }
-        }
-        if($action == 'update')
-        {
-            for($i=0; $i < count($purchase_item); $i++)
-            {
-                if($purchase_item[$i])
-                {
-                    $purchase_itemMessage .= "\n" .$data['purchase_item_list'][$i] .' : ' .$data['purchase_item_qty'][$i];
-                }
-                else
-                {
-                    break;
-                }
-            }
-        }
         $data['purq_code'] = $purchase_code;
         $data['project_name'] = $project[0]['proj_name'];
         $data['action'] = $action;
         $data['action_by'] = $this->session->userdata('adminData');
-//        $message = '
-//		Purchase NO : ' . $purq_code . '
-//		Project : ' . $project[0]['proj_name'] . '
-//		'.$action.' by : ' . $this->session->userdata('adminData') . '
-//		'.$action.' date : ' . date('Y-m-d H:i:s') . '
-//		Request date : ' . $data['purq_require_start'] . ' - '.  $data['purq_require_end']. '
-//		Project owner name : ' . $data['proj_owner_name'] . '
-//		Project contacts : ' . $data['proj_contacts'] . '
-//		Project mobile : ' . $data['proj_mobile'] . '
-//		Project email : ' . $data['proj_email'] . '
-//		Designer name : ' . $data['designer_name'] . '
-//		Designer contacts : ' . $data['designer_contacts'] . '
-//		Designer mobile : ' . $data['designer_mobile'] . '
-//		Designer email : ' . $data['designer_email'] . '
-//		Contractor name : ' . $data['contractor_name'] . '
-//		Contractor contacts : ' . $data['contractor_contacts'] . '
-//		Contractor mobile : ' . $data['contractor_mobile'] . '
-//		Contractor email : ' . $data['contractor_email'] . '
-//		Marketing account : ' . $data['mkt_account'] . '
-//		Marketing mobile : ' . $data['mkt_mobile'] . '
-//		Sale account : ' . $data['sale_account'] . '
-//		Sale mobile : ' . $data['sale_mobile'] . "\n".'
-//
-//		=========================== Purchase ITEM =========================== '
-//
-//            ."\n" . $purchase_itemMessage . "\n". '
-//
-//        =========================== New ITEM =========================== '
-//            ."\n" . $itemMessage . "\n". '
-//
-//		* Note : ' .$data['purq_comment']. '
-//		** email from purchasing system **';
-//        $data = array();
         $message = $this->load->view('email/purchase-request',$data,true);
-//        echo $message;
-//        exit();
-
-
-
         return $message;
     }
 
@@ -456,7 +384,7 @@ class purchase extends CI_Controller {
         $this->purchase_model->changePurchaseStatus($id,$status);
         $this->purchase_model->changePurchaseItemStatus($id,$status);
         $this->purchase_model->changeStatusLog($id,$status);
-      //  $this->sendEmailUpdateStatus($message,'Change Status',$email);
+        $this->sendEmailUpdateStatus($message,'Change Status',$email);
     }
 
     protected function sendEmailUpdateStatus($message,$action,$email = array())

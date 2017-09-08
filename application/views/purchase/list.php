@@ -61,11 +61,12 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Item Code</th>
-                                        <th>Req Qty</th>
+                                        <th>Request Qty</th>
                                         <th>Stock</th>
                                         <th>Status</th>
                                         <th>PO No.</th>
-                                        <th>Forecast date</th>
+                                        <th>Order QTY</th>
+                                        <th>Forecast Receive Date</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -77,6 +78,7 @@
                                             <td><?php echo $r['item_qty'];?></td>
                                             <td><?php echo $r['purq_item_status'];?></td>
                                             <td><?php echo $r['puror_code'];?></td>
+                                            <td><?php echo $r['puror_qty'];?></td>
                                             <td><?php echo $r['puror_forecasts_date'];?></td>
 
                                         </tr>
@@ -95,49 +97,5 @@
 
 
 <script  type="text/javascript">
-    function checkForm(form) {
-        var id = form.id;
-        var formDataSend = new FormData($('#' + id)[0]);
-        var base_url = window.location.origin;
-        var url = base_url + '/purchaseorder/change-status';
-
-        $('#loader').removeClass('hide');
-        $('.modal').modal('hide');
-
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-            },
-            url: url,
-            data: formDataSend,
-            type: 'POST',
-            contentType: false,
-            processData: false,
-            success: function(result){
-                $('#status_' + result.id).html(result.puror_status);
-                noty({
-                    text: 'Success',
-                    type: 'information',
-                    layout: 'top',
-                    timeout: 2000,
-                    modal: 'false'
-                });
-            },
-            error: function(result){
-                noty({
-                    text: 'Opp. Something went wrong. Please try again.',
-                    type: 'error',
-                    layout: 'top',
-                    timeout: 2000,
-                    modal: 'false'
-                });
-            }
-        }).done(function() {
-            $('#loader').addClass('hide');
-        });
-
-        return false;
-    }
-
 </script>
 

@@ -118,11 +118,15 @@ class purchaseorder extends CI_Controller {
 
     public function createPreOrder()
     {
-
+        $poCode = $this->getLastPurchase();
+        $puror_code = 'POA'.date('y').$poCode;
         $purq_id = null;
+        $old_purq_id = null;
         $input = $this->input->post();
         $pre_order = array(
             'puror_order_date' => date('Y-m-d H:i:s'),
+            'puror_code' => $puror_code,
+            'puror_code_no' => $poCode,
             'puror_forecasts_date' => date('Y-m-d H:i:s', strtotime('+50 days')),
             'puror_inquiry_by' => $this->session->userdata('adminData'),
             'puror_shipping_method' => $input['puror_shipping_method'],
@@ -158,6 +162,19 @@ class purchaseorder extends CI_Controller {
         echo "<script>alert('Success.'); window.location.assign('".base_url()."purchase/po-report/detail/".$puror_id."');</script>";
 
     }
+
+    protected function getLastPurchase()
+    {
+        $this->db->select('puror_code_no');
+        $this->db->order_by('puror_id','desc');
+        $this->db->limit(1);
+        $query = $this->db->get('purchase_order');
+        $data = $query->result_array();
+        $poCode = $data[0]['puror_code_no'];
+        $poCode =$poCode+1;
+        return str_pad($poCode,3 ,0,STR_PAD_LEFT);
+    }
+
 
     public function getChangeStatus($id, $status)
     {

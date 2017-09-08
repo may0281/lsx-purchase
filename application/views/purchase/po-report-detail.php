@@ -3,7 +3,7 @@
     @media print
     {
         @page { margin: 0; }
-        body  { margin-top: 25px }
+        body  { margin-top: 30px }
     }
 </style>
 <div id="content"">
@@ -32,7 +32,7 @@
                 <div class="widget invoice">
                     <div class="widget-header" style="border: none;">
                         <div class="pull-left" style="padding-left: 25px">
-                            <img src="<?php echo base_url('assets/img/lsx-logo-0.png')?>" width="60" >
+                            <img src="<?php echo base_url('assets/img/lsx-logo-1.png')?>">
                         </div>
                         <div class="pull-right" style="padding-right: 25px">
                             <h3>Purchase Order</h3>
@@ -98,7 +98,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div style="clear: both;padding: 20px;font-size: 10px;"> <strong>Description :</strong>  AICA HIGH PRESSURE LAMINATES	</div>
+                    <div style="clear: both;padding: 20px;font-size: 10px;"> <strong>Description :</strong> <?php echo $data['puror_note']; ?>	</div>
                     <div class="col-md-12">
                         <table class="table table-hover" style="font-size: 10px;">
                             <thead>
@@ -188,7 +188,7 @@
                                     <p style="padding-top: 50px;border: 1px solid #dddddd;"></p>
                                     <p style="font-size: 12px">(Mr.Kriengkrai  Tienpothong)</p>
                                     <p style="font-size: 12px;padding-left: 30px">Managing Director</p>
-                                    <p style="font-size: 12px;padding-left: 20px">Date ( <?php echo date('F d, Y', strtotime(date('Y-m-d'))); ?> )</p>
+                                    <p style="font-size: 12px;padding-left: 20px;font-size: 10px">Date ( <?php echo date('F d, Y', strtotime(date('Y-m-d'))); ?> )</p>
                                 </div>
                                 <div class="buttons align-right" >
                                     <a class="btn btn-default btn-lg" href="javascript:void(0);" onclick="javascript:window.print();"><i class="icon-print"></i> Print</a>

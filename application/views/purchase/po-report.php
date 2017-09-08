@@ -76,7 +76,7 @@ $label = array(
                                     <th>PO Code</th>
                                     <th>Create By</th>
                                     <th>Order Date</th>
-                                    <th>Forecasts Date</th>
+                                    <th>Forecasts Receive Date</th>
                                     <th>Status</th>
 
                                     <th class="align-center">Action</th>

@@ -39,7 +39,7 @@
             <!--=== Page Header ===-->
             <div class="page-header">
                 <div class="page-title">
-                    <h3><?php echo strtoupper($subMenu) ?></h3>
+                    <h3><?php echo strtoupper($subMenu) ?>  </h3>
                     <span></span>
                 </div>
             </div>

@@ -108,7 +108,7 @@
                                                     <tr style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px;">
                                                         <td class="table-row-td" style="padding-right: 16px; font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal; vertical-align: middle;" valign="middle" align="left">
                                                             <a href="#" style="color: #ffffff; text-decoration: none; padding: 10px 0px; font-size: 18px; line-height: 20px; height: auto; background-color: transparent;">
-                                                                Ace Newsletter
+                                                                Purchase Request [ <?php echo strtoupper($action); ?> ]
                                                             </a>
                                                         </td>
                                                         <td class="table-row-td" align="right" valign="middle" style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal; text-align: right; vertical-align: middle;">
@@ -239,8 +239,10 @@
                                                 <tr>
                                                     <td width="100%" bgcolor="#f5f5f5" style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal; padding: 9px; border: 1px solid #e3e3e3; background-color: #f5f5f5;" valign="top" align="left">
                                                         <?php echo $purq_comment ?>
-                                                    <a href="#" style="color: #428bca; text-decoration: none; background-color: transparent;">Click it!</a>
-                                                </td></tr></tbody></table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                         <br>
 
 
@@ -252,6 +254,7 @@
                             <tbody>
                                 <tr>
                                     <td class="table-col-td" width="267" style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal;" valign="top" align="left">
+                                        <?php  if($action == 'update'){ ?>
                                         <table class="table-space" height="6" style="height: 6px; font-size: 0px; line-height: 0; width: 267px; background-color: #ffffff;" width="267" bgcolor="#FFFFFF" cellspacing="0" cellpadding="0" border="0">
                                             <tbody>
                                                 <tr>
@@ -267,7 +270,7 @@
                                                         <table class="header-row" width="100%" cellspacing="0" cellpadding="0" border="0" style="table-layout: fixed;">
                                                             <tbody>
                                                                 <tr>
-                                                                    <td class="header-row-td" width="100%" style="font-family: Arial, sans-serif; font-weight: normal; line-height: 19px; color: #478fca; margin: 0px; font-size: 18px; padding-bottom: 8px; padding-top: 0px;" valign="top" align="left">Header Thing
+                                                                    <td class="header-row-td" width="100%" style="font-family: Arial, sans-serif; font-weight: normal; line-height: 19px; color: #478fca; margin: 0px; font-size: 18px; padding-bottom: 8px; padding-top: 0px;" valign="top" align="left">Purchase Item
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
@@ -280,61 +283,91 @@
                                                                 </tr>
                                                             </tbody>
                                                         </table>
-                                                        <a href="#" style="color: #428bca; text-decoration: none; background-color: transparent;">Just a Plain Link</a>
                                                         <hr data-skipstyle="true" style="border-width: 0px; height: 1px; background-color: #e8e8e8;">
-                                                        <a href="#" style="color: #428bca; text-decoration: none; background-color: transparent;">Just a Plain Link</a>
-                                                        <hr data-skipstyle="true" style="border-width: 0px; height: 1px; background-color: #e8e8e8;">
-                                                        <a href="#" style="color: #428bca; text-decoration: none; background-color: transparent;">Just a Plain Link</a>
-                                                        <hr data-skipstyle="true" style="border-width: 0px; height: 1px; background-color: #e8e8e8;">
-                                                        <a href="#" style="color: #428bca; text-decoration: none; background-color: transparent;">Just a Plain Link</a>
-                                                        <hr data-skipstyle="true" style="border-width: 0px; height: 1px; background-color: #e8e8e8;">
-                                                        <a href="#" style="color: #428bca; text-decoration: none; background-color: transparent;">Just a Plain Link</a>
-                                                        <hr data-skipstyle="true" style="border-width: 0px; height: 1px; background-color: #e8e8e8;">
-                                                        <a href="#" style="color: #428bca; text-decoration: none; background-color: transparent;">Just a Plain Link</a>
+                                                        <?php for($i=0; $i < count($purchase_item); $i++) {?>
+                                                            <a href="#" style="color: #428bca; text-decoration: none; background-color: transparent;"><?php echo $purchase_item_list[$i]; ?> =  <?php echo $purchase_item_qty[$i]; ?></a>
+                                                            <hr data-skipstyle="true" style="border-width: 0px; height: 1px; background-color: #e8e8e8;">
+                                                        <?php } ?>
+
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <?php }?>
                                     <br>
-                                    <table width="100%" cellspacing="0" cellpadding="0" border="0" style="table-layout: fixed;"><tbody><tr><td width="100%" bgcolor="#f5f5f5" style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal; padding: 19px; border: 1px solid #e3e3e3; background-color: #f5f5f5;" valign="top" align="left">
-                                                <table class="header-row" width="100%" cellspacing="0" cellpadding="0" border="0" style="table-layout: fixed;"><tbody><tr><td class="header-row-td" width="100%" style="font-family: Arial, sans-serif; font-weight: normal; line-height: 19px; color: #478fca; margin: 0px; font-size: 18px; padding-bottom: 8px; padding-top: 0px;" valign="top" align="left">Connect With Us</td></tr></tbody></table>
+                                    <table width="100%" cellspacing="0" cellpadding="0" border="0" style="table-layout: fixed;">
+                                        <tbody>
+                                        <tr>
+                                            <td width="100%" bgcolor="#f5f5f5" style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal; padding: 19px; border: 1px solid #e3e3e3; background-color: #f5f5f5;" valign="top" align="left">
+                                                <table class="header-row" width="100%" cellspacing="0" cellpadding="0" border="0" style="table-layout: fixed;">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td class="header-row-td" width="100%" style="font-family: Arial, sans-serif; font-weight: normal; line-height: 19px; color: #478fca; margin: 0px; font-size: 18px; padding-bottom: 8px; padding-top: 0px;" valign="top" align="left">New Request Item</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                                <table class="table-space" height="12" style="height: 12px; font-size: 0px; line-height: 0; width: 100px; background-color: transparent;" width="100" bgcolor="transparent" cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="table-space-td" valign="middle" height="12" style="height: 12px; width: 100px; background-color: transparent;" width="100" bgcolor="transparent" align="left">&nbsp;</td></tr></tbody></table>
 
-                                                <table class="table-space" height="12" style="height: 12px; font-size: 0px; line-height: 0; width: 100px; background-color: transparent;" width="100" bgcolor="transparent" cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="table-space-td" valign="middle" height="12" style="height: 12px; width: 100px; background-color: transparent;" width="100" bgcolor="transparent" align="left">&nbsp;</td></tr></tbody></table>
-                                                <div style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; text-align: center;">
-                                                    <a href="#" style="color: #ffffff; text-decoration: none; margin: 0px; text-align: center; vertical-align: baseline; border: 4px solid #428bca; padding: 4px 9px; font-size: 14px; line-height: 19px; background-color: #428bca;"> &nbsp;&nbsp; &nbsp; Facebook &nbsp; &nbsp;&nbsp; </a>
-                                                    <br>
-                                                    <br>
-                                                    <a href="#" style="color: #ffffff; text-decoration: none; margin: 0px; text-align: center; vertical-align: baseline; border: 4px solid #6fb3e0; padding: 4px 9px; font-size: 14px; line-height: 19px; background-color: #6fb3e0;"> &nbsp;&nbsp; &nbsp; &nbsp; Twitter &nbsp; &nbsp; &nbsp; &nbsp; </a>
-                                                    <br>
-                                                    <br>
-                                                    <a href="#" style="color: #ffffff; text-decoration: none; margin: 0px; text-align: center; vertical-align: baseline; border: 4px solid #d15b47; padding: 4px 9px; font-size: 14px; line-height: 19px; background-color: #d15b47;"> &nbsp; &nbsp; &nbsp; Google + &nbsp; &nbsp; &nbsp; </a>
-                                                </div>
-                                                <table class="table-space" height="12" style="height: 12px; font-size: 0px; line-height: 0; width: 100px; background-color: transparent;" width="100" bgcolor="transparent" cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="table-space-td" valign="middle" height="12" style="height: 12px; width: 100px; background-color: transparent;" width="100" bgcolor="transparent" align="left">&nbsp;</td></tr></tbody></table>
+
                                                 <hr data-skipstyle="true" style="border-width: 0px; height: 1px; background-color: #e8e8e8;">
+                                                <?php for($i=0; $i < count($item_id); $i++){ if($item_id[$i]){ ?>
 
-                                                <table class="header-row" width="100%" cellspacing="0" cellpadding="0" border="0" style="table-layout: fixed;"><tbody><tr><td class="header-row-td" width="100%" style="font-family: Arial, sans-serif; font-weight: normal; line-height: 19px; color: #478fca; margin: 0px; font-size: 18px; padding-bottom: 8px; padding-top: 10px;" valign="top" align="left">Contact Info</td></tr></tbody></table>
-                                                Phone: <span style="font-family: Arial, sans-serif; line-height: 19px; color: #31708f; font-size: 13px;">408.341.0600</span>
-                                                <br>
-                                                Email: <span style="font-family: Arial, sans-serif; line-height: 19px; color: #31708f; font-size: 13px;">hseldon@trantor.com</span>
-                                            </td></tr></tbody></table>
-                                </td></tr></tbody></table>
+                                                    <a href="#" style="color: #428bca; text-decoration: none; background-color: transparent;"><?php echo $item_id[$i]; ?> =  <?php echo $qty[$i]; ?></a>
+                                                    <hr data-skipstyle="true" style="border-width: 0px; height: 1px; background-color: #e8e8e8;">
+                                                <?php }} ?>
+
+
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </td></tr></tbody></table>
 
-            <table class="table-space" height="32" style="height: 32px; font-size: 0px; line-height: 0; width: 600px; background-color: #ffffff;" width="600" bgcolor="#FFFFFF" cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="table-space-td" valign="middle" height="32" style="height: 32px; width: 600px; padding-left: 18px; padding-right: 18px; background-color: #ffffff;" width="600" bgcolor="#FFFFFF" align="center">&nbsp;<table bgcolor="#E8E8E8" height="0" width="100%" cellspacing="0" cellpadding="0" border="0"><tbody><tr><td bgcolor="#E8E8E8" height="1" width="100%" style="height: 1px; font-size:0;" valign="top" align="left">&nbsp;</td></tr></tbody></table></td></tr></tbody></table>
+            <table class="table-space" height="32" style="height: 32px; font-size: 0px; line-height: 0; width: 600px; background-color: #ffffff;" width="600" bgcolor="#FFFFFF" cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                <tr>
+                    <td class="table-space-td" valign="middle" height="32" style="height: 32px; width: 600px; padding-left: 18px; padding-right: 18px; background-color: #ffffff;" width="600" bgcolor="#FFFFFF" align="center">&nbsp;
+                        <table bgcolor="#E8E8E8" height="0" width="100%" cellspacing="0" cellpadding="0" border="0">
+                            <tbody>
+                            <tr>
+                                <td bgcolor="#E8E8E8" height="1" width="100%" style="height: 1px; font-size:0;" valign="top" align="left">&nbsp;</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="table-row" width="600" bgcolor="#FFFFFF" style="table-layout: fixed; background-color: #ffffff;" cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                <tr>
+                    <td class="table-row-td" style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal; padding-left: 36px; padding-right: 36px;" valign="top" align="left">
+                        <table class="table-col" align="left" width="528" cellspacing="0" cellpadding="0" border="0" style="table-layout: fixed;">
+                            <tbody>
+                            <tr>
+                                <td class="table-col-td" width="528" style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal;" valign="top" align="left">
+                                    <div style="font-family: Arial, sans-serif; line-height: 19px; color: #777777; font-size: 14px; text-align: center;">LSX Purchasing</div>
+                                    <div style="font-family: Arial, sans-serif; line-height: 19px; color: #777777; font-size: 14px; text-align: center;">** email from purchasing system **</div>
+                                    <table class="table-space" height="8" style="height: 8px; font-size: 0px; line-height: 0; width: 528px; background-color: #ffffff;" width="528" bgcolor="#FFFFFF" cellspacing="0" cellpadding="0" border="0">
+                                        <tbody>
+                                        <tr>
+                                            <td class="table-space-td" valign="middle" height="8" style="height: 8px; width: 528px; background-color: #ffffff;" width="528" bgcolor="#FFFFFF" align="left">&nbsp;</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
 
-            <table class="table-row" width="600" bgcolor="#FFFFFF" style="table-layout: fixed; background-color: #ffffff;" cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="table-row-td" style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal; padding-left: 36px; padding-right: 36px;" valign="top" align="left">
-                        <table class="table-col" align="left" width="528" cellspacing="0" cellpadding="0" border="0" style="table-layout: fixed;"><tbody><tr><td class="table-col-td" width="528" style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal;" valign="top" align="left">
-                                    <div style="font-family: Arial, sans-serif; line-height: 19px; color: #777777; font-size: 14px; text-align: center;">&copy; 2014 by Ace Company</div>
-                                    <table class="table-space" height="8" style="height: 8px; font-size: 0px; line-height: 0; width: 528px; background-color: #ffffff;" width="528" bgcolor="#FFFFFF" cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="table-space-td" valign="middle" height="8" style="height: 8px; width: 528px; background-color: #ffffff;" width="528" bgcolor="#FFFFFF" align="left">&nbsp;</td></tr></tbody></table>
-                                    <div style="font-family: Arial, sans-serif; line-height: 19px; color: #bbbbbb; font-size: 13px; text-align: center;">
-                                        <a href="#" style="color: #428bca; text-decoration: none; background-color: transparent;">Terms</a>
-                                        &nbsp;|&nbsp;
-                                        <a href="#" style="color: #428bca; text-decoration: none; background-color: transparent;">Privacy</a>
-                                        &nbsp;|&nbsp;
-                                        <a href="#" style="color: #428bca; text-decoration: none; background-color: transparent;">Unsubscribe</a>
-                                    </div>
-                                </td></tr></tbody></table>
-                    </td></tr></tbody></table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
             <table class="table-space" height="14" style="height: 14px; font-size: 0px; line-height: 0; width: 600px; background-color: #ffffff;" width="600" bgcolor="#FFFFFF" cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="table-space-td" valign="middle" height="14" style="height: 14px; width: 600px; background-color: #ffffff;" width="600" bgcolor="#FFFFFF" align="left">&nbsp;</td></tr></tbody></table>
         </td></tr>
 </table>

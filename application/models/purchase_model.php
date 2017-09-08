@@ -42,7 +42,7 @@ class purchase_model extends ci_model
 
     public function getPurchaseItemAndPo($purchaseID)
     {
-        $this->db->select('a.*,item_qty,d.puror_code,d.puror_forecasts_date');
+        $this->db->select('a.*,item_qty,d.puror_code,d.puror_forecasts_date,c.puror_qty');
         $this->db->from('purchase_request_item a');
         $this->db->join('item b','a.item_code = b.item_code','left');
         $this->db->join('purchase_order_item c','a.purq_id = c.purq_id and a.item_code = c.item_code','left');
@@ -210,8 +210,7 @@ class purchase_model extends ci_model
         $this->db->insert('purchase_order', $data);
         $id = $this->db->insert_id();
         $this->log_model->Logging('purchase_model','success',$this->db->last_query());
-        $puror_code = 'PO'.str_pad($id,5 ,0,STR_PAD_LEFT);
-        $this->updatePurchaseOrder($id,array('puror_code'=>$puror_code));
+
 
         return $id;
     }
