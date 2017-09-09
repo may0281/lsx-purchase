@@ -8,15 +8,13 @@ class project_model extends ci_model
 	}
 	
 
-	public function getProjectList($proj_owner =NULL)
+	public function getProjectList($proj_owner)
 	{
         $this->db->select('*');
         $this->db->from('project');
 		$this->db->where('proj_owner',$proj_owner);
 		$this->db->where('status',1);
         $query = $this->db->get();
-	//	echo $this->db->last_query();
-	//	exit();
 		
         return $query->result_array();
 	}
@@ -55,7 +53,7 @@ class project_model extends ci_model
         $query = $this->db->get();
 		$row = $query->row();
 		
-		$name = $row->firstname.' '.$row->lastname;
+		$name = $row->account;
 		
 		return $name;
 	}

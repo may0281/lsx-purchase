@@ -1,5 +1,7 @@
 <?php $data = $ProjectData[0]; ?>
-<body>
+<!-- Form Validation -->
+<script type="text/javascript" src="<?php echo base_url(); ?>plugins/validation/jquery.validate.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>plugins/validation/additional-methods.min.js"></script>
 <div id="container">
     <div id="content">
         <div class="container">
@@ -32,14 +34,14 @@
 				<div class="col-md-12">
 					<div class="widget box">
 						<div class="widget-header">
-							<h4><i class="icon-reorder"></i>Create Project</h4>
+							<h4><i class="icon-reorder"></i>Fill the information</h4>
 						</div>
 						<div class="widget-content">
 							<form class="form-horizontal row-border" method="post"  action="<?php echo base_url(); ?>project/update_action">
 
 								<div class="form-group">
-									<label class="col-md-2 control-label">Project Name:</label>
-									<div class="col-md-10"><input type="text" name="name" value="<?php echo array_get($data,'proj_name');?>" class="form-control"></div>
+									<label class="col-md-2 control-label">Project Name <span class="required">*</span></label>
+									<div class="col-md-10"><input type="text" name="name" value="<?php echo array_get($data,'proj_name');?>" class="form-control" required></div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-2 control-label">Create By:</label>
@@ -49,13 +51,9 @@
 										<label class="col-md-2 control-label">Detail:</label>
 										<div class="col-md-10"><textarea rows="4" cols="5" name="detail" class="form-control"><?php echo array_get($data,'proj_about');?></textarea></div>
 									</div>
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">Detail:</label>
-                                    <div class="col-md-10"><textarea rows="4" cols="5" name="detail" class="form-control"><?php echo array_get($data,'proj_about');?></textarea></div>
-                                </div>
 								<div class="form-group" style="float:right; margin-right:20px; margin-top:20px;">
 									<input name="proj_id" type="hidden" value="<?php echo array_get($data,'proj_id'); ?>">
-									<input class="btn btn-sm btn-primary" type="submit" value="Edit"> <input class="btn" type="reset" value="Reset">
+									<input class="btn btn-sm btn-primary" type="submit" value="UPDATE"> <input class="btn" type="reset" value="Reset">
 								</div>
 
 							</form>

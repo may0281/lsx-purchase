@@ -4,7 +4,7 @@ class project extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
-//		error_reporting(0);
+		error_reporting(0);
         if($this->session->userdata('isSession') == false){
 
             echo "<script> window.location.assign('".base_url()."login?ReturnUrl=".$_SERVER['REQUEST_URI']."');</script>";
@@ -34,7 +34,7 @@ class project extends CI_Controller {
         $create_by = $this->project_model->getUserlogin($this->session->userdata('adminData'));
         $data = array(
             'menu'=> 'Project',
-            'subMenu'=> 'Create Project',
+            'subMenu'=> 'Create New Project',
             'create_by'=> $create_by,
             'q' => $this->project_model->getProjectList()
         );
@@ -75,7 +75,7 @@ class project extends CI_Controller {
         $data = array(
             'menu'=> 'Project',
             'subMenu'=> 'Project List',
-            'q' => $this->project_model->getProjectList()
+            'q' => $this->project_model->getProjectList($this->session->userdata('adminData'))
         );
         $this->load->view('template/left');
         $this->load->view('project/lists',$data);
@@ -127,5 +127,7 @@ class project extends CI_Controller {
             exit();
         }
     }
+	
+
 
 }

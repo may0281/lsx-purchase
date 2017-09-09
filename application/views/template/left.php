@@ -29,7 +29,6 @@
 
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/libs/jquery-1.10.2.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url();?>plugins/jquery-ui/jquery-ui-1.10.2.custom.min.js"></script>
-
 	<script type="text/javascript" src="<?php echo base_url();?>bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/libs/lodash.compat.min.js"></script>
 
@@ -48,12 +47,15 @@
 	<script type="text/javascript" src="<?php echo base_url();?>plugins/respond/respond.min.js"></script> <!-- Polyfill for min/max-width CSS3 Media Queries (only for IE8) -->
 	<script type="text/javascript" src="<?php echo base_url();?>plugins/cookie/jquery.cookie.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url();?>plugins/slimscroll/jquery.slimscroll.min.js"></script>
-	<script type="text/javascript" src="<?php echo base_url();?>plugins/slimscroll/jquery.slimscroll.horizontal.min.js"></script>
+	<script type="text/javascript" src="<?php echo base_url();?>plugins/slimscroll/jquery.slimscroll.horizontal.min.js"></script>\
+	
+	
 	
 		<!-- Charts -->
 	<script type="text/javascript" src="<?php echo base_url();?>plugins/sparkline/jquery.sparkline.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url();?>plugins/flot/jquery.flot.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url();?>plugins/flot/jquery.flot.time.min.js"></script>
+	<script type="text/javascript" src="<?php echo base_url();?>plugins/flot/jquery.flot.tooltip.min.js"></script>
 	
 	<script type="text/javascript" src="<?php echo base_url();?>plugins/daterangepicker/moment.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url();?>plugins/fullcalendar/fullcalendar.min.js"></script>
@@ -263,31 +265,31 @@
 							</li>
 						</ul>
 					</li>
-					<li class="">
+					<li class="<?php if(array_get($path,1) == 'stock'){echo "current open";} ?>">
 						<a href="javascript:void(0);">
 							<i class="icon-barcode"></i>
 							Stock
 						</a>
 						<ul class="sub-menu">
-							<li class="current">
+							<li class="<?php if(array_get($path,2) == 'add_item'){echo "current open";} ?>">
 								<a href="<?php echo base_url('stock/add_item');?>">
 									<i class="icon-angle-right"></i>
 									Add New Item
 								</a>
 							</li>
-							<li>
+							<li class="<?php if(array_get($path,2) == 'list_item'){echo "current open";} ?>">
 								<a href="<?php echo base_url('stock/list_item');?>">
 									<i class="icon-angle-right"></i>
 									Stock Item List
 								</a>
 							</li>
-							<li>
+							<li class="<?php if(array_get($path,2) == 'import_by_order'){echo "current open";} ?>">
 								<a href="<?php echo base_url(); ?>stock/import_by_order">
 									<i class="icon-angle-right"></i>
 									Update Stock
 								</a>
 							</li>
-							<li>
+							<li class="<?php if(array_get($path,2) == 'export_by_order'){echo "current open";} ?>">
 								<a href="<?php echo base_url(); ?>stock/export_by_order">
 									<i class="icon-angle-right"></i>
 									เบิกสินค้า

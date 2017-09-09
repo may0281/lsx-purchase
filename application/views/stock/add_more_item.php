@@ -1,4 +1,6 @@
-
+<!-- Form Validation -->
+<script type="text/javascript" src="<?php echo base_url(); ?>plugins/validation/jquery.validate.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>plugins/validation/additional-methods.min.js"></script>
 <?php $data = $item_code[0]; ?>
 <div id="container">
     <div id="content">
@@ -57,8 +59,8 @@
 			</div>
 			</div-->		
 			<div class="form-group">
-			<label class="col-md-2 control-label">Qty:</label>
-			<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="stk_qty"> Total in Stock: <?php echo array_get($data,'item_qty');?></div>
+			<label class="col-md-2 control-label">Qty: <span class="required">*</span></label>
+			<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="stk_qty" required> Total in Stock: <?php echo array_get($data,'item_qty');?></div>
 			</div>
 			<div class="form-group">
 			<label class="col-md-2 control-label">Detail:</label>
@@ -86,8 +88,8 @@
 			</div>
 
 			<div class="form-group">
-			<label class="col-md-2 control-label">Unit Price:</label>
-			<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="stk_unit_price" placeholder="US">Current Price: <?php echo array_get($data,'item_price');?></div>
+			<label class="col-md-2 control-label">Unit Price: <span class="required">*</span></label>
+			<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="stk_unit_price" placeholder="US" required>Current Price: <?php echo array_get($data,'item_price');?></div>
 			</div>
 			<div class="form-group">
 			<label class="col-md-2 control-label">QTY Min:</label>

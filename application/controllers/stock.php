@@ -13,12 +13,23 @@ class stock extends CI_Controller {
 		$this->load->model('purchase_model');
 		$this->load->model('stock_model');
 		$this->load->model('hublibrary_model');
+		$this->major="stock";
+        $this->minor="stock";
 	}
 
 
 	
 	public function add_item()
     {
+	
+		$permission = $this->hublibrary_model->permission($this->major,$this->minor,'create');
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('template/400','',true);
+            die();
+        }
+		
 		$data = array(
             'menu'=> 'Stock',
             'subMenu'=> 'Add New Item'
@@ -112,6 +123,15 @@ class stock extends CI_Controller {
 	
 	public function list_item()
     {
+	
+			$permission = $this->hublibrary_model->permission($this->major,$this->minor,'view');
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('template/400','',true);
+            die();
+        }
+		
 		$data = array(
             'menu'=> 'Stock',
             'subMenu'=> 'Stock Item List',
@@ -293,6 +313,14 @@ class stock extends CI_Controller {
 	
 	public function import_by_order()
     {
+		$permission = $this->hublibrary_model->permission($this->major,$this->minor,'update');
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('template/400','',true);
+            die();
+        }
+		
 		if($this->uri->segment(3) == 'search'){
 		
 			$data["puror_code"] = $this->input->post('puror_code');

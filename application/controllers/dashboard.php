@@ -19,11 +19,33 @@ class dashboard extends CI_Controller {
 	
 	public function index()
 	{
-	//	$this->dashboard_model->updateChart();
+		$this->updatechart();
         $data = array(
             'menu'=> 'dashboard',
-			'chart' => $this->dashboard_model->getChart(),
-			'glowup' => $this->dashboard_model->getGlowup(),
+			'jan_t' => $this->dashboard_model->getPurchaseTotal('jan'),
+			'jan_s' => $this->dashboard_model->getPurchaseStamp('jan'),
+			'feb_t' => $this->dashboard_model->getPurchaseTotal('feb'),
+			'feb_s' => $this->dashboard_model->getPurchaseStamp('feb'),
+			'mar_t' => $this->dashboard_model->getPurchaseTotal('mar'),
+			'mar_s' => $this->dashboard_model->getPurchaseStamp('mar'),
+			'apr_t' => $this->dashboard_model->getPurchaseTotal('apr'),
+			'apr_s' => $this->dashboard_model->getPurchaseStamp('apr'),
+			'may_t' => $this->dashboard_model->getPurchaseTotal('may'),
+			'may_s' => $this->dashboard_model->getPurchaseStamp('may'),
+			'jun_t' => $this->dashboard_model->getPurchaseTotal('jun'),
+			'jun_s' => $this->dashboard_model->getPurchaseStamp('jun'),
+			'jul_t' => $this->dashboard_model->getPurchaseTotal('jul'),
+			'jul_s' => $this->dashboard_model->getPurchaseStamp('jul'),
+			'aug_t' => $this->dashboard_model->getPurchaseTotal('aug'),
+			'aug_s' => $this->dashboard_model->getPurchaseStamp('aug'),
+			'sep_t' => $this->dashboard_model->getPurchaseTotal('sep'),
+			'sep_s' => $this->dashboard_model->getPurchaseStamp('sep'),
+			'oct_t' => $this->dashboard_model->getPurchaseTotal('oct'),
+			'oct_s' => $this->dashboard_model->getPurchaseStamp('oct'),
+			'nov_t' => $this->dashboard_model->getPurchaseTotal('nov'),
+			'nov_s' => $this->dashboard_model->getPurchaseStamp('nov'),
+			'dec_t' => $this->dashboard_model->getPurchaseTotal('dec'),
+			'dec_s' => $this->dashboard_model->getPurchaseStamp('dec'),
 			'c_request' => $this->dashboard_model->getRequeststatus(),
 			'c_approve' =>  $this->dashboard_model->getApprovestatus(),
 			'c_reject' =>  $this->dashboard_model->getRejectstatus(),
@@ -51,6 +73,10 @@ class dashboard extends CI_Controller {
     {
         return $this->login_model->getMenu();
     }
-
+	
+	public function updatechart()
+	{
+		$this->dashboard_model->updateChart();
+	}
 	
 }

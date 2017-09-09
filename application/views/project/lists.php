@@ -64,7 +64,7 @@
 										<tr>
 											<th>No</th>
 											<th>Name</th>
-											<th>Create date</th>
+											<th>Create</th>
 											<th>Action</th>
 											<th></th>
 										</tr>
@@ -77,10 +77,23 @@
 											<td><?php echo $r['proj_createdate'];?></td>
 											<td><span class="btn-group">
 													<a href="<?php echo base_url();?>project/edit/<?php echo $r['proj_id'];?>" class="btn btn-xs bs-tooltip" title="Edit"><i class="icon-pencil"></i></a>
+											<?php
+											$this->db->select('*');
+											$this->db->from('purchase_request');
+											$this->db->where('proj_id',$r['proj_id']);
+											$query = $this->db->get();
+											
+											$num_row = $query->num_rows();
+											
+											if($num_row == 0){
+											?>
 													<a href="<?php echo base_url();?>project/del/<?php echo $r['proj_id'];?>" class="btn btn-xs bs-tooltip" title="Delete"><i class="icon-trash"></i></a>
+											<?
+											}
+											?>		
 												</span></td>
 												<td><input type="button" class="btn btn-sm btn-inverse" value="Request Purchase" onclick="location.href='<?php echo base_url();?>purchase/request?p=18'"><!--<?php echo nbs(5);?><input type="button" class="btn btn-sm btn" value="List Request Purchase">--><!--purchase/request?p=18--></td>
-												<td><input type="button" class="btn btn-sm btn-inverse" value="Request Purchase"><!--<?php echo nbs(5);?><input type="button" class="btn btn-sm btn" value="List Request Purchase">--></td>
+									
 										</tr>
 									<?php $i++; }?>	
 									</tbody>
