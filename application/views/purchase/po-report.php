@@ -47,7 +47,7 @@ $label = array(
             <!--=== Page Header ===-->
             <div class="page-header">
                 <div class="page-title">
-                    <h3> Purchase Order List</h3>
+                    <h3> Purchase Order Report</h3>
                     <span></span>
                 </div>
             </div>
@@ -76,7 +76,7 @@ $label = array(
                                     <th>PO Code</th>
                                     <th>Create By</th>
                                     <th>Order Date</th>
-                                    <th>Forecasts Date</th>
+                                    <th>Forecasts Receive Date</th>
                                     <th>Status</th>
 
                                     <th class="align-center">Action</th>

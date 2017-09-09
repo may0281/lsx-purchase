@@ -41,11 +41,11 @@
                         <tr>
                             <td>
                                 <div class="col-md-12">
-                                    <strong><?php echo $data['proj_name'] ?></strong> <br>
+                                    <strong style="font-size: larger"> Project Name : <?php echo $data['proj_name'] ?></strong> <br>
                                     <strong>Status </strong> : <span><?php echo $data['purq_status'] ?></span>
                                     <address>
                                         <strong>Require Date</strong><br>
-                                        <p><?php echo date('Y-m-d',strtotime($data['purq_require_start'])) ?> <br>
+                                        <p><?php echo date('Y-m-d',strtotime($data['purq_require_start'])) ?> -
                                             <?php echo date('Y-m-d',strtotime($data['purq_require_end'])) ?></p>
                                     </address>
                                 </div>
@@ -64,12 +64,37 @@
                         </tr>
                     </table>
                     <div style="clear: both"></div>
+
                     <table class="table">
                         <tr>
                         </tr>
                         <tr>
-                            <td class="col-md-5">
+                            <td class="col-md-6">
                                 <div class="col-md-12">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th colspan="3"> ITEM LIST</th>
+                                        </tr>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Item</th>
+                                            <th>Quantity</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php $items = $this->purchase_model->getPurchaseItem($data['purq_id']); ?>
+                                        <?php $i=1; foreach ($items as $it){ ?>
+                                            <tr>
+                                                <td><?php echo $i; ?></td>
+                                                <td><?php echo $it['item_code'] ?></td>
+                                                <td><?php echo $it['qty'] ?></td>
+                                            </tr>
+                                            <?php $i++; }  ?>
+
+                                        </tbody>
+                                    </table>
+
                                     <table class="table table-striped table-hover">
                                         <thead>
                                         <tr>
@@ -94,6 +119,13 @@
                                             <td><?php echo $data['proj_email'] ?></td>
                                         </tr>
                                         </tbody>
+                                    </table>
+
+                                </div>
+                            </td>
+                            <td class="col-md-6">
+                                <div class="col-md-12">
+                                    <table class="table table-striped table-hover">
                                         <thead>
                                         <tr>
                                             <th colspan="2"> Designer</th>
@@ -139,30 +171,6 @@
                                             <td>Email</td>
                                             <td><?php echo $data['contractor_email'] ?></td>
                                         </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </td>
-                            <td class="col-md-7">
-                                <div class="col-md-12">
-                                    <table class="table table-striped table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Item</th>
-                                            <th>Quantity</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php $items = $this->purchase_model->getPurchaseItem($data['purq_id']); ?>
-                                        <?php $i=1; foreach ($items as $it){ ?>
-                                            <tr>
-                                                <td><?php echo $i; ?></td>
-                                                <td><?php echo $it['item_code'] ?></td>
-                                                <td><?php echo $it['qty'] ?></td>
-                                            </tr>
-                                            <?php $i++; }  ?>
-
                                         </tbody>
                                     </table>
                                 </div>

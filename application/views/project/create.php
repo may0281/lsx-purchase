@@ -37,6 +37,7 @@
 					<div class="col-md-12">
 						<div class="widget box">
 							<div class="widget-header">
+<<<<<<< HEAD
 								<h4><i class="icon-reorder"></i>Fill the information</h4>
 							</div>
 							<div class="widget-content">
@@ -45,6 +46,18 @@
 									<div class="form-group">
 									<label class="col-md-2 control-label">Project Name <span class="required">*</span></label>
 										<div class="col-md-10"><input type="text" name="name" class="form-control" required></div>
+=======
+								<h4><i class="icon-reorder"></i></h4>
+							</div>
+							<div class="widget-content">
+								<form class="form-horizontal row-border" method="post"  action="<?php echo base_url(); ?>project/create_action"  onsubmit="return checkForm(this);" >
+									<div class="form-group">
+										<label class="col-md-2 control-label">Project Name: *</label>
+										<div class="col-md-10">
+											<input type="text" id="name" name="name" class="form-control">
+											<label id="msg_name" class="col-md-6 errors" style="color: red" > </label>
+										</div>
+>>>>>>> 05e1e24504f3ae49c7f1f27642f7065c17ce7c49
 									</div>
 									<div class="form-group">
 										<label class="col-md-2 control-label">Create By:</label>
@@ -71,5 +84,21 @@
 </div>
 </div>
 <script>
+	$('#name').keypress(function() {
+		$('#msg_name').html('');
+	});
+	function checkForm(form) {
+		var error_msg = 'This field is required.';
+		var status = true;
+		if(form.name.value == '')
+		{
+			form.name.focus();
+			$('#name').addClass('has-error');
+			$('#msg_name').html(error_msg);
+			status = false;
+		}
+
+		return status;
+	}
 </script>
 </body>

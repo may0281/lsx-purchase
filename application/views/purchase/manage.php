@@ -38,6 +38,7 @@
 <script src="<?php echo base_url();?>assets/sample.js"></script>
 <link rel="stylesheet" href="<?php echo base_url();?>assets/ckeditor/toolbarconfigurator/lib/codemirror/neo.css">
 
+<script type="text/javascript" src="<?php echo base_url();?>plugins/bootbox/bootbox.min.js"></script>
 
 <!-- Demo JS -->
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/custom.js"></script>
@@ -96,7 +97,7 @@
                     <div class="widget-content">
                         <form class="form-horizontal row-border" method="post" id="<?php echo $action ?>"  action="<?php echo base_url('purchase/request/'.$action); ?>" onsubmit="return checkForm(this);" >
                             <div class="form-group">
-                                <label class="col-md-2 control-label">Project <?php echo $data['proj_id']; ?><span class="required">*</span></label>
+                                <label class="col-md-2 control-label">Project Name <span class="required">*</span></label>
                                 <div class="col-md-5 clearfix">
                                     <select name="proj_id" id="proj_id" class="col-md-12 select2 full-width-fix required">
                                         <option></option>
@@ -158,7 +159,7 @@
                                             <select name="purchase_item_list[]" id="purchase-item-list-<?php echo $j ?>" class="col-md-12 select2 full-width-fix required item_list">
                                                 <option></option>
                                                 <?php foreach ($items as $item){ ?>
-                                                    <option value="<?php echo array_get($item,'item_code')?>" <?php echo ($it['item_code'] == $item['item_code']) ? 'selected' : ''; ?> data-size="<?php echo array_get($item,'item_size'); ?>" data-thickness="<?php echo array_get($item,'item_thickness'); ?>" data-film="<?php echo array_get($item,'item_pfilm'); ?>" data-aica="<?php echo array_get($item,'item_aica'); ?>"><?php echo array_get($item,'item_code');?></option>
+                                                    <option  value="<?php echo array_get($item,'item_code')?>" <?php echo ($it['item_code'] == $item['item_code']) ? 'selected' : ''; ?> data-size="<?php echo array_get($item,'item_size'); ?>" data-thickness="<?php echo array_get($item,'item_thickness'); ?>" data-film="<?php echo array_get($item,'item_pfilm'); ?>" data-aica="<?php echo array_get($item,'item_aica'); ?>"><?php echo array_get($item,'item_code');?></option>
                                                 <?php } ?>
                                             </select>
                                         </div>
@@ -195,7 +196,8 @@
 
                                 <?php for($i=1; $i<= 30;$i++) {?>
                                 <div class="<?php if($i<2){echo 'count-form';}?> <?php if($i>1){echo 'hidden';}?>" id="item-list-<?php echo $i;?>" data-value="<?php echo $i;?>">
-                                    <label class="col-md-2 control-label"><?php if($i==1){ ?>Product Code <?php }?> [<?php echo $i;?>] <?php if($i==1){ ?> <span class="required">*</span><?php }?></label>
+                                    <label class="col-md-2 control-label"><?php if($i==1){ ?>Product Code <?php }?> <?php if($i==1){ ?> <span class="required">*</span><?php }else{?>
+                                            <a class="btn btn-sm reset-item" id="reset-<?php echo $i ?>"><i class="icon-remove"></i></a> <?php } ?>&nbsp;&nbsp;  [<?php echo $i;?>]</label>
                                     <div class="col-md-3 clearfix">
                                         <select name="item_id[]" id="item-<?php echo $i ?>" class="col-md-12 select2 full-width-fix required item_list">
                                             <option></option>
@@ -309,7 +311,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-5">
-                                    <input type="text" name="mkt_mobile" id="mkt_mobile" value="<?php echo $data['mkt_mobile']?>"  class="form-control" placeholder="">
+                                    <input type="text" name="mkt_mobile" id="mkt_mobile" value="<?php echo $data['mkt_mobile']?>"  class="form-control" placeholder="Mobile">
                                 </div>
                                 <div style="clear: both ; height: 10px" ></div>
                                 <label class="col-md-2 control-label">Sale</label>
@@ -324,7 +326,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-5">
-                                    <input type="text" name="sale_mobile" id="sale_mobile" value="<?php echo $data['sale_mobile']?>" class="form-control" placeholder="">
+                                    <input type="text" name="sale_mobile" id="sale_mobile" value="<?php echo $data['sale_mobile']?>" class="form-control" placeholder="Mobile">
                                 </div>
                                 <label id="msg_person" class="col-md-6 errors" style="text-align: left" > </label>
                             </div>
@@ -355,6 +357,18 @@
             autoSize: true,
             dateFormat: 'yy-mm-dd'
         });
+    });
+
+    $(".reset-item").click(function () {
+        var id = this.id.substring(6);
+        $('#item-' + id).val(null).trigger("change");
+        $('#item-'+ id +'-qty').prop("disabled", false).val('');
+        $('#item-'+ id +'-size').prop("disabled", false).val('');
+        $('#item-'+ id +'-thickness').prop("disabled", false).val('');
+        $('#item-'+ id +'-film').prop("disabled", false).val('');
+        $('#item-'+ id +'-aica').prop("disabled", false).val('');
+
+        $('#item-list-' + id).addClass('hidden').removeClass('count-form');
     });
     $('#proj_id').change(function () {
         $('#msg_proj').html('');
@@ -426,9 +440,8 @@
     });
 
     $('.item_list').change(function () {
-        console.log(this.id)
+        var value = $('#' + this.id +' option:selected').val();
         var data_size = $('#' + this.id +' option:selected').attr('data-size');
-        console.log(data_size);
         var data_thickness = $('#' + this.id+' option:selected').attr('data-thickness');
         var data_film = $('#' + this.id+' option:selected').attr('data-film');
         var data_aica = $('#' + this.id+' option:selected').attr('data-aica');
@@ -463,6 +476,7 @@
 
     $('#btn-add').click(function () {
         var last_child =  parseInt($("div.count-form:last").attr('data-value'), 10);
+        console.log(last_child);
         var current_div = last_child+1;
         $('#item-list-'+ current_div).addClass('count-form').removeClass('hidden');
         return false;
@@ -470,6 +484,7 @@
     });
 
     function checkForm(form) {
+
         var error_msg = 'This field is required.';
         var status = true;
         if(form.proj_id.value == '')
@@ -494,7 +509,12 @@
             status = false;
         }
 
-
+        if(form.purq_require_start.value > form.purq_require_end.value)
+        {
+            $('#purq_require_start').addClass('input-error');
+            $('#msg_purq_require_start').html('Start date must be less than end date.');
+            status = false;
+        }
 
         if(form.id== 'create')
         {
@@ -515,12 +535,24 @@
             for(var i =0; i<=item.length; i++)
             {
                 var id = i+1;
-                if(item[i] && qty[i] == '')
+
+                var qty_input = parseInt(qty[i], 10);
+
+                if(item[i] && qty_input == '')
                 {
                     $('#item-'+id+'-qty').addClass('input-error');
                     $('#msg_qty_'+id).html(error_msg);
                     status = false;
                 }
+                if(item[i] && qty[i] != qty_input)
+                {
+                    $('#item-'+id+'-qty').addClass('input-error');
+                    $('#msg_qty_'+id).html('Please enter only digits.');
+                    status = false;
+                }
+
+
+
             }
         }
 
@@ -542,17 +574,23 @@
                 }
             }
 
-
             var item = $("select[name='item_id[]']").map(function(){return $(this).val();}).get();
             var qty = $("input[name='qty[]']").map(function(){return $(this).val();}).get();
 
             for(var i =0; i<=item.length; i++)
             {
                 var id = i+1;
-                if(item[i] && qty[i] == '')
+                var qty_input = parseInt(qty[i], 10);
+                if(item[i] && qty_input == '')
                 {
                     $('#item-'+id+'-qty').addClass('input-error');
                     $('#msg_qty_'+id).html(error_msg);
+                    status = false;
+                }
+                if(item[i] && qty[i] != qty_input)
+                {
+                    $('#item-'+id+'-qty').addClass('input-error');
+                    $('#msg_qty_'+id).html('Please enter only digits.');
                     status = false;
                 }
             }
@@ -665,7 +703,21 @@
             status = false;
         }
 
-        return status;
+
+        if(status === false)
+        {
+            return status;
+        }
+        var r = confirm("Are you sure to purchasing request?");
+        if (r == true) {
+
+            return true;
+
+        } else {
+
+            return false;
+        }
+
 
     }
 

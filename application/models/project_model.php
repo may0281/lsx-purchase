@@ -8,14 +8,21 @@ class project_model extends ci_model
 	}
 	
 
+<<<<<<< HEAD
 	public function getProjectList($proj_owner)
+=======
+	public function getProjectList()
+>>>>>>> 05e1e24504f3ae49c7f1f27642f7065c17ce7c49
 	{
         $this->db->select('*');
         $this->db->from('project');
-		$this->db->where('proj_owner',$proj_owner);
 		$this->db->where('status',1);
         $query = $this->db->get();
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> 05e1e24504f3ae49c7f1f27642f7065c17ce7c49
         return $query->result_array();
 	}
 

@@ -59,7 +59,7 @@ class project extends CI_Controller {
     public function del()
     {
         $this->project_model->deleteProject($this->uri->segment(3));
-        echo "<script>alert('Delete Successful.'); window.location.assign('".base_url()."index.php/project/lists'); </script>";
+        echo "<script>alert('Delete Successful.'); window.location.assign('".base_url()."project/lists'); </script>";
     }
 
     public function lists()
@@ -99,7 +99,7 @@ class project extends CI_Controller {
             'status'=> '1'
         );
         $this->project_model->createProject($data);
-        echo "<script>alert('Success.'); window.location.assign('".base_url()."index.php/project/lists'); </script>";
+        echo "<script>alert('Success.'); window.location.assign('".base_url()."project/lists'); </script>";
         exit();
     }
 

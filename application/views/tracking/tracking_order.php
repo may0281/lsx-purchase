@@ -53,10 +53,6 @@ $label = array(
 					<span></span>
 				</div>
 			</div>
-
-			<!--=== Page Content ===-->
-			<!--=== Managed Tables ===-->
-
 			<!--=== Normal ===-->
 			<div class="row">
 				<div class="col-md-12">
@@ -80,7 +76,7 @@ $label = array(
 									<th>Order Date</th>
 									<th>Forecast Date</th>
 									<th>Project</th>
-									<th>Purchase</th>
+									<th>Purchase Code</th>
 									<th>Req. Qty</th>
 									<th>Request ETD</th>
 								</tr>

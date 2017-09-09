@@ -92,8 +92,14 @@
 											}
 											?>		
 												</span></td>
+<<<<<<< HEAD
 												<td><input type="button" class="btn btn-sm btn-inverse" value="Request Purchase" onclick="location.href='<?php echo base_url();?>purchase/request?p=18'"><!--<?php echo nbs(5);?><input type="button" class="btn btn-sm btn" value="List Request Purchase">--><!--purchase/request?p=18--></td>
 									
+=======
+												<td>
+													<input type="button" class="btn btn-sm btn-inverse" value="Request Purchase" onclick="location.href='<?php echo base_url();?>purchase/request?p=<?php echo $r['proj_id'];?>'">
+												</td>
+>>>>>>> 05e1e24504f3ae49c7f1f27642f7065c17ce7c49
 										</tr>
 									<?php $i++; }?>	
 									</tbody>

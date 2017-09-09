@@ -24,7 +24,7 @@
             <!--=== Page Header ===-->
             <div class="page-header">
                 <div class="page-title">
-                    <h3><?php echo strtoupper($subMenu) ?></h3>
+                    <h3><?php echo strtoupper($menu) ?> List</h3>
                     <span></span>
                 </div>
             </div>
@@ -34,23 +34,42 @@
 				<div class="col-md-12">
 					<div class="widget box">
 						<div class="widget-header">
+<<<<<<< HEAD
 							<h4><i class="icon-reorder"></i>Fill the information</h4>
+=======
+							<h4><i class="icon-reorder"></i>Edit Project</h4>
+>>>>>>> 05e1e24504f3ae49c7f1f27642f7065c17ce7c49
 						</div>
 						<div class="widget-content">
-							<form class="form-horizontal row-border" method="post"  action="<?php echo base_url(); ?>project/update_action">
+							<form class="form-horizontal row-border" method="post"  action="<?php echo base_url(); ?>project/update_action" onsubmit="return checkForm(this);" >
 
 								<div class="form-group">
+<<<<<<< HEAD
 									<label class="col-md-2 control-label">Project Name <span class="required">*</span></label>
 									<div class="col-md-10"><input type="text" name="name" value="<?php echo array_get($data,'proj_name');?>" class="form-control" required></div>
+=======
+									<label class="col-md-2 control-label">Project Name:</label>
+									<div class="col-md-10">
+                                        <input type="text" id="name" name="name" value="<?php echo array_get($data,'proj_name');?>" class="form-control">
+                                        <label id="msg_name" class="col-md-6 errors" style="color: red" > </label>
+                                    </div>
+>>>>>>> 05e1e24504f3ae49c7f1f27642f7065c17ce7c49
 								</div>
 								<div class="form-group">
 									<label class="col-md-2 control-label">Create By:</label>
 									<div class="col-md-10"><input type="text" name="create_by" class="form-control" value="<?php echo array_get($data,'proj_owner');?>" disabled="disabled"></div>
 								</div>
 								<div class="form-group">
+<<<<<<< HEAD
 										<label class="col-md-2 control-label">Detail:</label>
 										<div class="col-md-10"><textarea rows="4" cols="5" name="detail" class="form-control"><?php echo array_get($data,'proj_about');?></textarea></div>
 									</div>
+=======
+                                    <label class="col-md-2 control-label">Detail:</label>
+                                    <div class="col-md-10"><textarea rows="4" cols="5" name="detail" class="form-control"><?php echo array_get($data,'proj_about');?></textarea></div>
+                                </div>
+
+>>>>>>> 05e1e24504f3ae49c7f1f27642f7065c17ce7c49
 								<div class="form-group" style="float:right; margin-right:20px; margin-top:20px;">
 									<input name="proj_id" type="hidden" value="<?php echo array_get($data,'proj_id'); ?>">
 									<input class="btn btn-sm btn-primary" type="submit" value="UPDATE"> <input class="btn" type="reset" value="Reset">
@@ -65,5 +84,23 @@
 
 </div>
 </div>
+<script>
+    $('#name').keypress(function() {
+        $('#msg_name').html('');
+    });
+    function checkForm(form) {
+        var error_msg = 'This field is required.';
+        var status = true;
+        if(form.name.value == '')
+        {
+            form.name.focus();
+            $('#name').addClass('has-error');
+            $('#msg_name').html(error_msg);
+            status = false;
+        }
+
+        return status;
+    }
+</script>
 
 </body>

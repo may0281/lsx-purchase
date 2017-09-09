@@ -231,7 +231,7 @@
 							<li class="<?php if($path_2 == 'po-report'){echo "current";} ?>">
 								<a href="<?php echo base_url('purchase/po-report');?>">
 									<i class="icon-angle-right"></i>
-									Purchase Order report
+									Purchase Order Report
 								</a>
 							</li>
 							<?php } ?>
@@ -254,10 +254,10 @@
 							<li class="<?php if($path_2 == 'create'){echo "current";} ?>">
 								<a href="<?php echo base_url('project/create');?>">
 									<i class="icon-angle-right"></i>
-									Create New Project
+									Create Project
 								</a>
 							</li>
-							<li>
+							<li class="<?php if($path_2 == 'lists' || $path_2 == 'edit'){echo "current";} ?>">
 								<a href="<?php echo base_url('project/lists');?>">
 									<i class="icon-angle-right"></i>
 									Project List
@@ -265,7 +265,32 @@
 							</li>
 						</ul>
 					</li>
+<<<<<<< HEAD
 					<li class="<?php if(array_get($path,1) == 'stock'){echo "current open";} ?>">
+=======
+
+					<li class="<?php if(array_get($path,1) == 'report'){echo "current open";} ?>">
+						<a href="javascript:void(0);">
+							<i class="icon-hdd"></i>
+							Report
+						</a>
+						<ul class="sub-menu">
+							<li class="<?php if($path_2 == 'weekly'){echo "current";} ?>">
+								<a href="<?php echo base_url('report/weekly');?>">
+									<i class="icon-angle-right"></i>
+									Weekly Purchase Report
+								</a>
+							</li>
+							<li>
+								<a href="<?php echo base_url('report/forecast-receive');?>">
+									<i class="icon-angle-right"></i>
+									Forecast Receive Date By Item
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="">
+>>>>>>> 05e1e24504f3ae49c7f1f27642f7065c17ce7c49
 						<a href="javascript:void(0);">
 							<i class="icon-barcode"></i>
 							Stock

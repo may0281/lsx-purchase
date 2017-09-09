@@ -34,11 +34,11 @@
         <!--=== Page Header ===-->
         <div class="page-header">
             <div class="page-title">
-                <h3><?php echo strtoupper($subMenu) ?></h3>
+                <h3><?php echo $menu ?> </h3>
             </div>
         </div>
 
-        <form class="form-horizontal" method="post" action="<?php echo base_url('purchase/pre-order/create')?>">
+        <form class="form-horizontal" method="post" action="<?php echo base_url('purchase/pre-order/create')?>"  onsubmit="return checkForm(this);">
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
@@ -224,3 +224,19 @@
         </form>
     </div>
 </div>
+
+<script type="application/javascript">
+
+    function checkForm(form) {
+
+        var r = confirm("Are you sure to purchasing order?");
+        if (r == true) {
+
+            return true;
+
+        } else {
+
+            return false;
+        }
+    }
+</script>
