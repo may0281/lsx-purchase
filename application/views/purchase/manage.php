@@ -708,7 +708,7 @@
         {
             return status;
         }
-        var r = confirm("Are you sure to purchasing order?");
+        var r = confirm("Are you sure to purchasing request?");
         if (r == true) {
 
             return true;

@@ -126,7 +126,6 @@ class purchaseorder extends CI_Controller {
         $pre_order = array(
             'puror_order_date' => date('Y-m-d H:i:s'),
             'puror_code' => $puror_code,
-            'puror_code_no' => $poCode,
             'puror_forecasts_date' => date('Y-m-d H:i:s', strtotime('+50 days')),
             'puror_inquiry_by' => $this->session->userdata('adminData'),
             'puror_shipping_method' => $input['puror_shipping_method'],
@@ -165,14 +164,22 @@ class purchaseorder extends CI_Controller {
 
     protected function getLastPurchase()
     {
-        $this->db->select('puror_code_no');
+        $this->db->select('puror_code');
         $this->db->order_by('puror_id','desc');
         $this->db->limit(1);
         $query = $this->db->get('purchase_order');
         $data = $query->result_array();
-        $poCode = $data[0]['puror_code_no'];
-        $poCode =$poCode+1;
-        return str_pad($poCode,3 ,0,STR_PAD_LEFT);
+        $poCode = $data[0]['puror_code'];
+        $year = substr($poCode,3,2);
+        $poNo = substr($poCode,5);
+
+        $po = $poNo + 1;
+
+        if(date('y') > $year)
+        {
+            $po = 1;
+        }
+        return str_pad($po,3 ,0,STR_PAD_LEFT);
     }
 
 

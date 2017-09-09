@@ -1,5 +1,4 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-require_once(APPPATH.'controllers/purchase.php');
 class report extends CI_Controller {
     private $menu;
 	public function __construct()
@@ -9,40 +8,44 @@ class report extends CI_Controller {
 		if($this->session->userdata('isSession') == false){
             echo "<script> window.location.assign('".base_url()."login?ReturnUrl=".$_SERVER['REQUEST_URI']."');</script>";
 		}
-        $this->load->model('purchase_model');
-        $this->load->model('project_model');
-        $this->load->model('stock_model');
-        $this->load->model('user_model');
+        $this->load->model('report_model');
         $this->menu = 'Report';
-        $this->submenu = 'List';
-        $this->major = 'purchase';
-        $this->minor = 'po';
-        $this->create = 'create';
-        require_once(APPPATH.'controllers/purchase.php');
-
-
+        $this->submenu = 'weekly';
+        $this->major = 'report';
+        $this->minor = 'weekly';
     }
 
 	public function weekly()
 	{
-        $permission = $this->hublibrary_model->permission($this->major,$this->minor,'view');
-        if($permission == false)
+        $monday = date( 'Y-m-d', strtotime( 'monday this week' ) );
+        $sunday = date( 'Y-m-d', strtotime( 'sunday this week' ) );
+        
+        $projects = $this->report_model->getProjectList();
+        $i = 0;
+        $all = array();
+        foreach ($projects as $project)
         {
-            echo $this->load->view('template/left','',true);
-            echo $this->load->view('template/400','',true);
-            die();
+            $proj_id = $project['proj_id'];
+            $itemList = $this->report_model->getItemTrackingByProject($proj_id,$monday,$sunday);
+            if($itemList)
+            {
+                $data = array(
+                    $i => array(
+                        'proj_id' => $proj_id,
+                        'proj_name' => $project['proj_name'],
+                        'purchase' => $itemList
+                    ),
+                );
+                $i++;
+                $all = array_merge($all,$data);
+            }
+
         }
 
-        $data = array(
-            'menu'=> $this->menu,
-            'subMenu'=> $this->submenu,
-            'data' => $this->purchase_model->getPurchaseOrder(),
-        );
-
-        $this->load->view('template/left');
-        $this->load->view('purchase/po-report',$data);
-
 	}
+
+
+
 
 
 
