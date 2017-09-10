@@ -10,7 +10,7 @@ class report extends CI_Controller {
 		}
         $this->load->model('report_model');
         $this->menu = 'Report';
-        $this->submenu = 'weekly';
+        $this->weekly = 'Weekly Purchase Report';
         $this->major = 'report';
         $this->minor = 'weekly';
     }
@@ -41,6 +41,43 @@ class report extends CI_Controller {
             }
 
         }
+        $data['project'] = $all;
+        $data['menu'] = $this->menu;
+        $data['submenu'] = $this->weekly;
+        $data['startDate'] = $monday;
+        $data['endDate'] = $sunday;
+        $this->load->view('template/left');
+        $this->load->view('report/weekly',$data);
+
+	}
+
+	public function forecastReceive()
+	{
+        $monday = date( 'Y-m-d', strtotime( 'monday this week' ) );
+        $sunday = date( 'Y-m-d', strtotime( 'sunday this week' ) );
+
+        $projects = $this->report_model->getProjectList();
+        $i = 0;
+        $all = array();
+        foreach ($projects as $project)
+        {
+            $proj_id = $project['proj_id'];
+            $itemList = $this->report_model->getItemTrackingByProject($proj_id,$monday,$sunday);
+            if($itemList)
+            {
+                $data = array(
+                    $i => array(
+                        'proj_id' => $proj_id,
+                        'proj_name' => $project['proj_name'],
+                        'purchase' => $itemList
+                    ),
+                );
+                $i++;
+                $all = array_merge($all,$data);
+            }
+
+        }
+        sd($all);
 
 	}
 

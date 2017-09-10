@@ -22,7 +22,6 @@
                 <span></span>
             </div>
         </div>
-        <!-- /Page Header -->
 
         <!--=== Page Content ===-->
 <div class="row">

@@ -29,6 +29,7 @@
 
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/libs/jquery-1.10.2.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url();?>plugins/jquery-ui/jquery-ui-1.10.2.custom.min.js"></script>
+
 	<script type="text/javascript" src="<?php echo base_url();?>bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/libs/lodash.compat.min.js"></script>
 
@@ -47,15 +48,12 @@
 	<script type="text/javascript" src="<?php echo base_url();?>plugins/respond/respond.min.js"></script> <!-- Polyfill for min/max-width CSS3 Media Queries (only for IE8) -->
 	<script type="text/javascript" src="<?php echo base_url();?>plugins/cookie/jquery.cookie.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url();?>plugins/slimscroll/jquery.slimscroll.min.js"></script>
-	<script type="text/javascript" src="<?php echo base_url();?>plugins/slimscroll/jquery.slimscroll.horizontal.min.js"></script>\
-	
-	
+	<script type="text/javascript" src="<?php echo base_url();?>plugins/slimscroll/jquery.slimscroll.horizontal.min.js"></script>
 	
 		<!-- Charts -->
 	<script type="text/javascript" src="<?php echo base_url();?>plugins/sparkline/jquery.sparkline.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url();?>plugins/flot/jquery.flot.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url();?>plugins/flot/jquery.flot.time.min.js"></script>
-	<script type="text/javascript" src="<?php echo base_url();?>plugins/flot/jquery.flot.tooltip.min.js"></script>
 	
 	<script type="text/javascript" src="<?php echo base_url();?>plugins/daterangepicker/moment.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url();?>plugins/fullcalendar/fullcalendar.min.js"></script>
@@ -265,9 +263,6 @@
 							</li>
 						</ul>
 					</li>
-<<<<<<< HEAD
-					<li class="<?php if(array_get($path,1) == 'stock'){echo "current open";} ?>">
-=======
 
 					<li class="<?php if(array_get($path,1) == 'report'){echo "current open";} ?>">
 						<a href="javascript:void(0);">
@@ -289,8 +284,7 @@
 							</li>
 						</ul>
 					</li>
-					<li class="">
->>>>>>> 05e1e24504f3ae49c7f1f27642f7065c17ce7c49
+					<li class="<?php if(array_get($path,1) == 'stock'){echo "current open";} ?>">
 						<a href="javascript:void(0);">
 							<i class="icon-barcode"></i>
 							Stock

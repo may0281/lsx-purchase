@@ -111,6 +111,12 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-md-3 control-label">Mobile <span class="required">*</span></label>
+                                <div class="col-md-9">
+                                    <input type="text" name="mobile" class="form-control required">
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-md-3 control-label">Status<span class="required">*</span></label>
                                 <div class="col-md-9 clearfix">
                                     <select name="status" class="col-md-12 select2 full-width-fix required">

@@ -11,6 +11,7 @@ class user extends CI_Controller {
 		}
 		$lang = $this->session->userdata("lang")==null?"thailand":$this->session->userdata("lang");
         $this->load->model('user_model');
+        $this->load->database();
 	}
 
 
@@ -47,6 +48,7 @@ class user extends CI_Controller {
             'role_id' => $this->input->post('role_id'),
             'firstname' => $this->input->post('firstname'),
             'lastname' => $this->input->post('lastname'),
+            'mobile' => $this->input->post('mobile'),
             'create_by' => $this->session->userdata('adminData'),
             'create_date' => date('Y-m-d H:i:s'),
             'status' => $this->input->post('status'),
@@ -54,7 +56,15 @@ class user extends CI_Controller {
         try
         {
             $this->user_model->createUser($bn_user_profile);
-            echo "<script> window.location.assign('".base_url()."authen/init-user'); </script>";
+
+            if($this->db->_error_message())
+            {
+                $data['message'] = $this->db->_error_message();
+                echo $this->load->view('error/db',$data,true);
+                die();
+            }
+
+            echo "<script>alert('Success'); window.location.assign('".base_url()."authen/init-user'); </script>";
             exit();
 
         }
@@ -86,6 +96,7 @@ class user extends CI_Controller {
             'role_id' => $this->input->post('role_id'),
             'firstname' => $this->input->post('firstname'),
             'lastname' => $this->input->post('lastname'),
+            'mobile' => $this->input->post('mobile'),
             'update_by' => $this->session->userdata('adminData'),
             'update_date' => date('Y-m-d H:i:s'),
             'status' => $this->input->post('status'),
@@ -93,7 +104,14 @@ class user extends CI_Controller {
         try
         {
             $this->user_model->updateUserData($account,$bn_user_profile);
-            echo "<script> window.location.assign('".base_url()."authen/init-user'); </script>";
+            if($this->db->_error_message())
+            {
+                $data['message'] = $this->db->_error_message();
+                echo $this->load->view('error/db',$data,true);
+                die();
+            }
+
+            echo "<script>alert('Success'); window.location.assign('".base_url()."authen/init-user'); </script>";
             exit();
 
         }

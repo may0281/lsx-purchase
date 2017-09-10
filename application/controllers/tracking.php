@@ -4,7 +4,7 @@ class tracking extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-//		error_reporting(0);
+		error_reporting(0);
 		if($this->session->userdata('isSession') == false){
 
             echo "<script> window.location.assign('".base_url()."login?ReturnUrl=".$_SERVER['REQUEST_URI']."');</script>";
@@ -25,7 +25,6 @@ class tracking extends CI_Controller {
             'item' => $item
 
         );
-
         $this->load->view('template/left');
         $this->load->view('tracking/tracking_order',$data);
     }

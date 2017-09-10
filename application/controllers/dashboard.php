@@ -5,7 +5,7 @@ class dashboard extends CI_Controller {
 	{
 		parent::__construct();
 		
-//		error_reporting(0);
+		error_reporting(0);
 		
 		if($this->session->userdata('isSession') == false){
 
