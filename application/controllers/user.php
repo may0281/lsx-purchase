@@ -11,7 +11,9 @@ class user extends CI_Controller {
 		}
 		$lang = $this->session->userdata("lang")==null?"thailand":$this->session->userdata("lang");
         $this->load->model('user_model');
+        $this->load->model('role_model');
         $this->load->database();
+        $this->menu = 'User Management';
 	}
 
 
@@ -19,8 +21,7 @@ class user extends CI_Controller {
     {
 
         $data = array(
-            'menu'=> 'User',
-            'subMenu'=> 'User List',
+            'menu'=> $this->menu,
             'q' => $this->user_model->getUser()
         );
         $this->load->view('template/left');
@@ -31,7 +32,7 @@ class user extends CI_Controller {
     public function createUser()
     {
         $data = array(
-            'menu'=> 'User',
+            'menu'=> $this->menu,
             'subMenu'=> 'Create User',
             'roles' => $this->user_model->getRole()
         );
@@ -53,6 +54,20 @@ class user extends CI_Controller {
             'create_date' => date('Y-m-d H:i:s'),
             'status' => $this->input->post('status'),
         );
+
+        if (!filter_var($this->input->post('account'), FILTER_VALIDATE_EMAIL)) {
+
+            $data['message'] = $this->input->post('account').' is invalid email format';
+            echo $this->load->view('error/db',$data,true);
+            die();
+        }
+        if(empty($this->role_model->getRoleByRoleCode($this->input->post('role_id'))))
+        {
+            $data['message'] = 'The role ['.$this->input->post('role_id').'] is empty. <br>  Please select other role.';
+            echo $this->load->view('error/db',$data,true);
+            die();
+        }
+
         try
         {
             $this->user_model->createUser($bn_user_profile);
@@ -79,7 +94,7 @@ class user extends CI_Controller {
     public function updateUser($account)
     {
         $data = array(
-            'menu'=> 'User',
+            'menu'=> $this->menu,
             'subMenu'=> 'Update User',
             'roles' => $this->user_model->getRole(),
             'userData' => $this->user_model->getUserData($account)
@@ -101,6 +116,20 @@ class user extends CI_Controller {
             'update_date' => date('Y-m-d H:i:s'),
             'status' => $this->input->post('status'),
         );
+        if (!filter_var($this->input->post('account'), FILTER_VALIDATE_EMAIL)) {
+
+            $data['message'] = $this->input->post('account').' is invalid email format';
+            echo $this->load->view('error/db',$data,true);
+            die();
+        }
+
+        if(empty($this->role_model->getRoleByRoleCode($this->input->post('role_id'))))
+        {
+            $data['message'] = 'The role ['.$this->input->post('role_id').'] is empty. <br>  Please select other role.';
+            echo $this->load->view('error/db',$data,true);
+            die();
+        }
+
         try
         {
             $this->user_model->updateUserData($account,$bn_user_profile);

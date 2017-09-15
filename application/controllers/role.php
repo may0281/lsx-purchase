@@ -15,14 +15,14 @@ class role extends CI_Controller {
         $this->update = 'update';
         $this->delete = 'delete';
         $this->change_status = 'change-status';
+        $this->menu = 'Role Management';
 
 	}
 
 	public function index()
 	{
         $data = array(
-            'menu'=> 'Role',
-            'subMenu'=> 'Role List',
+            'menu'=> 'Role Management',
             'q' => $this->role_model->getRole()
         );
         $this->load->view('template/left');
@@ -34,7 +34,7 @@ class role extends CI_Controller {
     {
         $functions = $this->prepareMenu();
         $data = array(
-            'menu' => 'Role',
+            'menu' => $this->menu,
             'subMenu' => 'Create Role',
             'function' => $functions,
         );
@@ -124,7 +124,7 @@ class role extends CI_Controller {
         $functions = $this->prepareMenu();
         $permission = $this->preparePermission($roleCode);
         $data = array(
-            'menu'=> 'Role',
+            'menu'=> $this->menu,
             'subMenu'=> 'Update Role',
             'data' => $roleData,
             'function' => $functions,

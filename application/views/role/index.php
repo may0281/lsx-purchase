@@ -18,10 +18,7 @@
                         <a href="<?php echo base_url();?>dashboard">DASHBOARD</a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url();?>blog" title=""><?php echo strtoupper($menu); ?></a>
-                    </li>
-                    <li class="current">
-                        <a href="#" title=""><?php echo strtoupper($subMenu) ?></a>
+                        <a href="#" title=""><?php echo strtoupper($menu); ?></a>
                     </li>
                 </ul>
                 <ul class="crumb-buttons">
@@ -33,7 +30,7 @@
             <!--=== Page Header ===-->
             <div class="page-header">
                 <div class="page-title">
-                    <h3><?php echo strtoupper($subMenu) ?></h3>
+                    <h3><?php echo strtoupper($menu) ?></h3>
                     <span></span>
                 </div>
             </div>
