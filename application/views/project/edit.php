@@ -1,3 +1,4 @@
+<title>Dashboard | Project Management </title>
 <?php $data = $ProjectData[0]; ?>
 <body>
 <div id="container">

@@ -1,3 +1,4 @@
+<title>Dashboard | User Management </title>
 <?php $data = $userData[0]; ?>
 <!-- Charts -->
 <script type="text/javascript" src="<?php echo base_url(); ?>plugins/sparkline/jquery.sparkline.min.js"></script>

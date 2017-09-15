@@ -17,8 +17,9 @@ class login extends CI_Controller {
 		$this->load->view("authen/login");
 	}
 
-	public function Verify()
+	public function verify()
 	{
+//        sd($this->input->post());
         $username = $this->input->post('username');
 		if($this->session->userdata('isSession') === true)
 		{

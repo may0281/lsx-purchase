@@ -1,3 +1,5 @@
+<title>Dashboard | Purchase Request </title>
+
 <style>
     .errors
     {

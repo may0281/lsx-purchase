@@ -1,3 +1,4 @@
+<title>Dashboard | Purchase Order </title>
 
 <!-- Forms -->
 <script type="text/javascript" src="<?php echo base_url(); ?>plugins/uniform/jquery.uniform.min.js"></script> <!-- Styled radio and checkboxes -->

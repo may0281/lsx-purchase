@@ -1,3 +1,4 @@
+<title>Dashboard | Project Management </title>
 <body>
 <div id="container">
     <div id="content">

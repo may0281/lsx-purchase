@@ -1,3 +1,4 @@
+<title>Dashboard | Purchase Order </title>
 <style>
     .pageBreak { page-break-before: always; }
     @media print

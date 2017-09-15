@@ -1,3 +1,4 @@
+<title>Dashboard | Tracking Order</title>
 <script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/tabletools/TableTools.min.js"></script> <!-- optional -->
 <script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/colvis/ColVis.min.js"></script> <!-- optional -->
@@ -74,7 +75,7 @@ $label = array(
 									<th>Order QTY</th>
 									<th>PO No.</th>
 									<th>Order Date</th>
-									<th>Forecast Date</th>
+									<th>Forecast Receive Date</th>
 									<th>Project</th>
 									<th>Purchase Code</th>
 									<th>Req. Qty</th>

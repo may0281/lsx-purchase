@@ -1,4 +1,4 @@
-
+<title>Dashboard | Role Management </title>
 <!-- Charts -->
 <script type="text/javascript" src="<?php echo base_url(); ?>plugins/sparkline/jquery.sparkline.min.js"></script>
 

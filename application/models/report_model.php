@@ -58,6 +58,29 @@ class report_model extends ci_model
         return $query->result_array();
     }
 
+    public function getItemAll()
+    {
+        $this->db->select('a.item_code,a.item_qty');
+        $this->db->from('item a');
+        $this->db->where('item_status',1);
+        $this->db->order_by('item_id','DESC');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function purchase_order_item($item_code)
+    {
+        $this->db->select('a.item_code,a.puror_qty,b.puror_forecasts_date');
+        $this->db->from('purchase_order_item a');
+        $this->db->join('purchase_order b','a.puror_id = b.puror_id');
+        $this->db->where('puror_item_status','ordered');
+        $this->db->where('a.item_code',$item_code);
+        $this->db->order_by('puror_item_id','DESC');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+
 
 
 

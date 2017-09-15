@@ -1,3 +1,4 @@
+<title>Dashboard | lsx.co.th </title>
 <div id="content">
     <div class="container">
         <!-- Breadcrumbs line -->
