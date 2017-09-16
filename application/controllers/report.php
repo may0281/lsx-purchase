@@ -18,6 +18,13 @@ class report extends CI_Controller {
 
 	public function weekly()
 	{
+        $permission = $this->hublibrary_model->permission($this->major,$this->minor,'view');
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('template/400','',true);
+            die();
+        }
         $monday = date( 'Y-m-d', strtotime( 'monday this week' ) );
         $sunday = date( 'Y-m-d', strtotime( 'sunday this week' ) );
         
@@ -54,6 +61,13 @@ class report extends CI_Controller {
 
 	public function forecastReceive()
 	{
+        $permission = $this->hublibrary_model->permission($this->major,$this->forecast,'view');
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('template/400','',true);
+            die();
+        }
         $lastMonth = $this->weeks_in_month(date("m", strtotime('-1 months')),date("Y", strtotime('-1 months')));
         $currentMonth = $this->weeks_in_month(date("m"),date("Y"));
         $next1Month = $this->weeks_in_month(date("m", strtotime('+1 months')),date("Y", strtotime('+1 months')));

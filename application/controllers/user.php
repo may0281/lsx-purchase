@@ -61,7 +61,8 @@ class user extends CI_Controller {
             echo $this->load->view('error/db',$data,true);
             die();
         }
-        if(empty($this->role_model->getRoleByRoleCode($this->input->post('role_id'))))
+        $role = $this->role_model->getRoleByRoleCode($this->input->post('role_id'));
+        if(empty($role))
         {
             $data['message'] = 'The role ['.$this->input->post('role_id').'] is empty. <br>  Please select other role.';
             echo $this->load->view('error/db',$data,true);
@@ -122,8 +123,8 @@ class user extends CI_Controller {
             echo $this->load->view('error/db',$data,true);
             die();
         }
-
-        if(empty($this->role_model->getRoleByRoleCode($this->input->post('role_id'))))
+        $role = $this->role_model->getRoleByRoleCode($this->input->post('role_id'));
+        if(empty($role))
         {
             $data['message'] = 'The role ['.$this->input->post('role_id').'] is empty. <br>  Please select other role.';
             echo $this->load->view('error/db',$data,true);

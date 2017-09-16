@@ -105,10 +105,16 @@
 </div>
 
 <script  type="text/javascript">
+
     function delFunction() {
         var r = confirm("Are you sure to delete user?");
         if (r == true) {
+
             return true;
+
+        } else {
+
+            return false;
         }
     }
 

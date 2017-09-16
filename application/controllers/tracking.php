@@ -12,12 +12,17 @@ class tracking extends CI_Controller {
 		$this->load->model('hublibrary_model');
         $this->load->model('tracking_model');
 		$this->major="tracking";
-		$this->minor="lists";
 	}
 
     public function index()
     {
-
+        $permission = $this->hublibrary_model->permission($this->major,0,'view');
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('template/400','',true);
+            die();
+        }
         $item = $this->tracking_model->getItemTracking();
         $data = array(
             'menu'=> 'Stock',

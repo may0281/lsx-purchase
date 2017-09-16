@@ -153,48 +153,50 @@
 							Dashboard
 						</a>
 					</li>
+					<?php
+					$user  = $this->hublibrary_model->permission('authen','init-user','view');
+					$role  = $this->hublibrary_model->permission('authen','init-role','view');
+					if(	$user == true or $role == true){
+					?>
 					<li class="<?php if(array_get($path,1) == 'authen'){echo "current open";} ?>">
 						<a href="javascript:void(0);">
 							<i class="icon-sitemap"></i>
 							Authentication
 						</a>
 						<ul class="sub-menu">
+							<?php if($user == true){ ?>
 							<li class="<?php if($path_2 == 'init-user'){echo "current";} ?>">
 								<a href="<?php echo base_url('authen/init-user');?>">
 									<i class="icon-angle-right"></i>
 									User Management
 								</a>
-							</li><li class="<?php if($path_2 == 'init-role'){echo "current";} ?>">
+							</li>
+							<?php }?>
+							<?php if($role == true){ ?>
+							<li class="<?php if($path_2 == 'init-role'){echo "current";} ?>">
 								<a href="<?php echo base_url('authen/init-role');?>">
 									<i class="icon-angle-right"></i>
 									Role Management
 								</a>
 							</li>
+							<?php }?>
 						</ul>
 					</li>
-<!--					<li class="--><?php //if(array_get($path,1) == 'sale'){echo "current open";} ?><!--">-->
-<!--						<a href="javascript:void(0);">-->
-<!--							<i class="icon-group"></i>-->
-<!--							Marketing & Sale-->
-<!--						</a>-->
-<!--						<ul class="sub-menu">-->
-<!--							<li class="--><?php //if($path_2 == 'report'){echo "current";} ?><!--">-->
-<!--								<a href="--><?php //echo base_url('sale/report');?><!--">-->
-<!--									<i class="icon-angle-right"></i>-->
-<!--									Report-->
-<!--								</a>-->
-<!--							</li>-->
-<!--						</ul>-->
-<!--					</li>-->
-
+					<?php }?>
 					<?php
 						$purq_rep_view  = $this->hublibrary_model->permission('purchase','request','view');
 						$purq_req_create  = $this->hublibrary_model->permission('purchase','request','create');
 						$purq_req_change_status = $this->hublibrary_model->permission('purchase','request','change-status');
 						$po_report = $this->hublibrary_model->permission('purchase','po','view');
 						$po_create = $this->hublibrary_model->permission('purchase','po','create');
+
+						if(	$purq_rep_view == true or
+							$purq_req_create == true or
+							$purq_req_change_status == true or
+							$po_report == true or
+							$po_create == true){
 					?>
-						<li class="<?php if(array_get($path,1) == 'purchase'){echo "current open";} ?>">
+					<li class="<?php if(array_get($path,1) == 'purchase'){echo "current open";} ?>">
 						<a href="javascript:void(0);">
 							<i class="icon-usd"></i>
 							Purchase Management
@@ -243,47 +245,70 @@
 							<?php } ?>
 						</ul>
 					</li>
+					<?php } ?>
+
+					<?php
+						$proj_view  = $this->hublibrary_model->permission('project','init-project','view');
+						$proj_create  = $this->hublibrary_model->permission('project','init-project','create');
+						if(	$proj_view == true or $proj_create == true){
+					?>
 					<li class="<?php if(array_get($path,1) == 'project'){echo "current open";} ?>">
 						<a href="javascript:void(0);">
 							<i class="icon-hdd"></i>
 							Project
 						</a>
 						<ul class="sub-menu">
+							<?php if($proj_create == true){?>
 							<li class="<?php if($path_2 == 'create'){echo "current";} ?>">
 								<a href="<?php echo base_url('project/create');?>">
 									<i class="icon-angle-right"></i>
 									Create Project
 								</a>
 							</li>
+							<?php } ?>
+							<?php if($proj_view == true){?>
 							<li class="<?php if($path_2 == 'lists' || $path_2 == 'edit'){echo "current";} ?>">
 								<a href="<?php echo base_url('project/lists');?>">
 									<i class="icon-angle-right"></i>
 									Project List
 								</a>
 							</li>
+							<?php } ?>
 						</ul>
 					</li>
+					<?php } ?>
 
+					<?php
+					$weekly_view  = $this->hublibrary_model->permission('report','weekly','view');
+					$forecast_view  = $this->hublibrary_model->permission('report','forecast-receive','view');
+					if(	$weekly_view == true or $forecast_view == true){
+					?>
 					<li class="<?php if(array_get($path,1) == 'report'){echo "current open";} ?>">
 						<a href="javascript:void(0);">
 							<i class="icon-hdd"></i>
 							Report
 						</a>
 						<ul class="sub-menu">
+							<?php if($weekly_view == true){ ?>
 							<li class="<?php if($path_2 == 'weekly'){echo "current";} ?>">
 								<a href="<?php echo base_url('report/weekly');?>">
 									<i class="icon-angle-right"></i>
 									Weekly Purchase Report
 								</a>
 							</li>
+							<?php } ?>
+							<?php if($forecast_view == true){ ?>
 							<li>
 								<a href="<?php echo base_url('report/forecast-receive');?>">
 									<i class="icon-angle-right"></i>
 									Forecast Receive Date By Item
 								</a>
 							</li>
+							<?php } ?>
 						</ul>
 					</li>
+					<?php } ?>
+
 					<li class="<?php if(array_get($path,1) == 'stock'){echo "current open";} ?>">
 						<a href="javascript:void(0);">
 							<i class="icon-barcode"></i>
@@ -316,13 +341,30 @@
 							</li>
 						</ul>
 					</li>
-
+					<?php
+					$tracking  = $this->hublibrary_model->permission('tracking',0,'view');
+					if($tracking == true){
+					?>
 					<li class="<?php if(array_get($path,1) == 'tracking'){echo "current open";} ?>">
 						<a href="<?php echo base_url('tracking')?>">
 							<i class="icon-barcode"></i>
 							Tracking Order
 						</a>
 					</li>
+					<?php }?>
+
+
+					<?php
+					$param  = $this->hublibrary_model->permission('param',0,'view');
+					if($param == true){
+					?>
+					<li class="<?php if(array_get($path,1) == 'param'){echo "current open";} ?>">
+						<a href="<?php echo base_url('param')?>">
+							<i class="icon-barcode"></i>
+							Parameter Config
+						</a>
+					</li>
+					<?php }?>
 
 				</ul>
 				<!-- /Navigation -->
