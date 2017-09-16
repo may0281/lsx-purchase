@@ -85,9 +85,7 @@
 											</a>
 
 											<a data-toggle="modal" href="#delete-<?php echo $it['param_id'];?>"class="btn btn-sm btn-danger"><i class=" icon-remove"></i></a>
-											<a class="btn btn-sm btn-danger" href="<?php echo base_url(); ?>authen/delete-user/<?php echo $r['account']; ?>" onclick="delFunction()">
-												<i class=" icon-remove"></i>
-											</a>
+
 										</td>
 										<div class="modal fade" id="updateParamConfig-<?php echo $it['param_id'];?>">
 											<div class="modal-dialog">

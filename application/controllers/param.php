@@ -87,9 +87,29 @@ class param extends CI_Controller {
             exit();
         }
     }
+
     public function delete($id)
     {
-        sd($id);
+        try
+        {
+            $this->param_model->delete($id);
+
+            if($this->db->_error_message())
+            {
+                $data['message'] = $this->db->_error_message();
+                echo $this->load->view('error/db',$data,true);
+                die();
+            }
+
+            echo "<script>alert('Success'); window.location.assign('".base_url()."param'); </script>";
+            exit();
+
+        }
+        catch (\Exception $e)
+        {
+            echo "<script> history.back(); </script>";
+            exit();
+        }
     }
 
 }

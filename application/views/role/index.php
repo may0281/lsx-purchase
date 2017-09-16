@@ -59,8 +59,8 @@
                                     <th>Description</th>
                                     <th>Create</th>
                                     <th>Last Update</th>
-                                    <th data-hide="phone,tablet">Edit</th>
-                                    <th data-hide="phone,tablet">Del</th>
+                                    <th class="align-center">Edit</th>
+                                    <th class="align-center">Del</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -72,9 +72,34 @@
                                     <td><?php echo $r['create_by'];?> <br> <?php echo $r['create_date'];?> </td>
                                     <td><?php echo $r['update_by'];?> <br> <?php echo $r['update_date'];?> </td>
 
-                                    <td data-hide="phone,tablet"><a href="<?php echo base_url(); ?>authen/init-role/update/<?php echo $r['role_code']; ?>" title="Edit">Edit </a></td>
-                                    <td data-hide="phone,tablet"><a href="<?php echo base_url(); ?>authen/delete-role/<?php echo $r['role_code']; ?>" title="Del">Del </a></td>
+                                    <td class="align-center">
+                                        <a class="btn btn-sm btn-warning" href="<?php echo base_url(); ?>authen/init-role/update/<?php echo $r['role_code']; ?>">
+                                            <i class="icon-edit"></i>
+                                        </a>
+                                    </td>
+                                    <td class="align-center">
+                                        <a data-toggle="modal" href="#delete-<?php echo $i;?>" class="btn btn-sm btn-danger"><i class=" icon-remove"></i></a>
+                                    </td>
                                 </tr>
+                                    <div class="modal fade" id="delete-<?php echo $i;?>">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <form class="form-horizontal row-border" method="get" action="<?php echo base_url(); ?>authen/delete-role/<?php echo $r['role_code'];?>">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                        <h4 class="modal-title">Delete</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Are you sure to delete this role (<?php echo $r['role_code']; ?>) ?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Delete</button>
+                                                    </div>
+                                                </form>
+                                            </div><!-- /.modal-content -->
+                                        </div><!-- /.modal-dialog -->
+                                    </div><!-- /.modal -->
                         <?php $i++; }?>
                         </tbody>
                         </table>
