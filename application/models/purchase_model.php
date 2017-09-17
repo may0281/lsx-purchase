@@ -296,6 +296,21 @@ class purchase_model extends ci_model
         $this->log_model->Logging('accrual','success',$this->db->last_query());
     }
 
+    public function getEmailByKey($key)
+    {
+        $this->db->select('param_email');
+        $this->db->from('param');
+        $this->db->where('param_key',$key);
+        $query = $this->db->get();
+        $all = $query->result_array();
+        $email = array();
+        for ($i =0; $i< count($all); $i++)
+        {
+            $email = array($i=>$all[$i]['param_email']);
+        }
+        return $email;
+    }
+
 
 
 
