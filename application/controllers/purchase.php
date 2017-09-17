@@ -28,6 +28,7 @@ class purchase extends CI_Controller {
         $this->sale = 'SALE';
         $this->status = array(
             'reject',
+            'completed'
         );
 	}
 
@@ -266,6 +267,7 @@ class purchase extends CI_Controller {
 
     protected function sendPurchaseRequest($message,$action)
     {
+
         $subject = 'Purchase Request ['.strtoupper($action).']';
         $config = array (
             'mailtype' => 'html',
