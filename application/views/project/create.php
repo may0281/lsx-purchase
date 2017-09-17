@@ -18,7 +18,6 @@
                     </li>
                 </ul>
             </div>
-
             <!--=== Page Header ===-->
             <div class="page-header">
                 <div class="page-title">
@@ -27,15 +26,12 @@
                 </div>
             </div>
 
-            <!--=== Page Content ===-->
-            <!--=== Managed Tables ===-->
-
             <!--=== Normal ===-->
             <div class="row">
 					<div class="col-md-12">
 						<div class="widget box">
 							<div class="widget-header">
-								<h4><i class="icon-reorder"></i></h4>
+								<h4><i class="icon-reorder"></i> Fill the information.</h4>
 							</div>
 							<div class="widget-content">
 								<form class="form-horizontal row-border" method="post"  action="<?php echo base_url(); ?>project/create_action"  onsubmit="return checkForm(this);" >

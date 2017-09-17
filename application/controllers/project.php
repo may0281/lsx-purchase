@@ -56,10 +56,19 @@ class project extends CI_Controller {
 
     }
 
-    public function del()
+    public function del($id)
     {
-        $this->project_model->deleteProject($this->uri->segment(3));
-        echo "<script>alert('Delete Successful.'); window.location.assign('".base_url()."project/lists'); </script>";
+        $project = $this->project_model->getProjectby($id);
+        if($project)
+        {
+            echo "<script>alert('ไม่สามารถลบโปรเจคนี้ได้ เนื่องจากมี purchase request โปรเจคนี้อยู่'); window.location.assign('".base_url()."project/lists'); </script>";
+            exit();
+        }
+        else{
+            $this->project_model->deleteProject($id);
+            echo "<script>alert('Delete Successful.'); window.location.assign('".base_url()."project/lists'); </script>";
+        }
+
     }
 
     public function lists()

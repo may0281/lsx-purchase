@@ -64,7 +64,7 @@
 										<tr>
 											<th>No</th>
 											<th>Name</th>
-											<th>Create date</th>
+											<th>Create</th>
 											<th>Action</th>
 											<th></th>
 										</tr>
