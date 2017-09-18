@@ -84,4 +84,13 @@ class project_model extends ci_model
         return $query->result_array();
     }
 
+    public function getPurchaseByProjectId($proj_id)
+    {
+        $this->db->select('*');
+        $this->db->from('purchase_request');
+        $this->db->where('proj_id',$proj_id);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
 }

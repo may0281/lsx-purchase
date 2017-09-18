@@ -59,7 +59,7 @@
 								</div>
 							</div>
 							<div class="widget-content">
-								<table class="table table-striped table-bordered table-hover table-checkable datatable">
+								<table class="table table-striped table-bordered table-hover table-checkable datatable" data-display-length="25">
 									<thead>
 										<tr>
 											<th>No</th>
@@ -75,13 +75,34 @@
 											<td class="checkbox-column"><?php echo $i;?></td>
 											<td><?php echo $r['proj_name'];?></td>
 											<td><?php echo $r['proj_createdate'];?></td>
-											<td><span class="btn-group">
+											<td>
+												<span class="btn-group">
 													<a href="<?php echo base_url();?>project/edit/<?php echo $r['proj_id'];?>" class="btn btn-xs bs-tooltip" title="Edit"><i class="icon-pencil"></i></a>
-													<a href="<?php echo base_url();?>project/del/<?php echo $r['proj_id'];?>" class="btn btn-xs bs-tooltip" title="Delete"><i class="icon-trash"></i></a>
-												</span></td>
-												<td>
-													<input type="button" class="btn btn-sm btn-inverse" value="Request Purchase" onclick="location.href='<?php echo base_url();?>purchase/request?p=<?php echo $r['proj_id'];?>'">
-												</td>
+													<a data-toggle="modal" href="#delete-<?php echo $i;?>" class="btn btn-xs bs-tooltip" title="Delete"><i class="icon-trash"></i></a>
+												</span>
+											</td>
+											<td>
+												<input type="button" class="btn btn-sm btn-inverse" value="Request Purchase" onclick="location.href='<?php echo base_url();?>purchase/request?p=<?php echo $r['proj_id'];?>'">
+											</td>
+											<div class="modal fade" id="delete-<?php echo $i;?>">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<form class="form-horizontal row-border" method="get" action="<?php echo base_url(); ?>project/del/<?php echo $r['proj_id'];?>">
+															<div class="modal-header">
+																<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+																<h4 class="modal-title">Delete</h4>
+															</div>
+															<div class="modal-body">
+																Are you sure to delete this project (<?php echo $r['proj_name']; ?>) ?
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+																<button type="submit" class="btn btn-primary">Delete</button>
+															</div>
+														</form>
+													</div><!-- /.modal-content -->
+												</div><!-- /.modal-dialog -->
+											</div><!-- /.modal -->
 										</tr>
 									<?php $i++; }?>	
 									</tbody>

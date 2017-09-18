@@ -58,10 +58,10 @@ class project extends CI_Controller {
 
     public function del($id)
     {
-        $project = $this->project_model->getProjectby($id);
+        $project = $this->project_model->getPurchaseByProjectId($id);
         if($project)
         {
-            echo "<script>alert('ไม่สามารถลบโปรเจคนี้ได้ เนื่องจากมี purchase request โปรเจคนี้อยู่'); window.location.assign('".base_url()."project/lists'); </script>";
+            echo "<script>alert('This project can not be deleted because of the purchase request used.'); window.location.assign('".base_url()."project/lists'); </script>";
             exit();
         }
         else{
