@@ -1,3 +1,5 @@
+<title>Dashboard | Purchase Request </title>
+
 <script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/tabletools/TableTools.min.js"></script> <!-- optional -->
 <script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/colvis/ColVis.min.js"></script> <!-- optional -->
@@ -25,10 +27,7 @@
                         <a href="<?php echo base_url();?>dashboard">DASHBOARD</a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url($menu);?>" title=""><?php echo strtoupper($menu); ?></a>
-                    </li>
-                    <li class="">
-                        <a href="#" title=""><?php echo strtoupper($subMenu) ?></a>
+                        <a href="<?php echo base_url();?>" title=""><?php echo strtoupper($menu); ?></a>
                     </li>
                     <li class="current">
                         <a href="#" title="">Item List</a>

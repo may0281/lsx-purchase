@@ -1,3 +1,4 @@
+<title>Dashboard | Purchase Request </title>
 <script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/tabletools/TableTools.min.js"></script> <!-- optional -->
 <script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/colvis/ColVis.min.js"></script> <!-- optional -->
@@ -36,7 +37,7 @@ $label = array(
                         <a href="<?php echo base_url();?>dashboard">DASHBOARD</a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url($menu);?>" title=""><?php echo strtoupper($menu); ?></a>
+                        <a href="<?php echo base_url(strtolower($menu));?>" title=""><?php echo strtoupper($menu); ?></a>
                     </li>
                     <li class="current">
                         <a href="#" title=""><?php echo strtoupper($subMenu) ?></a>
@@ -51,9 +52,6 @@ $label = array(
                     <span></span>
                 </div>
             </div>
-
-            <!--=== Page Content ===-->
-            <!--=== Managed Tables ===-->
 
             <!--=== Normal ===-->
             <div class="row">
@@ -107,14 +105,14 @@ $label = array(
                                             <a href="<?php echo base_url('purchase/report/'.$r['purq_id'])?>" class="btn btn-xs bs-tooltip" title="" data-original-title="View"><i class="icon-search"></i></a>
                                             <a href="<?php echo base_url('purchase/report/list/'.$r['purq_id'].'/'.$r['purq_code'])?>" class="btn btn-xs bs-tooltip" title="" data-original-title="List"><i class="icon-list"></i></a>
 
-                                            <?php if($allowUpdate == true){ ?>
+                                            <?php if($allowUpdate == true && $r['purq_status'] == 'request'){ ?>
                                                 <a href="<?php echo base_url('purchase/request/update/'.$r['purq_id'])?>" class="btn btn-xs bs-tooltip" title="" data-original-title="Edit"><i class="icon-pencil"></i></a>
                                             <?php } ?>
                                             <?php if($allowDelete == true){ ?>
                                                 <a id="del_<?php echo $r['purq_id'];?>" class="btn btn-xs bs-tooltip confirm-dialog" title="" data-original-title="Delete"><i class="icon-trash"></i></a>
                                             <?php } ?>
 
-                                            <?php if($allowChangeStatus == true){ ?>
+                                            <?php if($allowChangeStatus == true && $r['purq_status'] == 'approved'){ ?>
                                             <a data-toggle="modal" href="#change_status_<?php echo $r['purq_id'];?>" id="cha_<?php echo $r['purq_id'];?>" class="btn btn-xs bs-tooltip" title="" data-original-title="Reject"><i class="icon-exchange"></i></a>
                                             <div class="modal fade" id="change_status_<?php echo $r['purq_id'];?>">
                                                 <form class="form-horizontal row-border" method="post" id="frm_change_status_<?php echo $r['purq_id'];?>"  onsubmit="return checkForm(this);" >
@@ -129,7 +127,6 @@ $label = array(
                                                                 <label class="col-md-2 control-label">Status<span class="required">*</span></label>
                                                                 <div class="col-md-10 clearfix">
                                                                     <select name="status" id="status_id" class="col-md-12 select2 full-width-fix required">
-
                                                                         <?php foreach ($status as $st){ ?>
                                                                             <option value="<?php echo $st?>" ><?php echo $st;?></option>
                                                                         <?php } ?>

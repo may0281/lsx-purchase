@@ -5,16 +5,16 @@ $active_record = TRUE;
 
 
 $db['default']['hostname'] = 'localhost';
-//$db['default']['username'] = 'root';
-//$db['default']['password'] = '12345678';
-//$db['default']['database'] = 'lsx-purchase';
+//$db['default']['username'] = 'premiumr_purchase';
+//$db['default']['password'] = 'lsxcoth';
+//$db['default']['database'] = 'premiumr_purchase';
 $db['default']['username'] = 'root';
-$db['default']['password'] = '12345678';
+$db['default']['password'] = '';
 $db['default']['database'] = 'lsx-purchase';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
-$db['default']['db_debug'] = TRUE;
+$db['default']['db_debug'] = true;
 $db['default']['cache_on'] = FALSE;
 $db['default']['cachedir'] = '';
 $db['default']['char_set'] = 'utf8';

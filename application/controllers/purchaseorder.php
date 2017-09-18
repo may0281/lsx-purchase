@@ -41,7 +41,6 @@ class purchaseorder extends CI_Controller {
             'data' => $this->purchase_model->getPurchaseOrder(),
         );
 
-
         $this->load->view('template/left');
         $this->load->view('purchase/po-report',$data);
 
@@ -151,12 +150,7 @@ class purchaseorder extends CI_Controller {
                 'puror_qty' => $qty,
                 'puror_price' => $price
             );
-            if($purq_id != $old_purq_id and $purq_id != null)
-            {
-                $this->getChangeStatus($purq_id,'ordered');
-            }
             $this->purchase_model->createPurchaseOrderItem($data);
-            $old_purq_id = $purq_id;
         }
         echo "<script>alert('Success.'); window.location.assign('".base_url()."purchase/po-report/detail/".$puror_id."');</script>";
 
@@ -215,13 +209,11 @@ class purchaseorder extends CI_Controller {
         $id = $this->input->post('puror_id');
         $status =$this->input->post('status');
         $puror_note =$this->input->post('puror_note');
-        $data = array('puror_status'=>$status,'puror_note'=>$puror_note);
-        if($status = 'approved')
-        {
-            $data['puror_approve_by'] = $this->session->userdata('adminData');
-            $data['puror_approve_date'] = date('Y-m-d H:i:s');
-        }
+        $data = array('puror_status'=>$status);
+
         $this->purchase_model->updatePurchaseOrder($id,$data);
+        $this->purchase_model->updatePurchaseOrderItem($id,array('puror_item_status'=>'accrual'));
+        $this->purchase_model->createAccrual(array('puror_id'=>$id,'note'=>$puror_note,'update_date'=>date('Y-m-d H:i:s')));
         header('Content-Type: application/json');
         $data = array(
             'code' => 200,

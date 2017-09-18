@@ -1,3 +1,4 @@
+<title>Dashboard | User Management </title>
 <?php $data = $userData[0]; ?>
 <!-- Charts -->
 <script type="text/javascript" src="<?php echo base_url(); ?>plugins/sparkline/jquery.sparkline.min.js"></script>
@@ -46,7 +47,7 @@
                     <a href="<?php echo base_url();?>dashboard">DASHBOARD</a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url();?>user/init-user" title=""><?php echo strtoupper($menu); ?></a>
+                    <a href="<?php echo base_url('authen/init-user');?>" title=""><?php echo strtoupper($menu); ?></a>
                 </li>
                 <li class="current">
                     <a href="#" title=""><?php echo strtoupper($subMenu) ?></a>
@@ -57,7 +58,6 @@
         <div class="page-header">
             <div class="page-title">
                 <h3><?php echo strtoupper($subMenu) ?></h3>
-                <span><?php echo array_get($data,'account');?></span>
             </div>
 
             <!-- Page Stats -->
@@ -94,7 +94,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 control-label">Role Code<span class="required">*</span></label>
+                                <label class="col-md-3 control-label">Role<span class="required">*</span></label>
                                 <div class="col-md-9 clearfix">
                                     <select name="role_id" class="col-md-12 select2 full-width-fix required">
                                         <option></option>
@@ -117,6 +117,12 @@
                                 <label class="col-md-3 control-label">Last Name <span class="required">*</span></label>
                                 <div class="col-md-9">
                                     <input type="text" name="lastname" class="form-control required" value="<?php echo array_get($data,'lastname');?>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Mobile <span class="required">*</span></label>
+                                <div class="col-md-9">
+                                    <input type="text" name="mobile" class="form-control required" value="<?php echo array_get($data,'mobile');?>">
                                 </div>
                             </div>
                             <div class="form-group">

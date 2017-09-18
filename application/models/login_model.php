@@ -19,6 +19,12 @@ class login_model extends ci_model
 
     }
 
+    public function updateLogin($account)
+    {
+        $this->db->where('account', $account);
+        $this->db->update('bn_user_profile', array('last_login_date'=>date('Y-m-d H:i:s')));
+    }
+
 //    public function getMenu()
 //    {
 //        $this->db->select('*');

@@ -1,4 +1,4 @@
-
+<title>Dashboard | Role Management </title>
 <!-- Charts -->
 <script type="text/javascript" src="<?php echo base_url(); ?>plugins/sparkline/jquery.sparkline.min.js"></script>
 
@@ -38,7 +38,13 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/custom.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/demo/form_validation.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/demo/ui_nestable_list.js"></script>
-
+<style>
+    .checker label.has-error
+    {
+        margin-left: -100px;
+        width: 200px;
+    }
+</style>
 <div id="content">
     <div class="container">
         <!-- Breadcrumbs line -->
@@ -49,7 +55,7 @@
                     <a href="<?php echo base_url();?>dashboard">DASHBOARD</a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url();?>user/init-user" title=""><?php echo strtoupper($menu); ?></a>
+                    <a href="<?php echo base_url();?>user/init-role" title=""><?php echo strtoupper($menu); ?></a>
                 </li>
                 <li class="current">
                     <a href="#" title=""><?php echo strtoupper($subMenu) ?></a>
@@ -80,7 +86,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Role Code <span class="required">*</span></label>
                                 <div class="col-md-9">
-                                    <input type="text" name="roleCode" class="form-control required">
+                                    <input type="text" name="roleCode" pattern="[a-zA-Z]{1,}" rangelength="5, 20" class="form-control required">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -98,10 +104,12 @@
                                             <table class="table table-hover table-striped table-checkable table-bordered table-highlight-head table-responsive">
                                                 <thead>
                                                 <tr>
-                                                    <th rowspan="2" class="align-center">#</th>
-                                                    <th rowspan="2" class="align-center"> Menu</th>
-                                                    <th rowspan="2" class="align-center"> Sub Menu</th>
-                                                    <th colspan="5" class="checkbox-column">Permission <input type="checkbox" class="uniform"> </th>
+                                                    <th rowspan="2" style="vertical-align: middle" class="align-center">#</th>
+                                                    <th rowspan="2" style="vertical-align: middle" class="align-center"> Menu</th>
+                                                    <th rowspan="2" style="vertical-align: middle" class="align-center"> Sub Menu</th>
+                                                    <th colspan="5" class="checkbox-column">Permission <br>
+                                                        <input type="checkbox" name="functions[]" class="uniform required" > <br><br>
+                                                    </th>
                                                 </tr>
                                                 <tr>
                                                     <th class="align-center">
@@ -154,7 +162,6 @@
                                                                 <input type="checkbox" name="functions[]" class="uniform required" value="<?php echo $r['change-status'] ?>">
                                                             <?php } ?>
                                                         </td>
-
                                                     </tr>
                                                 <?php $i++; } ?>
 

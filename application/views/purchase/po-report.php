@@ -1,3 +1,4 @@
+<title>Dashboard | Purchase Order </title>
 <script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/tabletools/TableTools.min.js"></script> <!-- optional -->
 <script type="text/javascript" src="<?php echo base_url();?>plugins/datatables/colvis/ColVis.min.js"></script> <!-- optional -->
@@ -13,18 +14,7 @@
 <script type="text/javascript" src="<?php echo base_url();?>plugins/noty/jquery.noty.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>plugins/noty/layouts/top.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>plugins/noty/themes/default.js"></script>
-<?php
-$label = array(
-    'request' => 'label-default',
-    'approved' => 'label-success',
-    'unapproved' => 'label-danger',
-    'pending' => 'label-warning',
-    'ordered' => 'label-info',
-    'received' => 'label-primary',
-    'delivered' => 'label-primary',
-    'reject' => 'label-danger',
-)
-?>
+
 <div id="container">
     <div id="content">
         <div class="container">
@@ -36,11 +26,9 @@ $label = array(
                         <a href="<?php echo base_url();?>dashboard">DASHBOARD</a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url($menu);?>" title=""><?php echo strtoupper($menu); ?></a>
+                        <a href="<?php echo base_url().'purchase/po-report';?>" title=""><?php echo strtoupper($menu); ?></a>
                     </li>
-                    <li class="current">
-                        <a href="#" title=""><?php echo strtoupper($subMenu) ?></a>
-                    </li>
+
                 </ul>
             </div>
 
@@ -72,7 +60,6 @@ $label = array(
                                 <thead>
                                 <tr>
                                     <th>#</th>
-
                                     <th>PO Code</th>
                                     <th>Create By</th>
                                     <th>Order Date</th>
@@ -96,30 +83,27 @@ $label = array(
                                         <span class="btn-group">
                                             <a href="<?php echo base_url('purchase/po-report/detail/'.$r['puror_id'])?>" class="btn btn-xs bs-tooltip" title="" data-original-title="View"><i class="icon-search"></i></a>
                                             <a href="<?php echo base_url('purchase/po-report/list/'.$r['puror_id'])?>" class="btn btn-xs bs-tooltip" title="" data-original-title="View List"><i class="icon-list"></i></a>
-                                            <a data-toggle="modal" href="#change_status_<?php echo $r['purq_id'];?>" id="cha_<?php echo $r['purq_id'];?>" class="btn btn-xs bs-tooltip" title="" data-original-title="Change Status"><i class="icon-exchange"></i></a>
-                                            <div class="modal fade" id="change_status_<?php echo $r['purq_id'];?>">
-                                                <form class="form-horizontal row-border" method="post" id="frm_change_status_<?php echo $r['purq_id'];?>"  onsubmit="return checkForm(this);" >
+                                            <a data-toggle="modal" href="#change_status_<?php echo $i;?>" id="cha_<?php echo $r['purq_id'];?>" class="btn btn-xs bs-tooltip" title="" data-original-title="ค้างรับ">ACCRUAL</a>
+                                            <div class="modal fade" id="change_status_<?php echo $i;?>">
+                                                <form class="form-horizontal row-border" method="post" id="frm_change_status_<?php echo $i;?>"  onsubmit="return checkForm(this);" >
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                                <h4 class="modal-title">Change status  <strong><?php echo $r['purq_code'];?> </strong></h4>
+                                                                <h4 class="modal-title">Set Accrual  <strong><?php echo $r['purq_code'];?> </strong></h4>
                                                             </div>
                                                             <div class="modal-body">
 
-                                                                <label class="col-md-2 control-label">Status<span class="required">*</span></label>
-                                                                <div class="col-md-10 clearfix">
-                                                                    <select name="status" id="status_id" class="col-md-12 select2 full-width-fix required">
-                                                                        <option></option>
-                                                                        <option value="ordered" <?php echo ($r['puror_status'] == 'ordered' ? 'selected' : '') ?>>Ordered</option>
-                                                                        <option value="received" <?php echo ($r['puror_status'] == 'received' ? 'selected' : '') ?>>Received</option>
-                                                                    </select>
-                                                                </div>
+                                                                <label class="col-md-12 ">
+                                                                    Are you sure to set accrual (<?php echo $r['puror_code']; ?>) ?
+                                                                </label>
+
                                                                 <div style="height: 10px; clear: both;" > </div>
                                                                 <label class="col-md-2 control-label" style="clear: both">Note</label>
                                                                 <div class="col-md-10">
                                                                     <textarea rows="2" cols="5" name="puror_note" class="form-control"> </textarea>
                                                                 </div>
+                                                                <input type="hidden" name="status" value="accrual">
                                                                 <input type="hidden" name="puror_id" value="<?php echo $r['puror_id'];?>">
                                                             </div>
                                                             <div style="clear: both"></div>
@@ -223,6 +207,8 @@ $label = array(
                 });
             },
             error: function(result){
+
+                $('#loader').addClass('hide');
                 noty({
                     text: 'Opp. Something went wrong. Please try again.',
                     type: 'error',

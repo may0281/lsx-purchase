@@ -28,18 +28,22 @@ class report_model extends ci_model
 
     public function getItemTrackingByProject($projectID,$startDate,$endDate)
     {
-        $this->db->select('a.item_code,a.puror_qty as order_qty,b.puror_code,b.puror_order_date,
-        b.puror_forecasts_date,c.purq_code,d.qty as request_qty,proj_name,purq_require_end,c.purq_create_date');
-        $this->db->from('purchase_order_item a');
-        $this->db->join('purchase_order b','a.puror_id = b.puror_id','left');
+        $this->db->select('a.item_code,a.qty,c.purq_code,c.purq_create_date,c.purq_require_start,c.purq_require_end,
+        f.item_qty,c.proj_owner_name,c.designer_name,c.contractor_name,g.firstname as mkt,g.firstname as sale,
+        c.purq_comment,d.puror_qty as order_qty,b.puror_code,b.puror_order_date,b.puror_forecasts_date');
+        $this->db->from('purchase_request_item a');
+        $this->db->join('purchase_order_item d','a.purq_id = d.purq_id and a.item_code = d.item_code','left');
+        $this->db->join('purchase_order b','d.puror_id = b.puror_id','left');
         $this->db->join('purchase_request c','c.purq_id = a.purq_id','left');
-        $this->db->join('purchase_request_item d','a.purq_id = d.purq_id and a.item_code = d.item_code','left');
         $this->db->join('project e','c.proj_id = e.proj_id','left');
-        $this->db->where_in('a.puror_item_status', array('ordered'));
+        $this->db->join('item f','a.item_code = f.item_code','left');
+        $this->db->join('bn_user_profile g','c.mkt_account = g.account','left');
+        $this->db->join('bn_user_profile h','c.sale_account = h.account','left');
+        $this->db->where_in('a.purq_item_status', array('ordered','approved'));
         $this->db->where('e.proj_id', $projectID);
-        $this->db->where('c.purq_create_date >= ', $startDate);
-        $this->db->where('c.purq_create_date <= ', $endDate);
-        $this->db->order_by('a.puror_id', 'asc');
+        $this->db->where('c.purq_create_date >= ', $startDate.' 00:00:00');
+        $this->db->where('c.purq_create_date <= ', $endDate. ' 23:59:39');
+        $this->db->order_by('c.purq_code', 'desc');
 
         $query = $this->db->get();
         return $query->result_array();
@@ -53,6 +57,29 @@ class report_model extends ci_model
         $this->log_model->Logging('purchase_model','success',$this->db->last_query());
         return $query->result_array();
     }
+
+    public function getItemAll()
+    {
+        $this->db->select('a.item_code,a.item_qty');
+        $this->db->from('item a');
+        $this->db->where('item_status',1);
+        $this->db->order_by('item_id','DESC');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function purchase_order_item($item_code)
+    {
+        $this->db->select('a.item_code,a.puror_qty,b.puror_forecasts_date');
+        $this->db->from('purchase_order_item a');
+        $this->db->join('purchase_order b','a.puror_id = b.puror_id');
+        $this->db->where('puror_item_status','ordered');
+        $this->db->where('a.item_code',$item_code);
+        $this->db->order_by('puror_item_id','DESC');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
 
 
 

@@ -17,8 +17,9 @@ class login extends CI_Controller {
 		$this->load->view("authen/login");
 	}
 
-	public function Verify()
+	public function verify()
 	{
+//        sd($this->input->post());
         $username = $this->input->post('username');
 		if($this->session->userdata('isSession') === true)
 		{
@@ -33,6 +34,7 @@ class login extends CI_Controller {
             $this->session->set_userdata('isSession',true);
             $this->session->set_userdata('adminData',array_get($user,'account'));
             $this->session->set_userdata('role',array_get($user, 'role_id'));
+            $this->login_model->updateLogin(array_get($user,'account'));
             echo "<script>window.location.assign('".base_url('dashboard')."');</script>";
             exit();
 

@@ -25,7 +25,6 @@ class role_model extends ci_model
     }
 	public function getMinorSub($masterId,$minorId = 0)
     {
-        s($masterId);
         $this->db->select('*');
         $this->db->from('bn_func_minor_sub');
         $this->db->where('func_master_id',$masterId);

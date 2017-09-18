@@ -1,3 +1,5 @@
+<title>Dashboard | Purchase Request </title>
+
 <style>
     .pageBreak { page-break-before: always; }
     @media print
@@ -16,7 +18,7 @@
                     <a href="<?php echo base_url();?>dashboard">DASHBOARD</a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url($menu);?>" title=""><?php echo strtoupper($menu); ?></a>
+                    <a href="<?php echo base_url(strtolower($menu));?>" title=""><?php echo strtoupper($menu); ?></a>
                 </li>
                 <li class="current">
                     <a href="#" title=""><?php echo strtoupper($subMenu) ?></a>

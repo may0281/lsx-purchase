@@ -1,3 +1,5 @@
+<title>Dashboard | Purchase Request </title>
+
 <style>
     .errors
     {
@@ -55,7 +57,7 @@
                     <a href="<?php echo base_url();?>dashboard">DASHBOARD</a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url();?>user/init-user" title=""><?php echo strtoupper($menu); ?></a>
+                    <a href="<?php echo base_url(strtolower($menu));?>" title=""><?php echo strtoupper($menu); ?></a>
                 </li>
                 <li class="current">
                     <a href="#" title=""><?php echo strtoupper($subMenu) ?></a>
@@ -300,7 +302,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Marketing</label>
-                                <div class="col-md-5 clearfix">
+                                <div class="col-md-4 clearfix">
                                     <select name="mkt_account" id="marketing" class="col-md-12 select2 full-width-fix">
                                         <option></option>
                                         <?php
@@ -310,14 +312,20 @@
                                         <?php } ?>
                                     </select>
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <input type="text" name="mkt_mobile" id="mkt_mobile" value="<?php echo $data['mkt_mobile']?>"  class="form-control" placeholder="Mobile">
                                 </div>
+                                <div class="col-md-2">
+                                    <a class="btn btn-sm " id="reset-mkt">Reset</a>
+                                </div>
+
                                 <div style="clear: both ; height: 10px" ></div>
+
+
                                 <label class="col-md-2 control-label">Sale</label>
-                                <div class="col-md-5 clearfix">
+                                <div class="col-md-4 clearfix">
                                     <select name="sale_account" id="sale" class="col-md-12 select2 full-width-fix">
-                                        <option></option>
+                                        <option ></option>
                                         <?php
                                             foreach ($users as $user){
                                         ?>
@@ -325,8 +333,11 @@
                                         <?php } ?>
                                     </select>
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <input type="text" name="sale_mobile" id="sale_mobile" value="<?php echo $data['sale_mobile']?>" class="form-control" placeholder="Mobile">
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="btn btn-sm " id="reset-sale">Reset</a>
                                 </div>
                                 <label id="msg_person" class="col-md-6 errors" style="text-align: left" > </label>
                             </div>
@@ -338,11 +349,9 @@
                                 <?php }?>
                                 <input type="submit" value="<?php echo strtoupper($subMenu) ?>" class="btn btn-primary pull-right">
                             </div>
-
                         </form>
                     </div>
                 </div>
-                <!-- /Validation Example 1 -->
             </div>
         </div>
         <!-- /Page Content -->
@@ -370,6 +379,17 @@
 
         $('#item-list-' + id).addClass('hidden').removeClass('count-form');
     });
+
+    $("#reset-mkt").click(function () {
+        $('#marketing').val(null).trigger("change");
+        $('#mkt_mobile').val('');
+    });
+
+    $("#reset-sale").click(function () {
+        $('#sale').val(null).trigger("change");
+        $('#sale_mobile').val('');
+    });
+    
     $('#proj_id').change(function () {
         $('#msg_proj').html('');
         $('#proj_id').removeClass('has-error');
@@ -565,11 +585,18 @@
             for(var i =0; i<=item_old.length; i++)
             {
                 var id = i+1;
+                var qty_old_input = parseInt(qty_old[i], 10);
                 if(item_old[i] && qty_old[i] == '' )
                 {
-                    console.lod(qty_old[i]);
+                    console.log(qty_old[i]);
                     $('#purchase-item-'+id+'-qty').addClass('input-error');
                     $('#purchase_msg_qty_'+id).html(error_msg);
+                    status = false;
+                }
+                if(item_old[i] && qty_old[i] != qty_old_input)
+                {
+                    $('#purchase-item-'+id+'-qty').addClass('input-error');
+                    $('#purchase_msg_qty_'+id).html('Please enter only digits.');
                     status = false;
                 }
             }

@@ -210,8 +210,6 @@ class purchase_model extends ci_model
         $this->db->insert('purchase_order', $data);
         $id = $this->db->insert_id();
         $this->log_model->Logging('purchase_model','success',$this->db->last_query());
-
-
         return $id;
     }
 
@@ -219,6 +217,14 @@ class purchase_model extends ci_model
     {
         $this->db->where('puror_id',$puror_id);
         $this->db->update('purchase_order', $data);
+        $this->log_model->Logging('purchase_model','success',$this->db->last_query());
+
+    }
+
+    public function updatePurchaseOrderItem($puror_id,$data)
+    {
+        $this->db->where('puror_id',$puror_id);
+        $this->db->update('purchase_order_item', $data);
         $this->log_model->Logging('purchase_model','success',$this->db->last_query());
 
     }
@@ -282,6 +288,27 @@ class purchase_model extends ci_model
         $query = $this->db->get();
         $this->log_model->Logging('purchase_model','success',$this->db->last_query());
         return $query->result_array();
+    }
+
+    public function createAccrual($data)
+    {
+        $this->db->insert('accrual', $data);
+        $this->log_model->Logging('accrual','success',$this->db->last_query());
+    }
+
+    public function getEmailByKey($key)
+    {
+        $this->db->select('param_email');
+        $this->db->from('param');
+        $this->db->where('param_key',$key);
+        $query = $this->db->get();
+        $all = $query->result_array();
+        $email = array();
+        for ($i =0; $i< count($all); $i++)
+        {
+            $email = array($i=>$all[$i]['param_email']);
+        }
+        return $email;
     }
 
 

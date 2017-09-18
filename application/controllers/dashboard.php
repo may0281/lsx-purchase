@@ -5,7 +5,7 @@ class dashboard extends CI_Controller {
 	{
 		parent::__construct();
 		
-//		error_reporting(0);
+		error_reporting(0);
 		
 		if($this->session->userdata('isSession') == false){
 
@@ -19,42 +19,40 @@ class dashboard extends CI_Controller {
 	
 	public function index()
 	{
-		$this->updatechart();
         $data = array(
             'menu'=> 'dashboard',
-			'jan_t' => $this->dashboard_model->getPurchaseTotal('jan'),
-			'jan_s' => $this->dashboard_model->getPurchaseStamp('jan'),
-			'feb_t' => $this->dashboard_model->getPurchaseTotal('feb'),
-			'feb_s' => $this->dashboard_model->getPurchaseStamp('feb'),
-			'mar_t' => $this->dashboard_model->getPurchaseTotal('mar'),
-			'mar_s' => $this->dashboard_model->getPurchaseStamp('mar'),
-			'apr_t' => $this->dashboard_model->getPurchaseTotal('apr'),
-			'apr_s' => $this->dashboard_model->getPurchaseStamp('apr'),
-			'may_t' => $this->dashboard_model->getPurchaseTotal('may'),
-			'may_s' => $this->dashboard_model->getPurchaseStamp('may'),
-			'jun_t' => $this->dashboard_model->getPurchaseTotal('jun'),
-			'jun_s' => $this->dashboard_model->getPurchaseStamp('jun'),
-			'jul_t' => $this->dashboard_model->getPurchaseTotal('jul'),
-			'jul_s' => $this->dashboard_model->getPurchaseStamp('jul'),
-			'aug_t' => $this->dashboard_model->getPurchaseTotal('aug'),
-			'aug_s' => $this->dashboard_model->getPurchaseStamp('aug'),
-			'sep_t' => $this->dashboard_model->getPurchaseTotal('sep'),
-			'sep_s' => $this->dashboard_model->getPurchaseStamp('sep'),
-			'oct_t' => $this->dashboard_model->getPurchaseTotal('oct'),
-			'oct_s' => $this->dashboard_model->getPurchaseStamp('oct'),
-			'nov_t' => $this->dashboard_model->getPurchaseTotal('nov'),
-			'nov_s' => $this->dashboard_model->getPurchaseStamp('nov'),
-			'dec_t' => $this->dashboard_model->getPurchaseTotal('dec'),
-			'dec_s' => $this->dashboard_model->getPurchaseStamp('dec'),
-			'c_request' => $this->dashboard_model->getRequeststatus(),
-			'c_approve' =>  $this->dashboard_model->getApprovestatus(),
-			'c_reject' =>  $this->dashboard_model->getRejectstatus(),
-			'c_delivered' =>  $this->dashboard_model->getDeliveredstatus()
+			'all' => $this->dashboard_model->getCountPurchaseByStatus(),
+			'request' =>  $this->dashboard_model->getCountPurchaseByStatus('request'),
+			'unapproved' =>  $this->dashboard_model->getCountPurchaseByStatus('unapproved'),
+			'approved' =>  $this->dashboard_model->getCountPurchaseByStatus('approved'),
+			'reject' =>  $this->dashboard_model->getCountPurchaseByStatus('reject'),
+			'pending' =>  $this->dashboard_model->getCountPurchaseByStatus('pending'),
+			'completed' =>  $this->dashboard_model->getCountPurchaseByStatus('completed'),
         );
         $this->load->view('template/left');
         $this->load->view('dashboard',$data);
 
 	}
+
+	public function getYear()
+    {
+        header('Content-Type: application/json');
+        $allData = array();
+        for($i=1; $i<=12;$i++)
+        {
+            $date = date('Y').'-'.$i.'-01';
+            $timeStamp = strtotime($date);
+
+            $data = array(
+                $i => array(str_pad($timeStamp,13 ,0,STR_PAD_RIGHT),$this->dashboard_model->getSumPurchaseByMonth($i))
+            );
+            $allData = array_merge($allData,$data);
+        }
+
+        echo json_encode($allData);
+
+    }
+
     protected function getPermission($role = null)
     {
         if($role == null)

@@ -28,6 +28,7 @@ class purchase extends CI_Controller {
         $this->sale = 'SALE';
         $this->status = array(
             'reject',
+            'completed'
         );
 	}
 
@@ -266,6 +267,8 @@ class purchase extends CI_Controller {
 
     protected function sendPurchaseRequest($message,$action)
     {
+        $email = $this->purchase_model->getEmailByKey('purchase-request');
+
         $subject = 'Purchase Request ['.strtoupper($action).']';
         $config = array (
             'mailtype' => 'html',
@@ -274,7 +277,7 @@ class purchase extends CI_Controller {
         );
         $this->email->initialize($config);
         $this->email->from('backend.lsx@gmail.com' ,'Purchasing System');
-        $this->email->to(array('maya.skyt@gmail.com'));
+        $this->email->to($email);
         $this->email->subject($subject);
         $this->email->message($message);
         $this->email->set_alt_message($message);

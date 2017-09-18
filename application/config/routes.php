@@ -42,6 +42,7 @@ $route['purchase/pre-order/create'] = "purchaseorder/createPreOrder";
 $route['purchaseorder/change-status'] = "purchaseorder/changeStatus";
 $route['purchase/po-report/list/(:any)'] = "purchaseorder/getList/$1";
 $route['purchase/po-report/detail/(:any)'] = "purchaseorder/getDetail/$1";
+$route['report/forecast-receive'] = "report/forecastReceive";
 
 
 
