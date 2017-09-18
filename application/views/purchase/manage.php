@@ -57,7 +57,7 @@
                     <a href="<?php echo base_url();?>dashboard">DASHBOARD</a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url();?>user/init-user" title=""><?php echo strtoupper($menu); ?></a>
+                    <a href="<?php echo base_url(strtolower($menu));?>" title=""><?php echo strtoupper($menu); ?></a>
                 </li>
                 <li class="current">
                     <a href="#" title=""><?php echo strtoupper($subMenu) ?></a>
@@ -319,7 +319,7 @@
                                 <label class="col-md-2 control-label">Sale</label>
                                 <div class="col-md-5 clearfix">
                                     <select name="sale_account" id="sale" class="col-md-12 select2 full-width-fix">
-                                        <option></option>
+                                        <option ></option>
                                         <?php
                                             foreach ($users as $user){
                                         ?>
@@ -340,11 +340,9 @@
                                 <?php }?>
                                 <input type="submit" value="<?php echo strtoupper($subMenu) ?>" class="btn btn-primary pull-right">
                             </div>
-
                         </form>
                     </div>
                 </div>
-                <!-- /Validation Example 1 -->
             </div>
         </div>
         <!-- /Page Content -->
@@ -567,11 +565,18 @@
             for(var i =0; i<=item_old.length; i++)
             {
                 var id = i+1;
+                var qty_old_input = parseInt(qty_old[i], 10);
                 if(item_old[i] && qty_old[i] == '' )
                 {
-                    console.lod(qty_old[i]);
+                    console.log(qty_old[i]);
                     $('#purchase-item-'+id+'-qty').addClass('input-error');
                     $('#purchase_msg_qty_'+id).html(error_msg);
+                    status = false;
+                }
+                if(item_old[i] && qty_old[i] != qty_old_input)
+                {
+                    $('#purchase-item-'+id+'-qty').addClass('input-error');
+                    $('#purchase_msg_qty_'+id).html('Please enter only digits.');
                     status = false;
                 }
             }

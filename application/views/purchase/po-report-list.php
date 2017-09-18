@@ -27,14 +27,12 @@
                         <a href="<?php echo base_url();?>dashboard">DASHBOARD</a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url($menu);?>" title=""><?php echo strtoupper($menu); ?></a>
+                        <a href="<?php echo base_url().'purchase/po-report';?>" title=""><?php echo strtoupper($menu); ?></a>
                     </li>
                     <li class="">
                         <a href="#" title=""><?php echo strtoupper($subMenu) ?></a>
                     </li>
-                    <li class="current">
-                        <a href="#" title="">Item List</a>
-                    </li>
+
                 </ul>
             </div>
 
@@ -65,8 +63,7 @@
                                         <th>Item Code</th>
                                         <th>Purchase Code</th>
                                         <th>QTY</th>
-                                        <th>Status</th>
-                                        <th class="align-center">Action</th>
+                                        <th class="align-center"> Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -76,46 +73,7 @@
                                             <td><?php echo $r['item_code'];?></td>
                                             <td><?php echo $r['purq_code'];?></td>
                                             <td><?php echo $r['puror_qty'];?></td>
-                                            <td><?php echo $r['puror_item_status'];?></td>
-                                            <td class="align-center">
-                                                <span class="btn-group">
-                                                <a data-toggle="modal" href="#change_status_<?php echo $r['purq_id'];?>" id="cha_<?php echo $r['purq_id'];?>" class="btn btn-xs bs-tooltip" title="" data-original-title="Change Status"><i class="icon-exchange"></i></a>
-                                                <div class="modal fade" id="change_status_<?php echo $r['purq_id'];?>">
-                                                    <form class="form-horizontal row-border" method="post" id="frm_change_status_<?php echo $r['purq_id'];?>"  onsubmit="return checkForm(this);" >
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                                    <h4 class="modal-title">Change status  <strong><?php echo $r['purq_code'];?> </strong></h4>
-                                                                </div>
-                                                                <div class="modal-body">
-
-                                                                    <label class="col-md-2 control-label">Status<span class="required">*</span></label>
-                                                                    <div class="col-md-10 clearfix">
-                                                                        <select name="status" id="status_id" class="col-md-12 select2 full-width-fix required">
-                                                                            <option></option>
-                                                                            <option value="ordered" <?php echo ($r['puror_item_status'] == 'ordered' ? 'selected' : '') ?>>Ordered</option>
-                                                                            <option value="received" <?php echo ($r['puror_item_status'] == 'received' ? 'selected' : '') ?>>Received</option>
-                                                                        </select>
-                                                                    </div>
-                                                                    <div style="height: 10px; clear: both;" > </div>
-                                                                    <label class="col-md-2 control-label" style="clear: both">Note</label>
-                                                                    <div class="col-md-10">
-                                                                        <textarea rows="2" cols="5" name="puror_note" class="form-control"> </textarea>
-                                                                    </div>
-                                                                    <input type="hidden" name="puror_id" value="<?php echo $r['puror_id'];?>">
-                                                                </div>
-                                                                <div style="clear: both"></div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                                    <input type="submit" value="Submit" class="btn btn-primary pull-right">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div><!-- /.modal -->
-                                            </span>
-                                            </td>
+                                            <th class="align-center"><?php echo $r['puror_item_status'];?></td>
                                         </tr>
                                     <?php $i++; } ?>
                                 </tbody>

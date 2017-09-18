@@ -14,18 +14,7 @@
 <script type="text/javascript" src="<?php echo base_url();?>plugins/noty/jquery.noty.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>plugins/noty/layouts/top.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>plugins/noty/themes/default.js"></script>
-<?php
-$label = array(
-    'request' => 'label-default',
-    'approved' => 'label-success',
-    'unapproved' => 'label-danger',
-    'pending' => 'label-warning',
-    'ordered' => 'label-info',
-    'received' => 'label-primary',
-    'delivered' => 'label-primary',
-    'reject' => 'label-danger',
-)
-?>
+
 <div id="container">
     <div id="content">
         <div class="container">
@@ -37,11 +26,9 @@ $label = array(
                         <a href="<?php echo base_url();?>dashboard">DASHBOARD</a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url($menu);?>" title=""><?php echo strtoupper($menu); ?></a>
+                        <a href="<?php echo base_url().'purchase/po-report';?>" title=""><?php echo strtoupper($menu); ?></a>
                     </li>
-                    <li class="current">
-                        <a href="#" title=""><?php echo strtoupper($subMenu) ?></a>
-                    </li>
+
                 </ul>
             </div>
 
@@ -73,7 +60,6 @@ $label = array(
                                 <thead>
                                 <tr>
                                     <th>#</th>
-
                                     <th>PO Code</th>
                                     <th>Create By</th>
                                     <th>Order Date</th>
