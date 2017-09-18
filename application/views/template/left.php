@@ -278,6 +278,7 @@
 							<?php } ?>
 						</ul>
 					</li>
+					<?php } ?>
 
 					<?php
 					$weekly_view  = $this->hublibrary_model->permission('report','weekly','view');
