@@ -53,9 +53,6 @@ $label = array(
                 </div>
             </div>
 
-            <!--=== Page Content ===-->
-            <!--=== Managed Tables ===-->
-
             <!--=== Normal ===-->
             <div class="row">
                 <div class="col-md-12">
