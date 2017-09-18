@@ -4,11 +4,12 @@ class stock extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-	//	error_reporting(0);
+		//error_reporting(0);
 		if($this->session->userdata('isSession') == false){
 
             echo "<script> window.location.assign('".base_url()."login?ReturnUrl=".$_SERVER['REQUEST_URI']."');</script>";
 		}
+		require_once APPPATH.'third_party/simplexlsx.class.php';
         $this->load->model('project_model');
 		$this->load->model('purchase_model');
 		$this->load->model('stock_model');
@@ -32,7 +33,7 @@ class stock extends CI_Controller {
 		
 		$data = array(
             'menu'=> 'Stock',
-            'subMenu'=> 'Add New Item'
+            'subMenu'=> 'Import Item'
         );
 
 		$this->load->view('template/left');
@@ -158,16 +159,15 @@ class stock extends CI_Controller {
 	
 		public function import_item()
     {
-/* 		if (isset($_FILES["file"]) && !empty($_FILES["file"])) { */
 			$filename=$_FILES["file"]["tmp_name"];
-			if($this->uri->segment(3) == "1"){
-				$this->stock_model->importItem($filename,$this->uri->segment(3));
-			}else{
-				$this->stock_model->importInstockItem($filename,$this->uri->segment(3));
-			}
-			
-			echo "<script>alert('Import Successfully.'); window.location.assign('".base_url()."index.php/stock/temp_list/".$this->uri->segment(3)."'); </script>";	
+			$this->stock_model->importItem($filename,$this->uri->segment(3));	
 
+    }
+	
+			public function export_item()
+    {
+			$filename=$_FILES["file"]["tmp_name"];
+			$this->stock_model->exportItem($filename);
     }
 	
 		public function temp_list()
@@ -293,6 +293,27 @@ class stock extends CI_Controller {
 		$this->load->view('stock/export_by_order',$data);
     }
 	
+	
+	public function export()
+    {
+	
+		$permission = $this->hublibrary_model->permission($this->major,$this->minor,'update');
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('template/400','',true);
+            die();
+        }
+		
+		$data = array(
+            'menu'=> 'Stock',
+            'subMenu'=> 'เบิกสินค้า'
+        );
+
+		$this->load->view('template/left');
+        $this->load->view('stock/export_item',$data);
+    }
+	
 	public function export_by_order_sum()
     {
 		$data = array(
@@ -356,5 +377,38 @@ class stock extends CI_Controller {
 		$this->stock_model->UpdateImportItem($this->uri->segment(3));
 		echo "<script>alert('Import Successfully.'); window.location.assign('".base_url()."index.php/stock/import_by_order'); </script>";	
 	}
+	
+	    public function update_min()
+    {
+	
+			$this->db->select('item_min,item_code');
+			$this->db->from('item');
+			$this->db->where('item_id',$this->uri->segment(3));
+			$query = $this->db->get();
+
+			$row = $query->row();
+			
+			$data = array(
+            'menu'=> 'Item List',
+			'subMenu'=> 'Update Min',
+			'item_code'=> $row->item_code,
+			'item_min'=> $row->item_min
+        );
+		
+        $this->load->view('template/left');
+        $this->load->view('stock/update_min',$data);
+    }
+	
+	    public function update_min_action()
+    {
+	
+		$data_update = array(
+            'item_min'=> $this->input->post('item_min')
+        );
+		$this->db->where('item_id', $this->uri->segment(3));
+		$this->db->update('item', $data_update); 
+		echo "<script>alert('Update Successfully.'); window.location.assign('".base_url()."index.php/stock/list_item'); </script>";		
+		
+    }
 	
 }

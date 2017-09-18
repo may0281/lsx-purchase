@@ -265,9 +265,7 @@
 							</li>
 						</ul>
 					</li>
-<<<<<<< HEAD
-					<li class="<?php if(array_get($path,1) == 'stock'){echo "current open";} ?>">
-=======
+
 
 					<li class="<?php if(array_get($path,1) == 'report'){echo "current open";} ?>">
 						<a href="javascript:void(0);">
@@ -289,8 +287,7 @@
 							</li>
 						</ul>
 					</li>
-					<li class="">
->>>>>>> 05e1e24504f3ae49c7f1f27642f7065c17ce7c49
+<li class="<?php if(array_get($path,1) == 'stock'){echo "current open";} ?>">
 						<a href="javascript:void(0);">
 							<i class="icon-barcode"></i>
 							Stock
@@ -299,7 +296,7 @@
 							<li class="<?php if(array_get($path,2) == 'add_item'){echo "current open";} ?>">
 								<a href="<?php echo base_url('stock/add_item');?>">
 									<i class="icon-angle-right"></i>
-									Add New Item
+									Import Item
 								</a>
 							</li>
 							<li class="<?php if(array_get($path,2) == 'list_item'){echo "current open";} ?>">
@@ -308,14 +305,14 @@
 									Stock Item List
 								</a>
 							</li>
-							<li class="<?php if(array_get($path,2) == 'import_by_order'){echo "current open";} ?>">
+<!--							<li class="<?php if(array_get($path,2) == 'import_by_order'){echo "current open";} ?>">
 								<a href="<?php echo base_url(); ?>stock/import_by_order">
 									<i class="icon-angle-right"></i>
 									Update Stock
 								</a>
-							</li>
-							<li class="<?php if(array_get($path,2) == 'export_by_order'){echo "current open";} ?>">
-								<a href="<?php echo base_url(); ?>stock/export_by_order">
+							</li>-->
+							<li class="<?php if(array_get($path,2) == 'export'){echo "current open";} ?>">
+								<a href="<?php echo base_url(); ?>stock/export">
 									<i class="icon-angle-right"></i>
 									เบิกสินค้า
 								</a>

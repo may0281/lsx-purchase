@@ -44,7 +44,7 @@
 			<input type="file" name="file" data-style="fileinput">
 			</div>
 			</div>
-			<div align="left"><a href="<?php echo base_url(); ?>stock/temp_list/1">รายการที่ Import ค้างไว้</a></div><div align="right"><input class="btn btn-sm btn-primary" type="submit" value="Import"> <input class="btn" type="reset" value="Reset"></div>
+			<div align="left"><!--<a href="<?php echo base_url(); ?>stock/temp_list/1">รายการที่ Import ค้างไว้</a>--></div><div align="right"><input class="btn btn-sm btn-primary" type="submit" value="Import"> <input class="btn" type="reset" value="Reset"></div>
 
 			</form>
 			</div>
@@ -54,7 +54,7 @@
 <!--			<div align="right" style="margin:20px">
 			<a href="<?php echo base_url(); ?>stock/import_by_order" class="btn btn-inverse">นำข้อมูลเข้า</a>
 			</div>-->
-			<div class="row">
+			<!--<div class="row">
 			<div class="col-md-12">
 			<div class="widget box">
 			<div class="widget-header">
@@ -108,7 +108,7 @@
 			</div>
 			</div>
 			</div>
-			</div>
+			</div>-->
 			<!-- /Normal -->
 
 
