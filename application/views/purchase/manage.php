@@ -302,7 +302,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Marketing</label>
-                                <div class="col-md-5 clearfix">
+                                <div class="col-md-4 clearfix">
                                     <select name="mkt_account" id="marketing" class="col-md-12 select2 full-width-fix">
                                         <option></option>
                                         <?php
@@ -312,12 +312,18 @@
                                         <?php } ?>
                                     </select>
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <input type="text" name="mkt_mobile" id="mkt_mobile" value="<?php echo $data['mkt_mobile']?>"  class="form-control" placeholder="Mobile">
                                 </div>
+                                <div class="col-md-2">
+                                    <a class="btn btn-sm " id="reset-mkt">Reset</a>
+                                </div>
+
                                 <div style="clear: both ; height: 10px" ></div>
+
+
                                 <label class="col-md-2 control-label">Sale</label>
-                                <div class="col-md-5 clearfix">
+                                <div class="col-md-4 clearfix">
                                     <select name="sale_account" id="sale" class="col-md-12 select2 full-width-fix">
                                         <option ></option>
                                         <?php
@@ -327,8 +333,11 @@
                                         <?php } ?>
                                     </select>
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <input type="text" name="sale_mobile" id="sale_mobile" value="<?php echo $data['sale_mobile']?>" class="form-control" placeholder="Mobile">
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="btn btn-sm " id="reset-sale">Reset</a>
                                 </div>
                                 <label id="msg_person" class="col-md-6 errors" style="text-align: left" > </label>
                             </div>
@@ -370,6 +379,17 @@
 
         $('#item-list-' + id).addClass('hidden').removeClass('count-form');
     });
+
+    $("#reset-mkt").click(function () {
+        $('#marketing').val(null).trigger("change");
+        $('#mkt_mobile').val('');
+    });
+
+    $("#reset-sale").click(function () {
+        $('#sale').val(null).trigger("change");
+        $('#sale_mobile').val('');
+    });
+    
     $('#proj_id').change(function () {
         $('#msg_proj').html('');
         $('#proj_id').removeClass('has-error');
