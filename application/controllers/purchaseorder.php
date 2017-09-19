@@ -34,10 +34,12 @@ class purchaseorder extends CI_Controller {
             die();
         }
 
+        $allowDelete = $this->hublibrary_model->permission($this->major,$this->minor,'delete');
 
         $data = array(
             'menu'=> $this->menu,
             'subMenu'=> $this->submenu,
+            'allowDelete'=> $allowDelete,
             'data' => $this->purchase_model->getPurchaseOrder(),
         );
 
@@ -176,7 +178,6 @@ class purchaseorder extends CI_Controller {
         return str_pad($po,3 ,0,STR_PAD_LEFT);
     }
 
-
     public function getChangeStatus($id, $status)
     {
         require_once(APPPATH.'controllers/purchase.php');
@@ -251,5 +252,21 @@ class purchaseorder extends CI_Controller {
         return $data;
     }
 
+    public function delete($id)
+    {
+        $checkPoReceive = $this->purchase_model->checkPoReceive($id);
+        $checkPoItemReceive = $this->purchase_model->checkPoItemReceive($id);
 
+        if(!empty($checkPoReceive) or !empty($checkPoItemReceive))
+        {
+            echo "<script>alert('This PO can not be deleted because the status is received or accrual.'); history.back();</script>";
+            exit();
+
+        }
+        $this->purchase_model->deletePurchaseOrder($id);
+        $this->purchase_model->deletePurchaseOrderItem($id);
+
+        echo "<script>alert('Success.'); window.location.assign('".base_url()."purchase/po-report');</script>";
+
+    }
 }

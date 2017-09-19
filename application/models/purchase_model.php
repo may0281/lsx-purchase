@@ -100,7 +100,9 @@ class purchase_model extends ci_model
         $this->db->join('project','purchase_request.proj_id = project.proj_id');
         $this->db->join('purchase_request_item','purchase_request.purq_id = purchase_request_item.purq_id');
         $this->db->join('item','purchase_request_item.item_code = item.item_code');
+        $this->db->join('purchase_order_item','purchase_request_item.item_code = purchase_order_item.item_code','left');
         $this->db->where('purchase_request.purq_status',$status);
+        $this->db->where('purchase_request_item.item_code NOT IN (SELECT item_code FROM purchase_order_item WHERE purchase_order_item.item_code = purchase_request_item.item_code and purchase_request.purq_id = purchase_order_item.purq_id)', NULL, FALSE);
         $this->db->order_by('purchase_request_item.item_code','desc');
         $query = $this->db->get();
 
@@ -309,6 +311,38 @@ class purchase_model extends ci_model
             $email = array($i=>$all[$i]['param_email']);
         }
         return $email;
+    }
+
+    public function checkPoReceive($id)
+    {
+        $this->db->select('*');
+        $this->db->from('purchase_order');
+        $this->db->where('puror_id',$id);
+        $this->db->where_in('puror_status',array('received','accrual'));
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function checkPoItemReceive($id)
+    {
+        $this->db->select('*');
+        $this->db->from('purchase_order_item');
+        $this->db->where('puror_id',$id);
+        $this->db->where_in('puror_item_status',array('received','accrual'));
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function deletePurchaseOrder($id)
+    {
+        $this->db->delete('purchase_order', array('puror_id' => $id));
+        $this->log_model->Logging('purchase_model','success',$this->db->last_query());
+    }
+
+    public function deletePurchaseOrderItem($id)
+    {
+        $this->db->delete('purchase_order_item', array('puror_id' => $id));
+        $this->log_model->Logging('purchase_model','success',$this->db->last_query());
     }
 
 
