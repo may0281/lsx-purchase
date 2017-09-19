@@ -47,7 +47,7 @@
 	<script type="text/javascript" src="<?php echo base_url();?>plugins/respond/respond.min.js"></script> <!-- Polyfill for min/max-width CSS3 Media Queries (only for IE8) -->
 	<script type="text/javascript" src="<?php echo base_url();?>plugins/cookie/jquery.cookie.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url();?>plugins/slimscroll/jquery.slimscroll.min.js"></script>
-	<script type="text/javascript" src="<?php echo base_url();?>plugins/slimscroll/jquery.slimscroll.horizontal.min.js"></script>\
+	<script type="text/javascript" src="<?php echo base_url();?>plugins/slimscroll/jquery.slimscroll.horizontal.min.js"></script>
 
 
 	
@@ -64,10 +64,6 @@
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/app.js"></script>
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/plugins.js"></script>
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/plugins.form-components.js"></script>
-	
-	
-	
-	
 
 	<style>
 		#loader {
@@ -149,12 +145,17 @@
 			<div id="sidebar-content">
 				<!--=== Navigation ===-->
 				<ul id="nav">
+					<?php
+					$dashboard  = $this->hublibrary_model->permission('dashboard',0,'view');
+					if(	$dashboard == true){
+					?>
 					<li class="<?php if(array_get($path,1) == 'dashboard'){echo "current open";} ?>">
 						<a href="<?php echo base_url('dashboard')?>">
 							<i class="icon-dashboard"></i>
 							Dashboard
 						</a>
 					</li>
+					<?php } ?>
 					<?php
 					$user  = $this->hublibrary_model->permission('authen','init-user','view');
 					$role  = $this->hublibrary_model->permission('authen','init-role','view');

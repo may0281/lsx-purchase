@@ -81,11 +81,17 @@ class project extends CI_Controller {
             die();
         }
 
+        $allowEdit  = $this->hublibrary_model->permission($this->major,$this->minor,'update');
+        $allowDelete  = $this->hublibrary_model->permission($this->major,$this->minor,'delete');
+
         $data = array(
             'menu'=> 'Project',
             'subMenu'=> 'Project List',
+            'allowEdit'=> $allowEdit,
+            'allowDelete'=> $allowDelete,
             'q' => $this->project_model->getProjectList($this->session->userdata('adminData'))
         );
+
         $this->load->view('template/left');
         $this->load->view('project/lists',$data);
 
@@ -95,8 +101,6 @@ class project extends CI_Controller {
     {
         $proj_name = $this->input->post('name');
         $proj_owner = $this->input->post('create_by');
-
-
         $proj_about  = $this->input->post('detail');
 
         date_default_timezone_set('asia/bangkok');
