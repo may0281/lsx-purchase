@@ -69,6 +69,38 @@ class stock_model extends ci_model
         return $query->result_array();
 	}
 	
+		public function getTransactionImport()
+	{
+ 		 $this->db->select('impre_import_num,impre_ipo,impre_date,impre_stk_id,SUM(impre_qty) as total');
+		 $this->db->from('import_item_report');
+ 		 $this->db->group_by('impre_import_num'); 
+ 		 $this->db->order_by('impre_id', 'desc'); 
+        $query = $this->db->get();
+        return $query->result_array();
+	}
+	
+		public function getTransactionImportPo()
+	{
+ 		 $this->db->select('import_item_report.impre_ipo,import_item_report.impre_item_code,item.item_size,item.item_thickness,item.item_pfilm,item.item_aica,import_item_report.impre_qty,stock.stk_unit_price');
+		 $this->db->from('import_item_report');
+		 $this->db->join('item','item.item_code	 = import_item_report.impre_item_code');
+		 $this->db->join('stock','stock.stk_id = import_item_report.impre_stk_id');
+		 $this->db->where('impre_ipo',$this->uri->segment(3));	 
+		 $this->db->where('impre_import_num',$this->uri->segment(4));	
+ 		 $this->db->order_by('impre_id','desc'); 
+        $query = $this->db->get();
+        return $query->result_array();
+	}
+	
+		public function getTransactionImportByPO()
+	{
+			$this->db->select('impre_qty,impre_ipo, SUM(impre_qty) as total_imported');
+			$this->db->from('import_item_report');	
+			$this->db->group_by('impre_ipo'); 
+       		$query = $this->db->get();
+        	return $query->result_array();
+	}
+	
 	public function getStockitem_temp($tmp_type)
 	{
         $this->db->select('*');
@@ -159,6 +191,7 @@ class stock_model extends ci_model
 		date_default_timezone_set('asia/bangkok');
 		$xlsx = new SimpleXLSX($filename);
 		$i = 1;
+		$import_num = $this->genImportNumber();
 		foreach( $xlsx->rows() as $r ) {
 			if($i > 1){
 			if (isset($r[1])) { $item_1=$r[1]; }
@@ -207,7 +240,7 @@ class stock_model extends ci_model
 						$this->db->insert('item');
 						$item_id = $this->db->insert_id();
 				}
-						
+				
 					$data_stk = array(
 						'item_id'=> $item_id,
 						'stk_qty'=> $r[10],
@@ -219,23 +252,30 @@ class stock_model extends ci_model
 					);
 
 						$stock_id = $this->addStock($data_stk);
-				//		$purq_id = $this->getIdPurRequest($r[0]);
 						
-/*						// Update purchase_request_item
-						$data_purq = array(
-							'purchase_order_item'=> 'received'
-						);
+						// Update Transaction
+				
+						$data_import = array(
+							'impre_ipo'=> $r[0],
+							'impre_import_num'=> $import_num,
+							'impre_item_code'=> $item,
+							'impre_qty'=> $r[10],
+							'impre_date'=> date('Y-m-d H:i:s'),
+							'impre_stk_id'=> $stock_id
+					     );
+					
+						$this->db->set($data_import);
+						$this->db->insert('import_item_report');
 						
-						$this->db->where('puror_item_id', $puror_item_id);
-						$this->db->update('purchase_order_item', $data_purq); */
 						}
 			}
 			$i++;
-		}
+		}			
 
+						
 		if (empty($dup_po)) {
 		
-			echo "<script>alert('Import Success'); window.location.assign('".base_url()."index.php/stock/list_item'); </script>";	
+			echo "<script>alert('Import Success'); window.location.assign('".base_url()."index.php/stock/import_report'); </script>";	
 			
 		}else{
 		
@@ -243,7 +283,7 @@ class stock_model extends ci_model
 			foreach($dup_po as $po) {
 				$message .= "".$po."\\n";
 			}
-			echo "<script>alert('$message'); window.location.assign('".base_url()."index.php/stock/list_item'); </script>";	
+			echo "<script>alert('$message'); window.location.assign('".base_url()."index.php/stock/import_report'); </script>";	
 		}
 		
 
@@ -286,8 +326,7 @@ class stock_model extends ci_model
 						
 					}
 			}
-					
-			
+						
 			$i++;
 		}
 		
@@ -374,6 +413,27 @@ class stock_model extends ci_model
 				}
 
 	}
+			public function genImportNumber()
+			{
+			$this->db->select('impre_import_num');
+			$this->db->from('import_item_report');
+			$this->db->order_by('impre_id','DESC');
+			$this->db->limit(1);
+			$query = $this->db->get();
+			$row = $query->row();
+			if ($query->num_rows() > 0)
+			{
+				$new_num = $row->impre_import_num + 1; 
+	
+				
+			}else{
+					
+					$new_num = 1;
+			}
+					return $new_num;
+			}
+	
+	
 			public function checkEnough_item($item_code,$qty)
 	{
 			$this->db->select('item_qty');

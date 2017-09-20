@@ -155,6 +155,41 @@ class stock extends CI_Controller {
         $this->load->view('stock/stock_item',$data);
     }
 	
+		public function import_report()
+    {
+		$data = array(
+            'menu'=> 'Stock',
+            'subMenu'=> 'Import Transaction Report',
+			 'q' => $this->stock_model->getTransactionImport()
+        );
+
+		$this->load->view('template/left');
+        $this->load->view('stock/import_report',$data);
+    }
+	
+		public function import_report_po()
+    {
+		$data = array(
+            'menu'=> 'Import Transaction Report',
+            'subMenu'=> 'Import Transaction Report ',
+			 'q' => $this->stock_model->getTransactionImportPO()
+        );
+
+		$this->load->view('template/left');
+        $this->load->view('stock/import_report_po',$data);
+    }
+	
+		public function import_report_by_po()
+    {
+		$data = array(
+            'menu'=> 'Stock',
+            'subMenu'=> 'Import Transaction Report by PO',
+			 'q' => $this->stock_model->getTransactionImportByPO()
+        );
+
+		$this->load->view('template/left');
+        $this->load->view('stock/import_report_by_po',$data);
+    }
 	
 	
 		public function import_item()
