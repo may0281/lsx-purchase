@@ -41,10 +41,17 @@ class purchase extends CI_Controller {
             echo $this->load->view('template/400','',true);
             die();
         }
+        $filter = array();
         $role = null;
+        $purchaseData = array();
         if($this->session->userdata('role') == $this->marketting or $this->session->userdata('role') == $this->sale)
         {
             $role = $this->session->userdata('role');
+        }
+        if($this->input->post('submit'))
+        {
+            $filter = $this->input->post();
+            $purchaseData = $this->purchase_model->getAllPurchaseRequest($role,$filter);
         }
 
         $data = array(
@@ -54,7 +61,8 @@ class purchase extends CI_Controller {
             'status'=> $this->status,
             'menu'=> $this->menu,
             'subMenu'=> $this->report,
-            'data' => $this->purchase_model->getAllPurchaseRequest($role),
+            'data' => $purchaseData,
+            'filter' => $filter
         );
         $this->load->view('template/left');
         $this->load->view('purchase/index',$data);

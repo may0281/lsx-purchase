@@ -39,12 +39,86 @@
                     <span></span>
                 </div>
             </div>
+            <div class="row row-bg"> <!-- .row-bg -->
+                <div class="row">
+                    <div class="col-md-12">
 
-            <!--=== Page Content ===-->
-            <!--=== Managed Tables ===-->
+                        <form class="form-horizontal row-border" action="" method="post">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Purchase Order Code:</label>
+                                <div class="col-md-2">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input type="text" name="puror_code" value="<?php echo $filter['puror_code'];?>" class="form-control">
 
-            <!--=== Normal ===-->
-            <div class="row">
+                                        </div>
+                                    </div>
+                                </div>
+                                <label class="col-md-2 control-label">Order Date</label>
+                                <div class="col-md-3">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input type="text" name="puror_order_date_start" value="<?php echo $filter['puror_order_date_start'];?>" class="form-control datepicker">
+                                            <span class="help-block align-center">start</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input type="text" name="puror_order_date_end" value="<?php echo $filter['puror_order_date_end'];?>" class="form-control datepicker">
+                                            <span class="help-block align-center">end</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Status</label>
+                                <div class="col-md-2">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <select name="puror_status" class="form-control" name="select">
+                                                <option value="">Select All Status</option>
+                                                <option value="ordered" <?php echo ($filter['puror_status'] == 'ordered')? 'selected' : null; ?> >Ordered</option>
+                                                <option value="received" <?php echo ($filter['puror_status'] == 'received')? 'selected' : null; ?>>Received</option>
+                                                <option value="accrual" <?php echo ($filter['puror_status'] == 'accrual')? 'selected' : null; ?>>Accrual</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label class="col-md-2 control-label">Forecasts Receive Date</label>
+                                <div class="col-md-3">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input type="text" name="puror_forecasts_date_start" value="<?php echo $filter['puror_forecasts_date_start'];?>" class="form-control datepicker">
+                                            <span class="help-block align-center">start</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input type="text" name="puror_forecasts_date_end" value="<?php echo $filter['puror_forecasts_date_end'];?>" class="form-control datepicker">
+                                            <span class="help-block align-center">end</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                            <div>
+                                <input type="submit" name="submit" value="SEARCH" class="btn btn-primary pull-right" style="margin-bottom: 20px">
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div> <!-- /.row -->
+
+            <?php if($data){ ?>
+                <div class="row">
                 <div class="col-md-12">
                     <div class="widget box">
                         <div class="widget-header">
@@ -147,6 +221,7 @@
                     </div>
                 </div>
             </div>
+            <?php } ?>
         </div>
     </div>
 </div>
@@ -155,7 +230,13 @@
 
 
 <script  type="text/javascript">
-
+    $(document).ready(function() {
+        $(".datepicker").datepicker({
+            showOtherMonths: true,
+            autoSize: true,
+            dateFormat: 'yy-mm-dd'
+        });
+    });
     $("a.confirm-dialog").click(function(e) {
         var  id = this.id;
         var purq_id = id.substr(4);

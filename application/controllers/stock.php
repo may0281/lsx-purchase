@@ -157,20 +157,23 @@ class stock extends CI_Controller {
 	
 	
 	
-		public function import_item()
+    public function import_item()
     {
-			$filename=$_FILES["file"]["tmp_name"];
-			$this->stock_model->importItem($filename,$this->uri->segment(3));	
+        $filename=$_FILES["file"]["tmp_name"];
+        $xlsx = new SimpleXLSX($filename);
+
+
+        $this->stock_model->importItem($filename,$this->uri->segment(3));
 
     }
 	
-			public function export_item()
+    public function export_item()
     {
 			$filename=$_FILES["file"]["tmp_name"];
 			$this->stock_model->exportItem($filename);
     }
 	
-		public function temp_list()
+    public function temp_list()
     {
 		$data = array(
             'menu'=> 'Add New Item',
@@ -182,7 +185,7 @@ class stock extends CI_Controller {
 		$this->load->view('stock/temp_list',$data);
     }
 	
-		public function import_stock_action()
+    public function import_stock_action()
     {
 		if(isset($_POST['tmp_item_id'])){
 		
@@ -191,7 +194,7 @@ class stock extends CI_Controller {
 
 	}
 	
-		public function suggest_order()
+    public function suggest_order()
     {
 				date_default_timezone_set('asia/bangkok');
 				$test_sent  = 1;
@@ -238,7 +241,7 @@ class stock extends CI_Controller {
 				}
 	}
 	
-		public function sendMail($message,$topic)
+    public function sendMail($message,$topic)
     {
         $this->email->from('backend.lsx@gmail.com' ,'Purchasing System');
         $this->email->to('pramote.pha@gmail.com');

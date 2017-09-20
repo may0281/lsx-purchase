@@ -14,18 +14,7 @@
 <script type="text/javascript" src="<?php echo base_url();?>plugins/noty/jquery.noty.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>plugins/noty/layouts/top.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>plugins/noty/themes/default.js"></script>
-<?php
-$label = array(
-    'request' => 'label-default',
-    'approved' => 'label-success',
-    'unapproved' => 'label-danger',
-    'pending' => 'label-warning',
-    'ordered' => 'label-info',
-    'received' => 'label-primary',
-    'delivered' => 'label-primary',
-    'reject' => 'label-danger',
-)
-?>
+
 <div id="container">
 	<div id="content">
 		<div class="container">
@@ -73,7 +62,7 @@ $label = array(
 							</div>
 						</div>
 						<div class="widget-content">
-							<table class="table table-striped table-bordered  datatable" data-display-length="25">
+							<table class="table table-striped table-bordered " data-display-length="25">
 								<thead>
 								<tr>
 									<th class="align-center">Project</th>

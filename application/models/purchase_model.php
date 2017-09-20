@@ -54,7 +54,7 @@ class purchase_model extends ci_model
     }
 
 
-	public function getAllPurchaseRequest($role = null)
+	public function getAllPurchaseRequest($role = null,$data)
     {
 
         $this->db->select('purchase_request.*,project.proj_name');
@@ -71,6 +71,40 @@ class purchase_model extends ci_model
         {
             $this->db->join('bn_user_profile','purchase_request.sale_account = bn_user_profile.account','left');
             $this->db->where('bn_user_profile.role_id',$role);
+        }
+
+        if($data['purq_status'])
+        {
+            $this->db->where('purchase_request.purq_status',$data['purq_status']);
+        }
+
+        if($data['proj_name'])
+        {
+            $this->db->where('project.proj_name',$data['proj_name']);
+        }
+
+        if($data['purq_code'])
+        {
+            $this->db->where('purchase_request.purq_code',$data['purq_code']);
+        }
+
+        if($data['purq_require_start'] and $data['purq_require_end'])
+        {
+            $this->db->where('purchase_request.purq_require_start >=',$data['purq_require_start']);
+            $this->db->where('purchase_request.purq_require_start <=',$data['purq_require_end']);
+        }
+
+         if($data['purq_require_start'] or $data['purq_require_end'])
+        {
+            if($data['purq_require_start'])
+            {
+                $this->db->where('purchase_request.purq_require_start',$data['purq_require_start']);
+            }
+
+            if($data['purq_require_end'])
+            {
+                $this->db->where('purchase_request.purq_require_end',$data['purq_require_end']);
+            }
         }
 
         $this->db->order_by('purchase_request.purq_id','desc');
@@ -237,10 +271,37 @@ class purchase_model extends ci_model
         $this->log_model->Logging('purchase_model','success',$this->db->last_query());
     }
 
-    public function getPurchaseOrder()
+    public function getPurchaseOrder($data)
     {
         $this->db->select('*');
         $this->db->from('purchase_order');
+        if($data['puror_code'])
+        {
+            $this->db->where('puror_code',$data['puror_code']);
+        }
+        if($data['puror_order_date_start'])
+        {
+            $this->db->where('puror_order_date >= ',$data['puror_order_date_start'].' 00:00:00');
+        }
+
+        if($data['puror_order_date_end'])
+        {
+            $this->db->where('puror_order_date <= ',$data['puror_order_date_end'].' 23:59:59');
+        }
+
+        if($data['puror_forecasts_date_start'])
+        {
+            $this->db->where('puror_forecasts_date >= ',$data['puror_forecasts_date_start'].' 00:00:00');
+        }
+        if($data['puror_forecasts_date_end'])
+        {
+            $this->db->where('puror_forecasts_date <= ',$data['puror_forecasts_date_end'].' 23:59:59');
+        }
+
+        if($data['puror_status'])
+        {
+            $this->db->where('puror_status',$data['puror_status']);
+        }
         $this->db->order_by('puror_id','desc');
         $query = $this->db->get();
         $this->log_model->Logging('purchase_model','success',$this->db->last_query());

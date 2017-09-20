@@ -34,13 +34,24 @@ class purchaseorder extends CI_Controller {
             die();
         }
 
+        $poData = array();
+        $filter = array();
+        if($this->input->post('submit'))
+        {
+            $filter = $this->input->post();
+            $poData = $this->purchase_model->getPurchaseOrder($filter);
+        }
+
+
+
         $allowDelete = $this->hublibrary_model->permission($this->major,$this->minor,'delete');
 
         $data = array(
             'menu'=> $this->menu,
             'subMenu'=> $this->submenu,
             'allowDelete'=> $allowDelete,
-            'data' => $this->purchase_model->getPurchaseOrder(),
+            'data' => $poData,
+            'filter' => $filter,
         );
 
         $this->load->view('template/left');

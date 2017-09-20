@@ -14,6 +14,11 @@
 <script type="text/javascript" src="<?php echo base_url();?>plugins/noty/jquery.noty.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>plugins/noty/layouts/top.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>plugins/noty/themes/default.js"></script>
+
+<script type="text/javascript" src="<?php echo base_url();?>plugins/pickadate/picker.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>plugins/pickadate/picker.date.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>plugins/pickadate/picker.time.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js"></script>
 <?php
 $label = array(
     'request' => 'label-default',
@@ -26,6 +31,7 @@ $label = array(
     'reject' => 'label-danger',
 )
 ?>
+
 <div id="container">
     <div id="content">
         <div class="container">
@@ -53,8 +59,70 @@ $label = array(
                 </div>
             </div>
 
-            <!--=== Normal ===-->
-            <div class="row">
+            <div class="row row-bg"> <!-- .row-bg -->
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <form class="form-horizontal row-border" action="" method="post">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Project:</label>
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input type="text" name="proj_name" value="<?php echo $filter['proj_name'];?>" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <label class="col-md-2 control-label">Purchase Request Code</label>
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input type="text" name="purq_code" value="<?php echo $filter['purq_code'];?>" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Require Date</label>
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input type="text" name="purq_require_start" value="<?php echo $filter['purq_require_start'];?>" class="form-control datepicker">
+                                            <span class="help-block align-center">StartDate</span>
+                                            <input type="text" name="purq_require_end" value="<?php echo $filter['purq_require_end'];?>" class="form-control datepicker">
+                                            <span class="help-block align-center">EndDate</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <label class="col-md-2 control-label">Status</label>
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <select name="purq_status" class="form-control" name="select">
+                                                <option value="">Select All Status</option>
+                                                <option value="request" <?php echo ($filter['purq_status'] == 'request')? 'selected' : null; ?> >Request</option>
+                                                <option value="pending" <?php echo ($filter['purq_status'] == 'pending')? 'selected' : null; ?>>Pending</option>
+                                                <option value="unapproved" <?php echo ($filter['purq_status'] == 'unapproved')? 'selected' : null; ?>>UnApproved</option>
+                                                <option value="approved" <?php echo ($filter['purq_status'] == 'approved')? 'selected' : null; ?>>Approved</option>
+                                                <option value="completed" <?php echo ($filter['purq_status'] == 'completed')? 'selected' : null; ?>>Completed</option>
+                                                <option value="reject" <?php echo ($filter['purq_status'] == 'reject')? 'selected' : null; ?>>Reject</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div  class="col-md-6" style="margin-top: 20px">
+                                    <input type="submit" name="submit" value="SEARCH" class="btn btn-primary pull-right">
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div> <!-- /.row -->
+            <?php if($data){ ?>
+                <div class="row">
                 <div class="col-md-12">
                     <div class="widget box">
                         <div class="widget-header">
@@ -69,8 +137,7 @@ $label = array(
                             <table class="table table-striped table-bordered table-hover table-checkable datatable" data-display-length="30" data-dataTable='{"bSort": false}'>
                                 <thead>
                                 <tr>
-                                    <th>#</th>
-
+                                    <th>PR Code</th>
                                     <th>Project</th>
                                     <th>Project Owner</th>
                                     <th>Designer</th>
@@ -159,6 +226,7 @@ $label = array(
                     </div>
                 </div>
             </div>
+            <?php } ?>
         </div>
     </div>
 </div>
@@ -167,6 +235,13 @@ $label = array(
 
 
 <script  type="text/javascript">
+    $(document).ready(function() {
+        $(".datepicker").datepicker({
+            showOtherMonths: true,
+            autoSize: true,
+            dateFormat: 'yy-mm-dd'
+        });
+    });
 
     $("a.confirm-dialog").click(function(e) {
         var  id = this.id;

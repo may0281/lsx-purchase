@@ -161,77 +161,80 @@ class stock_model extends ci_model
 		$i = 1;
 		foreach( $xlsx->rows() as $r ) {
 			if($i > 1){
-			if (isset($r[1])) { $item_1=$r[1]; }
-			if (isset($r[2])) { $item_2=$r[2]; }
-			if (isset($r[3])) { $item_3=$r[3]; }
-			if (isset($r[4])) { $item_4=$r[4]; }
-			$item = trim($item_1.'-'.$item_2.'-'.$item_3.'-'.$item_4);
-			$chk_po = $this->checkPO_item($r[0]);
-			$chk_dup = $this->checkDuplicate_item($item);
-			if($chk_po == 0){ $dup_po[] = $r[0]; } else {
-				if($chk_dup == 1){ 
-				
-					$this->db->select('item_qty');
-					$this->db->from('item');
-					$this->db->where('item_code',$item);
-					$query = $this->db->get();
-					$row = $query->row();
-					if ($query->num_rows() > 0)
-					{
-						$update_total =	$row->item_qty + $r[10];
-					}
-					$data_update = array(
-						'item_qty'=> $update_total
-					);
-					
-					$item_id = $this->getItemid($item);
-					$this->updatePriceItem($item_id,$r[9]);
-					
-					$this->db->where('item_code', $item);
-					$this->db->update('item', $data_update); 
-				
-				 } else {
-					
-						$data = array(
-							'item_code'=> $item,
-							'item_aica'=> $r[5],
-							'item_pfilm'=> $r[6],
-							'item_size'=> $r[7],
-							'item_thickness'=> $r[8],
-							'item_price'=> $r[9],
-							'item_qty'=> $r[10],
-							'item_add_date'=> date('Y-m-d H:i:s'),
-							'item_status'=> 1	
-						 );
-						$this->db->set($data);
-						$this->db->insert('item');
-						$item_id = $this->db->insert_id();
-				}
-						
-					$data_stk = array(
-						'item_id'=> $item_id,
-						'stk_qty'=> $r[10],
-						'stk_unit_price'=> $r[9],
-						'stk_add_date'=> date('Y-m-d H:i:s'),
-						'stk_add_type'=> '1',
-						'stk_add_by'=> $this->project_model->getUserlogin($this->session->userdata('adminData')),
-						'stk_status'=> '1'
-					);
 
-						$stock_id = $this->addStock($data_stk);
-				//		$purq_id = $this->getIdPurRequest($r[0]);
-						
-/*						// Update purchase_request_item
-						$data_purq = array(
-							'purchase_order_item'=> 'received'
-						);
-						
-						$this->db->where('puror_item_id', $puror_item_id);
-						$this->db->update('purchase_order_item', $data_purq); */
-						}
+
+                if (isset($r[1])) { $item_1=$r[1]; }
+                if (isset($r[2])) { $item_2=$r[2]; }
+                if (isset($r[3])) { $item_3=$r[3]; }
+                if (isset($r[4])) { $item_4=$r[4]; }
+                $item = trim($item_1.'-'.$item_2.'-'.$item_3.'-'.$item_4);
+                $chk_po = $this->checkPO_item($r[0]);
+                $chk_dup = $this->checkDuplicate_item($item);
+                if($chk_po == 0){ $dup_po[] = $r[0]; } else {
+                    if($chk_dup == 1){
+
+                        $this->db->select('item_qty');
+                        $this->db->from('item');
+                        $this->db->where('item_code',$item);
+                        $query = $this->db->get();
+                        $row = $query->row();
+                        if ($query->num_rows() > 0)
+                        {
+                            $update_total =	$row->item_qty + $r[10];
+                        }
+                        $data_update = array(
+                            'item_qty'=> $update_total
+                        );
+
+                        $item_id = $this->getItemid($item);
+                        $this->updatePriceItem($item_id,$r[9]);
+
+                        $this->db->where('item_code', $item);
+                        $this->db->update('item', $data_update);
+
+                     } else {
+
+                            $data = array(
+                                'item_code'=> $item,
+                                'item_aica'=> $r[5],
+                                'item_pfilm'=> $r[6],
+                                'item_size'=> $r[7],
+                                'item_thickness'=> $r[8],
+                                'item_price'=> $r[9],
+                                'item_qty'=> $r[10],
+                                'item_add_date'=> date('Y-m-d H:i:s'),
+                                'item_status'=> 1
+                             );
+                            $this->db->set($data);
+                            $this->db->insert('item');
+                            $item_id = $this->db->insert_id();
+                    }
+
+                        $data_stk = array(
+                            'item_id'=> $item_id,
+                            'stk_qty'=> $r[10],
+                            'stk_unit_price'=> $r[9],
+                            'stk_add_date'=> date('Y-m-d H:i:s'),
+                            'stk_add_type'=> '1',
+                            'stk_add_by'=> $this->project_model->getUserlogin($this->session->userdata('adminData')),
+                            'stk_status'=> '1'
+                        );
+
+                            $stock_id = $this->addStock($data_stk);
+                    //		$purq_id = $this->getIdPurRequest($r[0]);
+
+    /*						// Update purchase_request_item
+                            $data_purq = array(
+                                'purchase_order_item'=> 'received'
+                            );
+
+                            $this->db->where('puror_item_id', $puror_item_id);
+                            $this->db->update('purchase_order_item', $data_purq); */
+                            }
 			}
 			$i++;
 		}
+		sd('d');
 
 		if (empty($dup_po)) {
 		
@@ -245,9 +248,7 @@ class stock_model extends ci_model
 			}
 			echo "<script>alert('$message'); window.location.assign('".base_url()."index.php/stock/list_item'); </script>";	
 		}
-		
 
-		
 		
 	}
 	
@@ -277,13 +278,13 @@ class stock_model extends ci_model
 					$data_update = array(
 						'item_qty'=> $update_total
 					);
-					
+
 					$item_id = $this->getItemid($r[0]);
-					
+
 					$this->db->where('item_code', $r[0]);
-					$this->db->update('item', $data_update); 
+					$this->db->update('item', $data_update);
 						}
-						
+
 					}
 			}
 					
