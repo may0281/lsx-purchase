@@ -54,11 +54,11 @@
 <!--			<div align="right" style="margin:20px">
 			<a href="<?php echo base_url(); ?>stock/import_by_order" class="btn btn-inverse">นำข้อมูลเข้า</a>
 			</div>-->
-			<!--<div class="row">
+			<div class="row">
 			<div class="col-md-12">
 			<div class="widget box">
 			<div class="widget-header">
-			<h4><i class="icon-reorder"></i>Add Manual</h4>
+			<h4><i class="icon-reorder"></i>Add Manual (New Item)</h4>
 			</div>
 			<div class="widget-content">
 			<form class="form-horizontal row-border" method="post" action="<?php echo base_url(); ?>stock/add_item_action">
@@ -108,7 +108,7 @@
 			</div>
 			</div>
 			</div>
-			</div>-->
+			</div>
 			<!-- /Normal -->
 
 

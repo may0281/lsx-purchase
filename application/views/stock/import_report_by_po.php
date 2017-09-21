@@ -76,17 +76,17 @@
 											<td><?php echo $r['total_imported'];?></td>
 											<td>
 											<?php
-											$this->db->select('impre_qty, SUM(impre_qty) as total');
+											$this->db->select('puror_qty, SUM(puror_qty) as total');
 											$this->db->from('purchase_order_item');
-											$this->db->join('stock','stock.stk_id = import_item_report.impre_stk_id');
-											$this->db->where('impre_ipo',$this->uri->segment(3));	 
-											$this->db->where('impre_import_num',$this->uri->segment(4));	
-											$this->db->group_by('impre_qty'); 
+											$this->db->join('purchase_order','purchase_order.puror_id = purchase_order_item.puror_id');
+											$this->db->where('purchase_order.puror_code',$r['impre_ipo']);	
+											$this->db->group_by('puror_qty'); 
 											$query = $this->db->get();
 											$row = $query->row();
 												if ($query->num_rows() > 0)
 												{
 													$total = $row->total;
+													echo $total;
 												}
 											?>
 											</td>
