@@ -107,9 +107,8 @@ $label = array(
 
                                             <a href="<?php echo base_url('purchase/request/update/'.$r['purq_id'])?>" id="app_<?php echo $r['purq_id'];?>" data-value="approved" class="btn btn-xs bs-tooltip btn-success confirm-dialog" title="" data-original-title="Approve">Approve</a>
 
-                                            <?php if($r['purq_status'] != 'pending'){ ?>
-                                                <a data-toggle="modal" href="#pending_<?php echo $r['purq_id'];?>" id="pen_<?php echo $r['purq_id'];?>" class="btn btn-xs bs-tooltip btn-warning" data-original-title="Pending">Pending</a>
-                                                <div class="modal fade" id="pending_<?php echo $r['purq_id'];?>">
+                                            <a data-toggle="modal" href="#pending_<?php echo $r['purq_id'];?>" id="pen_<?php echo $r['purq_id'];?>" class="btn btn-xs bs-tooltip btn-warning <?php echo ($r['purq_status'] == 'pending')? 'hide' : null ?>" data-original-title="Pending">Pending</a>
+                                            <div class="modal fade" id="pending_<?php echo $r['purq_id'];?>">
                                                 <form class="form-horizontal row-border" method="post" id="frm_pending_<?php echo $r['purq_id'];?>"  onsubmit="return checkForm(this);" >
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
@@ -134,11 +133,10 @@ $label = array(
                                                         </div>
                                                     </div>
                                                 </form>
-                                            </div><!-- /.modal -->
-                                            <?php } ?>
-                                            <?php if($r['purq_status'] != 'unapproved'){ ?>
-                                                <a data-toggle="modal" href="#unapproved_<?php echo $r['purq_id'];?>" id="una_<?php echo $r['purq_id'];?>" class="btn btn-xs bs-tooltip btn-danger" data-original-title="Unapproved">Unapproved</a>
-                                                <div class="modal fade" id="unapproved_<?php echo $r['purq_id'];?>">
+                                            </div>
+
+                                            <a data-toggle="modal" href="#unapproved_<?php echo $r['purq_id'];?>" id="una_<?php echo $r['purq_id'];?>" class="btn btn-xs bs-tooltip btn-danger <?php echo ($r['purq_status'] == 'unapproved')? 'hide' : null ?>" data-original-title="Unapproved">Unapproved</a>
+                                            <div class="modal fade" id="unapproved_<?php echo $r['purq_id'];?>">
                                                 <form class="form-horizontal row-border" method="post" id="frm_unapproved_<?php echo $r['purq_id'];?>" onsubmit="return checkForm(this);" >
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
@@ -164,7 +162,6 @@ $label = array(
                                                     </div>
                                                 </form>
                                             </div>
-                                            <?php } ?>
                                         </span>
                                     </td>
                                 </tr>
@@ -209,7 +206,10 @@ $label = array(
                         {
                             console.log(result.act);
                             $('#span-status-' + result.id).removeClass('label-default label-danger label-warning').addClass('label-success').html(result.act);
-                            $('#app_' + result.id).removeClass('btn btn-xs btn-success confirm-dialog').html('');
+                            $('#app_' + result.id).addClass('hide');
+                            $('#una_' + result.id).removeClass('hide');
+                            $('#pen_' + result.id).removeClass('hide');
+
                             noty({
                                 text: 'Success',
                                 type: 'information',
@@ -250,16 +250,20 @@ $label = array(
                 console.log(result);
                 if(result.act == 'pending')
                 {
-                    $('#span-status-' + result.id).removeClass('label-default label-danger').addClass('label-warning').html('pending');
-                    $('#pen_' + result.id).removeClass('btn btn-xs btn-success btn-danger').html('');
-                    $('#pending_' + result.id).html('');
+                    $('#span-status-' + result.id).removeClass('label-default label-success label-danger').addClass('label-warning').html('pending');
+                    $('#pen_' + result.id).addClass('hide');
+                    $('#app_' + result.id).removeClass('hide');
+                    $('#una_' + result.id).removeClass('hide');
+
                 }
 
                 if(result.act == 'unapproved')
                 {
-                    $('#span-status-' + result.id).removeClass('label-default label-warning').addClass('label-danger').html('unapproved');
-                    $('#una_' + result.id).removeClass('btn btn-xs btn-success btn-warning').html('');
-                    $('#unapproved_' + result.id).html('');
+                    $('#span-status-' + result.id).removeClass('label-default label-success label-warning').addClass('label-danger').html('unapproved');
+                    $('#una_' + result.id).addClass('hide');
+                    $('#app_' + result.id).removeClass('hide');
+                    $('#pen_' + result.id).removeClass('hide');
+
                 }
                 noty({
                     text: 'Success',

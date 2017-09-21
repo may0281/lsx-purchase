@@ -80,12 +80,12 @@ class purchase_model extends ci_model
 
         if($data['proj_name'])
         {
-            $this->db->where('project.proj_name',$data['proj_name']);
+            $this->db->like('project.proj_name',$data['proj_name']);
         }
 
         if($data['purq_code'])
         {
-            $this->db->where('purchase_request.purq_code',$data['purq_code']);
+            $this->db->like('purchase_request.purq_code',$data['purq_code']);
         }
 
         if($data['purq_require_start'] and $data['purq_require_end'])
@@ -277,7 +277,7 @@ class purchase_model extends ci_model
         $this->db->from('purchase_order');
         if($data['puror_code'])
         {
-            $this->db->where('puror_code',$data['puror_code']);
+            $this->db->like('puror_code',$data['puror_code']);
         }
         if($data['puror_order_date_start'])
         {

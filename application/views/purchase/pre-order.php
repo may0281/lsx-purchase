@@ -86,11 +86,11 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-12 align-left">Note</label>
+                        <label class="col-md-12 align-left">Description </label>
                     </div>
                     <div class="form-group">
                         <div class="col-md-12">
-                            <textarea rows="3" cols="5" name="puror_note" class="form-control wysiwyg"></textarea>
+                            <textarea rows="3" cols="5" name="puror_description" class="form-control wysiwyg"></textarea>
                         </div>
                     </div>
                     <div class="widget box">
@@ -243,6 +243,14 @@
                             </table>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-12 align-left">Note </label>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <textarea rows="3" cols="5" name="puror_note" class="form-control wysiwyg"></textarea>
                 </div>
             </div>
             <div class="form-actions">

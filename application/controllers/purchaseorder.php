@@ -145,6 +145,7 @@ class purchaseorder extends CI_Controller {
             'puror_shipping_destination' => $input['puror_shipping_destination'],
             'puror_shipping_payment_term' => $input['puror_shipping_payment_term'],
             'puror_note' => $input['puror_note'],
+            'puror_description' => $input['puror_description'],
         );
 
         $puror_id = $this->purchase_model->createPurchaseOrder($pre_order);

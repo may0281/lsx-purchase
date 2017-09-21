@@ -45,7 +45,10 @@
 <!-- Demo JS -->
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/custom.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/demo/form_validation.js"></script>
-<!--<script type="text/javascript" src="--><?php //echo base_url(); ?><!--assets/js/demo/ui_general.js"></script>-->
+
+<script type="text/javascript" src="<?php echo base_url();?>plugins/noty/jquery.noty.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>plugins/noty/layouts/top.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>plugins/noty/themes/default.js"></script>
 
 <div id="content">
     <div class="container">
@@ -151,10 +154,10 @@
                                     <div style="clear: both ; height: 10px" ></div>
 
                                     <?php $k=1; $j=1; foreach ($purchaseItem as $it){ ?>
-                                    <div class="" id="item-list-<?php echo $j;?>" data-value="<?php echo $j;?>">
+                                    <div class="" id="update-item-list-<?php echo $j;?>" data-value="<?php echo $j;?>">
                                         <label class="col-md-1 control-label"><?php echo $k; ?> </label>
                                         <div class="col-md-1" style="text-align: center">
-                                            <label class="checkbox"><input type="checkbox" name="delete[]" value="<?php echo $it['purq_item_id'] ?>" class="uniform"> </label>
+                                            <label class="checkbox"><input type="checkbox" name="delete[]" value="<?php echo $it['purq_item_id'] ?>" class="uniform delete"> </label>
                                         </div>
                                         <input type="hidden" name="purchase_item[]" value="<?php echo $it['purq_item_id'] ?>">
                                         <div class="col-md-3 clearfix">
@@ -540,6 +543,7 @@
         {
             var item = $("select[name='item_id[]']").map(function(){return $(this).val();}).get();
             var qty = $("input[name='qty[]']").map(function(){return $(this).val();}).get();
+            var  countItem = 0;
             if(item[0] == '')
             {
                 $('#item-1').addClass('input-error');
@@ -557,7 +561,7 @@
                 var id = i+1;
 
                 var qty_input = parseInt(qty[i], 10);
-
+                var allItem = [];
                 if(item[i] && qty_input == '')
                 {
                     $('#item-'+id+'-qty').addClass('input-error');
@@ -570,57 +574,134 @@
                     $('#msg_qty_'+id).html('Please enter only digits.');
                     status = false;
                 }
-
-
+                if(item[i] && qty[i])
+                {
+                    countItem = countItem+1;
+                }
 
             }
+
+            //check duplicate form create
+            var n = [];
+            for(var a = 0; a < item.length; a++)
+            {
+                if (n.indexOf(item[a]) == -1) n.push(item[a]);
+            }
+
+            if(countItem >= n.length)
+            {
+                var msg = 'รายการที่คุณเลือกมี item ซ้ำกัน กรุณาทำใหม่';
+                noty({
+                    text: msg,
+                    type: 'error',
+                    layout: 'top',
+                    timeout: 5000,
+                    modal: 'false'
+                });
+                return false;
+            }
+            // [END] check duplicate form create
+
+
         }
 
         if(form.id== 'update')
         {
+
+            var numberOfDelete = $('.delete:checked').size();
             var item_old = $("select[name='purchase_item_list[]']").map(function(){return $(this).val();}).get();
             var qty_old = $("input[name='purchase_item_qty[]']").map(function(){return $(this).val();}).get();
 
 
-            for(var i =0; i<=item_old.length; i++)
+            for(var j =0; j<=item_old.length; j++)
             {
-                var id = i+1;
-                var qty_old_input = parseInt(qty_old[i], 10);
-                if(item_old[i] && qty_old[i] == '' )
+                var id = j+1;
+                var qty_old_input = parseInt(qty_old[j], 10);
+                if(item_old[j] && qty_old[j] == '' )
                 {
-                    console.log(qty_old[i]);
                     $('#purchase-item-'+id+'-qty').addClass('input-error');
                     $('#purchase_msg_qty_'+id).html(error_msg);
                     status = false;
                 }
-                if(item_old[i] && qty_old[i] != qty_old_input)
+                if(item_old[j] && qty_old[j] != qty_old_input)
                 {
                     $('#purchase-item-'+id+'-qty').addClass('input-error');
                     $('#purchase_msg_qty_'+id).html('Please enter only digits.');
                     status = false;
                 }
             }
-
             var item = $("select[name='item_id[]']").map(function(){return $(this).val();}).get();
             var qty = $("input[name='qty[]']").map(function(){return $(this).val();}).get();
-
-            for(var i =0; i<=item.length; i++)
+            var countItem = 0;
+            var checkItemHasValue = [];
+            for(var k = 0; k <= item.length; k++)
             {
-                var id = i+1;
-                var qty_input = parseInt(qty[i], 10);
-                if(item[i] && qty_input == '')
+                var id = k+1;
+                var qty_input = parseInt(qty[k], 10);
+                if(item[k] && qty_input == '')
                 {
                     $('#item-'+id+'-qty').addClass('input-error');
                     $('#msg_qty_'+id).html(error_msg);
                     status = false;
                 }
-                if(item[i] && qty[i] != qty_input)
+                if(item[k] && qty[k] != qty_input)
                 {
                     $('#item-'+id+'-qty').addClass('input-error');
                     $('#msg_qty_'+id).html('Please enter only digits.');
                     status = false;
                 }
+                if(item[k] && qty[k])
+                {
+                    countItem = countItem+1;
+                    checkItemHasValue.push(item[k]);
+                }
             }
+
+
+
+            /// check delete all item and no item new
+            var totalItem = countItem+item_old.length;
+            if(numberOfDelete >= totalItem)
+            {
+                var msg = 'Please fill the item at least 1 item. (Delete = ' + numberOfDelete + ' item and Total = ' + totalItem +' item.)';
+                noty({
+                    text: msg,
+                    type: 'error',
+                    layout: 'top',
+                    timeout: 5000,
+                    modal: 'false'
+                });
+                return false;
+            }
+
+            //check duplicate form update
+
+            var allItemFormUpdate = item_old.length + checkItemHasValue.length;
+            var m = [];
+            for(var a = 0; a < item_old.length; a++)
+            {
+                if (m.indexOf(item_old[a]) == -1) m.push(item_old[a]);
+            }
+            for(var b = 0; b < checkItemHasValue.length; b++)
+            {
+                if (m.indexOf(checkItemHasValue[b]) == -1) m.push(checkItemHasValue[b]);
+            }
+
+            if(allItemFormUpdate > m.length)
+            {
+                var msg = 'รายการที่คุณเลือกมี item ซ้ำกัน กรุณาทำใหม่';
+                noty({
+                    text: msg,
+                    type: 'error',
+                    layout: 'top',
+                    timeout: 5000,
+                    modal: 'false'
+                });
+                return false;
+            }
+
+            //[end]check duplicate form update
+
 
         }
 

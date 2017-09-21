@@ -182,7 +182,9 @@
                     <div class="row padding-top-10px">
                         <div class="col-md-6">
                             <div class="well">
-                                <p><strong>Notes: </strong><?php echo $data['purq_comment'] ?> </p>
+                                <p><strong>Notes: </strong>
+                                    <?php echo wordwrap($data['purq_comment'],90,"<br>\n",true); ?>
+                                </p>
                             </div>
                         </div>
                         <div class="col-md-6 align-right">

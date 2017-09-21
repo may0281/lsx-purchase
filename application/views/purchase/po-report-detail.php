@@ -99,7 +99,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div style="clear: both;padding: 20px;font-size: 10px;"> <strong>Description :</strong> <?php echo $data['puror_note']; ?>	</div>
+                    <div style="clear: both;padding: 20px;font-size: 10px;"> <strong>Description :</strong> <?php echo $data['puror_description']; ?>	</div>
                     <div class="col-md-12">
                         <table class="table table-hover" style="font-size: 10px;">
                             <thead>
@@ -155,7 +155,7 @@
                     <div class="row padding-top-10px">
                         <div class="col-md-8">
                             <div style="padding-left: 20px;font-size: 10px">
-                                <p><strong>Notes: </strong> <?php echo $data['puror_note'] ?></p>
+                                <p><?php echo $data['puror_note'] ?></p>
                             </div>
                         </div>
                         <div class="col-md-4 align-right">

@@ -103,7 +103,8 @@
 												<?php if($pu['puror_order_date']){ ?>สั่งสินค้าวันที่ <?php echo date('Y/m/d',strtotime($pu['puror_order_date'])); ?> <br>
 												PO No =  <?php echo $pu['puror_code'] ?> <br> <?php }?>
 												......................................<br>
-												<?php echo $pu['purq_comment'] ?>
+
+												<?php echo wordwrap($pu['purq_comment'],20,"<br>\n",true); ?>
 											</td>
 										</tr>
 									<?php $oldPur_code = $pu['purq_code']; $i++; } ?>
