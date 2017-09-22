@@ -71,7 +71,7 @@ class stock_model extends ci_model
 	
 		public function getTransactionImport()
 	{
- 		 $this->db->select('impre_import_num,impre_ipo,impre_date,impre_stk_id,SUM(impre_qty) as total');
+ 		 $this->db->select('impre_import_num,impre_ipo,impre_date,impre_stk_id,impre_by,SUM(impre_qty) as total');
 		 $this->db->from('import_item_report');
  		 $this->db->group_by('impre_import_num');
  		 $this->db->order_by('impre_id', 'desc');
@@ -79,14 +79,14 @@ class stock_model extends ci_model
         return $query->result_array();
 	}
 
-		public function getTransactionImportPo()
+		public function getTransactionImportPo($po,$prefix)
 	{
  		 $this->db->select('import_item_report.impre_ipo,import_item_report.impre_item_code,item.item_size,item.item_thickness,item.item_pfilm,item.item_aica,import_item_report.impre_qty,stock.stk_unit_price');
 		 $this->db->from('import_item_report');
 		 $this->db->join('item','item.item_code	 = import_item_report.impre_item_code');
 		 $this->db->join('stock','stock.stk_id = import_item_report.impre_stk_id');
-		 $this->db->where('impre_ipo',$this->uri->segment(3));
-		 $this->db->where('impre_import_num',$this->uri->segment(4));
+		 $this->db->where('impre_ipo',$po);
+		 $this->db->where('impre_import_num',$prefix);
  		 $this->db->order_by('impre_id','desc');
         $query = $this->db->get();
         return $query->result_array();

@@ -67,6 +67,7 @@
         <?php if($async){ ?>
         <div class="row">
             <div class="col-md-12">
+                <form class="form-horizontal row-border" method="post" action="<?php echo base_url('stock/updateStockAsync')?>">
                 <div class="widget box">
                     <div class="widget-header">
                         <h4><i class="icon-reorder"></i> รายการที่อัพเดทไม่สำเร็จ เนื่องจาก ITEM กับ PO ไม่ตรงกัน</h4>
@@ -88,7 +89,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <form class="form-horizontal row-border" method="post" action="<?php echo base_url('stock/updateStockAsync')?>">
+
                                 <?php $i=0; foreach ($async as $a){ ?>
                                 <tr>
                                     <td class="checkbox-column">

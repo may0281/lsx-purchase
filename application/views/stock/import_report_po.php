@@ -39,21 +39,7 @@
             <div class="page-header">
                 <div class="page-title">
                     <h3><?php echo strtoupper($subMenu) ?><? echo $this->uri->segment(3); ?>
-					 
-					<?php
-						$this->db->select('impre_qty, SUM(impre_qty) as total');
-						$this->db->from('import_item_report');
-						$this->db->where('impre_ipo',$this->uri->segment(3));	 
-						$this->db->where('impre_import_num',$this->uri->segment(4));	
-						$this->db->group_by('impre_qty'); 
-						$query = $this->db->get();
-						$row = $query->row();
-						if ($query->num_rows() > 0)
-						{
-							$total = $row->total;
-						}
-					?>
-					(Total Imported <?php echo $total; ?> Item.)
+					(Total Imported <?php echo $this->db->where('impre_ipo',$this->uri->segment(3))->where('impre_import_num',$this->uri->segment(4))->from("import_item_report")->count_all_results(); ?> Item.)
 					</h3>
                     <span></span>
                 </div>

@@ -42,32 +42,6 @@
                     <span></span>
                 </div>
             </div>
-
-            <!--=== Page Content ===-->
-            <!--=== Managed Tables ===-->
-
-			<!--<div class="row">
-			<div class="col-md-12">
-			<div class="widget box">
-			<div class="widget-header">
-			<h4><i class="icon-reorder"></i>เลือกนำข้อมูลเข้าแบบ Import File</h4>
-			</div>
-			<div class="widget-content">
-			<form class="form-horizontal row-border" method="post" action="<?php echo base_url(); ?>stock/import_item/2" enctype="multipart/form-data">
-			<div class="form-group">
-			<label class="col-md-2 control-label">File Upload:</label>
-			<div class="col-md-10">
-			<input type="file" name="file" data-style="fileinput">
-			</div>
-			</div>
-			<div align="left"><a href="<?php echo base_url(); ?>stock/temp_list/2">รายการที่ Import ค้างไว้</a></div><div align="right"><input class="btn btn-sm btn-primary" type="submit" value="Import"> <input class="btn" type="reset" value="Reset"></div>
-			
-			</form>
-			</div>
-			</div>
-			</div>
-			</div>-->
-            <!--=== Normal ===-->
             <div class="row">
 					<div class="col-md-12">
 						<div class="widget box">
@@ -80,7 +54,7 @@
 								</div>
 							</div>
 							<div class="widget-content">
-								<table class="table table-striped table-bordered table-hover table-checkable datatable">
+								<table class="table table-striped table-bordered table-hover table-checkable datatable"  data-display-length="50">
 									<thead>
 										<tr>
 											<th>No</th>

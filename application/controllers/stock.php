@@ -82,7 +82,6 @@ class stock extends CI_Controller {
 			'item_qty'=> $this->input->post('stk_qty'),
 			'item_price'=> $this->input->post('stk_unit_price'),
 			'item_min'=> $this->input->post('item_min'),
-			'item_pfilm'=> $this->input->post('item_pfilm'),
 			'item_add_date'=> date('Y-m-d H:i:s'),
 			'stk_id'=> $stock_id,
 			'item_status'=> '1'
@@ -179,12 +178,12 @@ class stock extends CI_Controller {
         $this->load->view('stock/import_report',$data);
     }
 
-    public function import_report_po()
+    public function import_report_po($po,$prefix)
     {
         $data = array(
             'menu'=> 'Import Transaction Report',
             'subMenu'=> 'Import Transaction Report ',
-            'q' => $this->stock_model->getTransactionImportPO()
+            'q' => $this->stock_model->getTransactionImportPO($po,$prefix)
         );
 
         $this->load->view('template/left');
@@ -206,6 +205,7 @@ class stock extends CI_Controller {
     public function import_item()
     {
         $date = date('Y-m-d H:i:s');
+        $import_num = strtotime($date);
         $filename=$_FILES["file"]["tmp_name"];
         $xlsx = new SimpleXLSX($filename);
         $i=0;
@@ -226,13 +226,26 @@ class stock extends CI_Controller {
 
                 if($isTrue)
                 {
+                    $stockData = array(
+                        'item_code' => $item_code,
+                        'stk_qty' => $qty,
+                        'puror_code' => $po_code,
+                        'stk_add_date' =>$date,
+                        'stk_add_type' =>'import',
+                        'stk_add_by' =>$this->session->userdata('adminData'),
+                        'stk_status' =>1,
+                    );
+                    $stock_id = $this->stock_model->addStock($stockData);
                     $importItem = array(
+                        'impre_import_num'=> $import_num,
                         'impre_ipo'=> $po_code,
                         'impre_item_code'=> $item_code,
                         'impre_qty'=> $qty,
                         'impre_date'=> $date,
                         'impre_by'=> $this->session->userdata('adminData'),
+                        'impre_stk_id'=> $stock_id,
                     );
+
                     $this->stock_model->insertImportItemReport($importItem);
                     $this->stock_model->updateItemQty($item_code,$qty);
                     $this->checkAndChangeStatusPO($po_code,$item_code);
@@ -534,11 +547,21 @@ class stock extends CI_Controller {
 
     public function updateStockAsync()
     {
+        $date = date('Y-m-d H:i:s');
         $qty = $this->input->post('qty');
         $items = $this->input->post('item');
         foreach ($this->input->post('row') as $r)
         {
             $this->stock_model->updateItemQty($items[$r],$qty[$r]);
+            $stockData = array(
+                'item_code' => $items[$r],
+                'stk_qty' => $qty[$r],
+                'stk_add_date' =>$date,
+                'stk_add_type' =>'import',
+                'stk_add_by' =>$this->session->userdata('adminData'),
+                'stk_status' =>1,
+            );
+            $this->stock_model->addStock($stockData);
         }
 
         echo "<script>alert('Update Successfully.');  window.location.assign('".base_url('stock/list_item')."');</script>";

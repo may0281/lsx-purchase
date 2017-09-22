@@ -63,7 +63,6 @@
 									<thead>
 										<tr>
 											<th>No</th>
-											<th>Import ID</th>
 											<th>Imported PO</th>
 											<th>Date</th>
 											<th>Imported QTY</th>
@@ -74,7 +73,6 @@
 									<?php  $i=1;foreach ($q as $r) { ?>
 										<tr>
 											<td><?php echo $i;?></td>
-											<td>M<?php echo str_pad($r['impre_import_num'], 5, "0", STR_PAD_LEFT);?></td>
 											<td><?php
 													$this->db->select('impre_ipo');
 													$this->db->from('import_item_report');
@@ -91,22 +89,12 @@
 														}
 														$k ++;
 													}
-											
+
 											?>
 											</td>
-											<td><?php echo $r['impre_date'];?></td>
+											<td><?php echo date('Y-m-d',strtotime($r['impre_date']));?></td>
 											<td><?php echo $r['total'];?></td>
-											<td><?php
-											$this->db->select('stk_add_by');
-											$this->db->from('stock');
-											$this->db->where('stk_id',$r['impre_stk_id']);
-											$query = $this->db->get();
-											$row = $query->row();
-											if ($query->num_rows() > 0)
-											{
-												echo $row->stk_add_by;
-											}
-											 ?></td>
+											<td><?php echo $r['impre_by']; ?></td>
 										</tr>
 									<?php $i++; }?>	
 									</tbody>
