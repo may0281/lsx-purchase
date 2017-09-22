@@ -19,4 +19,15 @@ class api extends CI_Controller {
         echo json_encode($result);
 	}
 
+	public function test()
+    {
+
+        for($i=0; $i<=20; $i++)
+        {
+            $data[] = $i*10;
+        }
+
+        sd($data);
+    }
+
 }

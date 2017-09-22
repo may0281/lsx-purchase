@@ -4,12 +4,12 @@ class stock extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		//error_reporting(0);
+		error_reporting(0);
 		if($this->session->userdata('isSession') == false){
 
             echo "<script> window.location.assign('".base_url()."login?ReturnUrl=".$_SERVER['REQUEST_URI']."');</script>";
 		}
-		require_once APPPATH.'third_party/simplexlsx.class.php';
+        $this->load->library('SimpleXLSX');
         $this->load->model('project_model');
 		$this->load->model('purchase_model');
 		$this->load->model('stock_model');
@@ -22,7 +22,6 @@ class stock extends CI_Controller {
 	
 	public function add_item()
     {
-	
 		$permission = $this->hublibrary_model->permission($this->major,$this->minor,'create');
         if($permission == false)
         {
@@ -33,7 +32,7 @@ class stock extends CI_Controller {
 		
 		$data = array(
             'menu'=> 'Stock',
-            'subMenu'=> 'Import Item'
+            'subMenu'=> 'Import Stock'
         );
 
 		$this->load->view('template/left');
@@ -154,16 +153,69 @@ class stock extends CI_Controller {
 		$this->load->view('template/left');
         $this->load->view('stock/stock_item',$data);
     }
-	
-	
-	
+
     public function import_item()
     {
+        $date = date('Y-m-d H:i:s');
         $filename=$_FILES["file"]["tmp_name"];
         $xlsx = new SimpleXLSX($filename);
+        $i=0;
+        $sync = array();
+        $async = array();
+        $po = array();
+        $po_old = null;
+        foreach ($xlsx->rows() as $r)
+        {
+            if($i > 0)
+            {
 
+                $po_code = $r[0];
+                $item_code = $r[1];
+                $qty = $r[2];
 
-        $this->stock_model->importItem($filename,$this->uri->segment(3));
+                $isTrue = $this->stock_model->getItemOnPO($po_code,$item_code);
+
+                if($isTrue)
+                {
+                    $importItem = array(
+                        'impre_ipo'=> $po_code,
+                        'impre_item_code'=> $item_code,
+                        'impre_qty'=> $qty,
+                        'impre_date'=> $date,
+                        'impre_by'=> $this->session->userdata('adminData'),
+                    );
+                    $this->stock_model->insertImportItemReport($importItem);
+                    $this->stock_model->updateItemQty($item_code,$qty);
+                    $this->checkAndChangeStatusPO($po_code,$item_code);
+                    $sync[] = $importItem;
+                    if($po_code != $po_old)
+                    {
+                        $po[] = $po_code;
+                    }
+
+                    $po_old = $po_code;
+                }
+                else
+                {
+                    $async[] = array(
+                        'item_code' => $item_code,
+                        'po_code' => $po_code,
+                        'qty' => $qty
+                    );
+                }
+            }
+
+            $i++;
+        }
+
+        $data['sync'] = $sync;
+        $data['total_success'] = count($sync);
+        $data['async'] = $async;
+        $data['menu'] = 'stock';
+        $data['subMenu'] = 'import stock';
+
+        $this->load->view('template/left');
+        $this->load->view('stock/pre_import',$data);
 
     }
 	
@@ -412,6 +464,35 @@ class stock extends CI_Controller {
 		$this->db->update('item', $data_update); 
 		echo "<script>alert('Update Successfully.'); window.location.assign('".base_url()."index.php/stock/list_item'); </script>";		
 		
+    }
+
+    protected function checkAndChangeStatusPO($po,$item_code)
+    {
+        $amount = $this->stock_model->summaryImportItemReportByItemAndPO($po,$item_code);
+        $order_qty = $this->stock_model->getPurchaseOrderItem($po,$item_code);
+
+        $this->stock_model->changeStatusPurchaseOrder($po,'received');
+
+        if($amount >= $order_qty)
+        {
+            $this->stock_model->changeStatusPurchaseOrderItem($po,$item_code,'received');
+            return true;
+        }
+
+        return false;
+
+    }
+
+    public function updateStockAsync()
+    {
+        $qty = $this->input->post('qty');
+        $items = $this->input->post('item');
+        foreach ($this->input->post('row') as $r)
+        {
+            $this->stock_model->updateItemQty($items[$r],$qty[$r]);
+        }
+
+        echo "<script>alert('Update Successfully.');  window.location.assign('".base_url('stock/list_item')."');</script>";
     }
 	
 }

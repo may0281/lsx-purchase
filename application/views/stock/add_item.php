@@ -1,3 +1,18 @@
+<!-- Forms -->
+<script type="text/javascript" src="<?php echo base_url(); ?>plugins/fileinput/fileinput.js"></script>
+
+<!-- Form Validation -->
+<script type="text/javascript" src="<?php echo base_url(); ?>plugins/validation/jquery.validate.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>plugins/validation/additional-methods.min.js"></script>
+
+<!-- Noty -->
+<script type="text/javascript" src="<?php echo base_url(); ?>plugins/noty/jquery.noty.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>plugins/noty/layouts/top.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>plugins/noty/themes/default.js"></script>
+
+<!-- Demo JS -->
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/demo/form_validation.js"></script>
+
 <div id="container">
     <div id="content">
         <div class="container">
@@ -22,31 +37,36 @@
                     <span></span>
                 </div>
             </div>
-			<div class="row">
-			    <div class="col-md-12">
-			        <div class="widget box">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="widget box">
                         <div class="widget-header">
-                            <h4><i class="icon-reorder"></i> Add by import file</h4>
+                            <h4><i class="icon-reorder"></i> Select Files XLSX.</h4>
                         </div>
                         <div class="widget-content">
-                            <form class="form-horizontal row-border" method="post" action="<?php echo base_url(); ?>stock/import_item/1" enctype="multipart/form-data">
+                            <form class="form-horizontal row-border" id="validate-3" method="post" action="<?php echo base_url('stock/import_item'); ?>" enctype="multipart/form-data">
+
                                 <div class="form-group">
-                                    <label class="col-md-2 control-label">File Upload:</label>
-                                    <div class="col-md-10">
-                                        <input type="file" name="file" data-style="fileinput">
+                                    <label class="col-md-3 control-label">File <span class="required">*</span></label>
+                                    <div class="col-md-9">
+                                        <input type="file" name="file" class="required" data-style="fileinput" data-inputsize="medium">
+                                        <p class="help-block">Excel only (.xlsx)</p>
+                                        <label for="file" class="has-error help-block" generated="true" style="display:none;"></label>
                                     </div>
                                 </div>
-                            <div align="left"><!--<a href="<?php echo base_url(); ?>stock/temp_list/1">รายการที่ Import ค้างไว้</a>--></div><div align="right"><input class="btn btn-sm btn-primary" type="submit" value="Import"> <input class="btn" type="reset" value="Reset"></div>
 
+                                <div class="form-actions">
+                                    <input type="submit" value="Upload" class="btn btn-primary pull-right">
+                                </div>
                             </form>
                         </div>
                     </div>
-			    </div>
-			</div>
-    </div>
-    <!-- /.container -->
+                </div>
+            </div>
 
-</div>
+        </div>
+    </div>
 </div>
 <script>
 	$(function () {
@@ -57,4 +77,3 @@
 	});
 	
 </script>
-</body>

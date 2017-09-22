@@ -318,10 +318,10 @@
 							Stock
 						</a>
 						<ul class="sub-menu">
-							<li class="<?php if(array_get($path,2) == 'add_item'){echo "current open";} ?>">
+							<li class="<?php if(array_get($path,2) == 'add_item' or array_get($path,2) == 'import_item'){echo "current open";} ?>">
 								<a href="<?php echo base_url('stock/add_item');?>">
 									<i class="icon-angle-right"></i>
-									Import Item
+									Import Stock
 								</a>
 							</li>
 							<li class="<?php if(array_get($path,2) == 'list_item'){echo "current open";} ?>">

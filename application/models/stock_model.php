@@ -153,105 +153,7 @@ class stock_model extends ci_model
 		return $item_id;
 	}
 	
-	
-	public function importItem($filename,$tmp_type)
-	{
-		date_default_timezone_set('asia/bangkok');
-		$xlsx = new SimpleXLSX($filename);
-		$i = 1;
-		foreach( $xlsx->rows() as $r ) {
-			if($i > 1){
 
-
-                if (isset($r[1])) { $item_1=$r[1]; }
-                if (isset($r[2])) { $item_2=$r[2]; }
-                if (isset($r[3])) { $item_3=$r[3]; }
-                if (isset($r[4])) { $item_4=$r[4]; }
-                $item = trim($item_1.'-'.$item_2.'-'.$item_3.'-'.$item_4);
-                $chk_po = $this->checkPO_item($r[0]);
-                $chk_dup = $this->checkDuplicate_item($item);
-                if($chk_po == 0){ $dup_po[] = $r[0]; } else {
-                    if($chk_dup == 1){
-
-                        $this->db->select('item_qty');
-                        $this->db->from('item');
-                        $this->db->where('item_code',$item);
-                        $query = $this->db->get();
-                        $row = $query->row();
-                        if ($query->num_rows() > 0)
-                        {
-                            $update_total =	$row->item_qty + $r[10];
-                        }
-                        $data_update = array(
-                            'item_qty'=> $update_total
-                        );
-
-                        $item_id = $this->getItemid($item);
-                        $this->updatePriceItem($item_id,$r[9]);
-
-                        $this->db->where('item_code', $item);
-                        $this->db->update('item', $data_update);
-
-                     } else {
-
-                            $data = array(
-                                'item_code'=> $item,
-                                'item_aica'=> $r[5],
-                                'item_pfilm'=> $r[6],
-                                'item_size'=> $r[7],
-                                'item_thickness'=> $r[8],
-                                'item_price'=> $r[9],
-                                'item_qty'=> $r[10],
-                                'item_add_date'=> date('Y-m-d H:i:s'),
-                                'item_status'=> 1
-                             );
-                            $this->db->set($data);
-                            $this->db->insert('item');
-                            $item_id = $this->db->insert_id();
-                    }
-
-                        $data_stk = array(
-                            'item_id'=> $item_id,
-                            'stk_qty'=> $r[10],
-                            'stk_unit_price'=> $r[9],
-                            'stk_add_date'=> date('Y-m-d H:i:s'),
-                            'stk_add_type'=> '1',
-                            'stk_add_by'=> $this->project_model->getUserlogin($this->session->userdata('adminData')),
-                            'stk_status'=> '1'
-                        );
-
-                            $stock_id = $this->addStock($data_stk);
-                    //		$purq_id = $this->getIdPurRequest($r[0]);
-
-    /*						// Update purchase_request_item
-                            $data_purq = array(
-                                'purchase_order_item'=> 'received'
-                            );
-
-                            $this->db->where('puror_item_id', $puror_item_id);
-                            $this->db->update('purchase_order_item', $data_purq); */
-                            }
-			}
-			$i++;
-		}
-		sd('d');
-
-		if (empty($dup_po)) {
-		
-			echo "<script>alert('Import Success'); window.location.assign('".base_url()."index.php/stock/list_item'); </script>";	
-			
-		}else{
-		
-			$message = "PO ที่ไม่สามารถ Import ข้อมูลได้เนื่องจากไม่พบเลขที่ PO ดังกล่าวอยู่่ในระบบได้แก่\\n\\n";
-			foreach($dup_po as $po) {
-				$message .= "".$po."\\n";
-			}
-			echo "<script>alert('$message'); window.location.assign('".base_url()."index.php/stock/list_item'); </script>";	
-		}
-
-		
-	}
-	
 	public function exportItem($filename)
 	{
 		date_default_timezone_set('asia/bangkok');
@@ -410,23 +312,22 @@ class stock_model extends ci_model
 	}
 	
 	
-			public function checkPo_item($puror_code)
+    public function checkPo_item($puror_code)
 	{
 			$this->db->select('puror_code');
 			$this->db->from('purchase_order');
 			$this->db->where('puror_code',$puror_code);
 			$query = $this->db->get();
-			$row = $query->row();
-				if ($query->num_rows() > 0)
-				{
-					return 1;
-				}else{
-					return 0;
-				}
 
+            if ($query->num_rows() > 0)
+            {
+                return 1;
+            }else{
+                return 0;
+            }
 	}
 
-			public function checkDuplicate_temp($item_code,$tmp_type)
+    public function checkDuplicate_temp($item_code,$tmp_type)
 	{
 			$this->db->select('tmp_item_code');
 			$this->db->from('temp_import');
@@ -684,7 +585,7 @@ class stock_model extends ci_model
 		$this->db->update('purchase_order_item', $data_puroi); 	
 		
 		// Update qty
-		
+
 		$this->db->select('purchase_order_item.item_code,purchase_order_item.puror_qty,item.item_qty');
         $this->db->from('purchase_order_item');
 		$this->db->join('item', 'item.item_code = purchase_order_item.item_code');
@@ -703,7 +604,7 @@ class stock_model extends ci_model
 		}
 	}
 	
-		public function getPO()
+    public function getPO()
 	{
 		$this->db->select('*');
         $this->db->from('purchase_order');
@@ -712,7 +613,7 @@ class stock_model extends ci_model
         return $query->result_array();
 	}
 	
-		public function importSearch($data)
+    public function importSearch($data)
 	{
 		$this->db->select('*');
         $this->db->from('purchase_order');
@@ -723,7 +624,7 @@ class stock_model extends ci_model
         return $query->result_array();
 	}
 	
-		public function getImportItem($puror_id)
+    public function getImportItem($puror_id)
 	{
         $this->db->select('purchase_order_item.item_code,purchase_order_item.puror_qty,item.*,');
         $this->db->from('purchase_order_item');
@@ -734,13 +635,76 @@ class stock_model extends ci_model
         return $query->result_array();
 	}
 	
-		public function getIdPurRequest($purq_code)
-		{
-			$this->db->select('purq_id');
-			$this->db->from('purchase_request');
-			$this->db->where('purq_code',$purq_code);
-			$query = $this->db->get();
-			$row = $query->row();
-			return $row->purq_id;	
-		}
+    public function getIdPurRequest($purq_code)
+    {
+        $this->db->select('purq_id');
+        $this->db->from('purchase_request');
+        $this->db->where('purq_code',$purq_code);
+        $query = $this->db->get();
+        $row = $query->row();
+        return $row->purq_id;
+    }
+
+    public function getItemOnPO($po_code,$item_code)
+    {
+        $this->db->select('*');
+        $this->db->from('purchase_order_item a');
+        $this->db->join('purchase_order b', 'a.puror_id = b.puror_id');
+        $this->db->where('a.item_code',$item_code);
+        $this->db->where('b.puror_code',$po_code);
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function insertImportItemReport($data)
+    {
+        $this->db->insert('import_item_report', $data);
+    }
+
+    public function updateItemQty($item_code,$qty)
+    {
+        $this->db->set('item_qty', 'item_qty+'.$qty, FALSE);
+        $this->db->where('item_code', $item_code);
+        $this->db->update('item');
+    }
+
+    public function summaryImportItemReportByItemAndPO($po,$item_code)
+    {
+        $this->db->select_sum('impre_qty', 'Amount');
+        $this->db->where('impre_ipo',$po);
+        $this->db->where('impre_item_code',$item_code);
+        $query = $this->db->get('import_item_report');
+        $result = $query->result();
+        return $result[0]->Amount;
+    }
+
+    public function getPurchaseOrderItem($po,$item_code)
+    {
+        $this->db->select('puror_qty');
+        $this->db->from('purchase_order_item a');
+        $this->db->join('purchase_order b' ,'a.puror_id = b.puror_id');
+        $this->db->where('puror_code',$po);
+        $this->db->where('item_code',$item_code);
+        $query = $this->db->get();
+        $result = $query->result();
+        return $result[0]->puror_qty;
+    }
+
+    public function changeStatusPurchaseOrderItem($po,$item_code,$status)
+    {
+
+        $this->db->set('purchase_order_item.puror_item_status',$status);
+        $this->db->where('purchase_order_item.item_code',$item_code);
+        $this->db->where('purchase_order.puror_code',$po);
+        $this->db->update('purchase_order_item JOIN purchase_order ON purchase_order_item.puror_id= purchase_order.puror_id');
+
+    }
+
+    public function changeStatusPurchaseOrder($po,$status)
+    {
+        $this->db->set('puror_status',$status);
+        $this->db->where('puror_code', $po);
+        $this->db->update('purchase_order');
+    }
+
 }
