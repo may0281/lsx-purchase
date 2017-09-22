@@ -46,33 +46,12 @@
             <!--=== Page Content ===-->
             <!--=== Managed Tables ===-->
 
-			<!--<div class="row">
-			<div class="col-md-12">
-			<div class="widget box">
-			<div class="widget-header">
-			<h4><i class="icon-reorder"></i>เลือกนำข้อมูลเข้าแบบ Import File</h4>
-			</div>
-			<div class="widget-content">
-			<form class="form-horizontal row-border" method="post" action="<?php echo base_url(); ?>stock/import_item/2" enctype="multipart/form-data">
-			<div class="form-group">
-			<label class="col-md-2 control-label">File Upload:</label>
-			<div class="col-md-10">
-			<input type="file" name="file" data-style="fileinput">
-			</div>
-			</div>
-			<div align="left"><a href="<?php echo base_url(); ?>stock/temp_list/2">รายการที่ Import ค้างไว้</a></div><div align="right"><input class="btn btn-sm btn-primary" type="submit" value="Import"> <input class="btn" type="reset" value="Reset"></div>
-			
-			</form>
-			</div>
-			</div>
-			</div>
-			</div>-->
             <!--=== Normal ===-->
             <div class="row">
 					<div class="col-md-12">
 						<div class="widget box">
 							<div class="widget-header">
-								<h4><i class="icon-reorder"></i> Item List</h4>
+								<h4><i class="icon-reorder"></i>Transaction List</h4>
 								<div class="toolbar no-padding">
 									<div class="btn-group">
 										<span class="btn btn-xs widget-collapse"><i class="icon-angle-down"></i></span>
@@ -84,45 +63,42 @@
 									<thead>
 										<tr>
 											<th>No</th>
-											<th>Item Code</th>
-											<th>Size</th>
-											<th>Thickness</th>
-											<th>P.film</th>
-											<th>AICA</th>
-											<th class="hidden-xs">Total Qty</th>
-											<th class="hidden-xs">Min Qty</th>
-											<th class="hidden-xs">Item Price</th>
-											<th class="hidden-xs"></th>
+											<th>PO</th>
+											<th>Total Imported</th>
+											<th>Total Ordered</th>
 										</tr>
 									</thead>
 									<tbody>
 									<?php  $i=1;foreach ($q as $r) { ?>
 										<tr>
 											<td><?php echo $i;?></td>
-											<td><?php echo $r['item_code'];?></td>
-											<td><?php echo $r['item_size'];?></td>
-											<td><?php echo $r['item_thickness'];?></td>
-											<td><?php echo $r['item_pfilm'];?></td>
-											<td><?php echo $r['item_aica'];?></td>
-											<td class="hidden-xs"><?php echo $r['item_qty'];?></td>
-											<td class="hidden-xs"><?php echo $r['item_min'];?></td>
-											<td class="hidden-xs"><?php echo $r['item_price'];?> $</td>
-											<td class="hidden-xs"><?php echo nbs(5);?>
-											<input type="button" onClick="location.href='<?php echo base_url(); ?>stock/edit_item/<?php echo $r['item_id'];?>'" class="btn btn-sm btn" value="Edit"><?php echo nbs(5);?><input type="button" onClick="location.href='<?php echo base_url(); ?>stock/stock_item/<?php echo $r['item_id'];?>'" class="btn btn-sm btn-success" value="Imported Detail"><?php echo nbs(5);?><!--<input type="button" onClick="location.href='<?php echo base_url(); ?>stock/update_min/<?php echo $r['item_id'];?>'" class="btn btn-sm btn-info" value="Update Min">-->
+											<td><?php echo $r['impre_ipo'];?></td>
+											<td><?php echo $r['total_imported'];?></td>
+											<td>
+											<?php
+											$this->db->select('puror_qty, SUM(puror_qty) as total');
+											$this->db->from('purchase_order_item');
+											$this->db->join('purchase_order','purchase_order.puror_id = purchase_order_item.puror_id');
+											$this->db->where('purchase_order.puror_code',$r['impre_ipo']);	
+											$this->db->group_by('puror_qty'); 
+											$query = $this->db->get();
+											$row = $query->row();
+												if ($query->num_rows() > 0)
+												{
+													$total = $row->total;
+													echo $total;
+												}
+											?>
 											</td>
 										</tr>
 									<?php $i++; }?>	
 									</tbody>
 								</table>
-								<div align="right"><!--<input class="btn btn-sm btn-primary" type="button"  onclick="window.location.href='<?php echo base_url(); ?>stock/export_by_order'" value="เบิกสินค้า">-->
-									<input class="btn btn-sm btn-inverse" type="submit" value="Export"></div>
 							</div>
 						</div>
 					</div>
 				</div>
         <!-- /Normal -->
-
-
         <!-- /Page Content -->
     </div>
     <!-- /.container -->

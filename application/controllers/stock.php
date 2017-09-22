@@ -39,16 +39,16 @@ class stock extends CI_Controller {
         $this->load->view('stock/add_item',$data);
     }
 	
-	public function add_more_item()
+	public function edit_item()
     {
 		$data = array(
             'menu'=> 'Stock',
-            'subMenu'=> 'Add More Item',
+            'subMenu'=> 'Edit Item',
 			'item_code'=> $this->stock_model->getItemby($this->uri->segment(3))
         );
 
 		$this->load->view('template/left');
-        $this->load->view('stock/add_more_item',$data);
+        $this->load->view('stock/edit_item',$data);
     }
 	
 	public function add_item_action()
@@ -95,10 +95,10 @@ class stock extends CI_Controller {
 		
     }
 	
-	public function add_more_item_action()
+	public function edit_item_action()
     {
 		date_default_timezone_set('asia/bangkok');
-		$data_stk = array(
+/*		$data_stk = array(
 		    'item_id'=> $this->uri->segment(3),
 			'stk_qty'=> $this->input->post('stk_qty'),
 			'stk_unit_price'=> $this->input->post('stk_unit_price'),
@@ -116,7 +116,20 @@ class stock extends CI_Controller {
 		);
 		 
 		$this->stock_model->updateQTY($data_item);
-		$this->stock_model->updatePriceItem($this->uri->segment(3),$this->input->post('stk_unit_price'));
+		$this->stock_model->updatePriceItem($this->uri->segment(3),$this->input->post('stk_unit_price'));*/
+
+		$data_update = array(
+			'item_size'=> $this->input->post('item_size'),
+			'item_thickness'=> $this->input->post('item_thickness'),
+			'item_pfilm'=> $this->input->post('item_pfilm'),
+			'item_aica'=> $this->input->post('item_aica'),
+			'item_price'=> $this->input->post('item_price'),
+			'item_min'=> $this->input->post('item_min')
+		);
+
+		$this->db->where('item_id',$this->uri->segment(3));
+		$this->db->update('item', $data_update);
+
 		echo "<script>alert('Success.'); window.location.assign('".base_url()."index.php/stock/list_item'); </script>";
 		exit();
     }
@@ -152,6 +165,42 @@ class stock extends CI_Controller {
 
 		$this->load->view('template/left');
         $this->load->view('stock/stock_item',$data);
+    }
+
+    public function import_report()
+    {
+        $data = array(
+            'menu'=> 'Stock',
+            'subMenu'=> 'Import Transaction Report',
+            'q' => $this->stock_model->getTransactionImport()
+        );
+
+        $this->load->view('template/left');
+        $this->load->view('stock/import_report',$data);
+    }
+
+    public function import_report_po()
+    {
+        $data = array(
+            'menu'=> 'Import Transaction Report',
+            'subMenu'=> 'Import Transaction Report ',
+            'q' => $this->stock_model->getTransactionImportPO()
+        );
+
+        $this->load->view('template/left');
+        $this->load->view('stock/import_report_po',$data);
+    }
+
+    public function import_report_by_po()
+    {
+        $data = array(
+            'menu'=> 'Stock',
+            'subMenu'=> 'Import Transaction Report by PO',
+            'q' => $this->stock_model->getTransactionImportByPO()
+        );
+
+        $this->load->view('template/left');
+        $this->load->view('stock/import_report_by_po',$data);
     }
 
     public function import_item()
@@ -494,5 +543,5 @@ class stock extends CI_Controller {
 
         echo "<script>alert('Update Successfully.');  window.location.assign('".base_url('stock/list_item')."');</script>";
     }
-	
+
 }
