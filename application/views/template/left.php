@@ -311,6 +311,12 @@
 						</ul>
 					</li>
 					<?php } ?>
+					<?php
+					$stock_view  = $this->hublibrary_model->permission('stock','stock','view');
+					$stock_update  = $this->hublibrary_model->permission('stock','stock','update');
+					$stock_create  = $this->hublibrary_model->permission('stock','stock','create');
+					if(	$stock_view == true or $stock_update == true or $stock_create == true){
+					?>
 
 					<li class="<?php if(array_get($path,1) == 'stock'){echo "current open";} ?>">
 						<a href="javascript:void(0);">
@@ -318,40 +324,51 @@
 							Stock
 						</a>
 						<ul class="sub-menu">
+							<?php if($stock_view == true){ ?>
 							<li class="<?php if(array_get($path,2) == 'list_item'){echo "current open";} ?>">
 								<a href="<?php echo base_url('stock/list_item');?>">
 									<i class="icon-angle-right"></i>
 									Stock Item List
 								</a>
 							</li>
+							<?php }?>
+							<?php if($stock_update == true){ ?>
 							<li class="<?php if(array_get($path,2) == 'add_item' or array_get($path,2) == 'import_item'){echo "current open";} ?>">
 								<a href="<?php echo base_url('stock/add_item');?>">
 									<i class="icon-angle-right"></i>
 									Import Stock
 								</a>
 							</li>
+							<?php }?>
+							<?php if($stock_update == true){ ?>
 							<li class="<?php if(array_get($path,2) == 'export'){echo "current open";} ?>">
 								<a href="<?php echo base_url(); ?>stock/export">
 									<i class="icon-angle-right"></i>
 									Export Stock
 								</a>
 							</li>
+							<?php }?>
+							<?php if($stock_view == true){ ?>
 							<li class="<?php if(array_get($path,2) == 'import_report'){echo "current open";} ?>">
 								<a href="<?php echo base_url('stock/import_report');?>">
 									<i class="icon-angle-right"></i>
 									Report Import Item
 								</a>
 							</li>
+							<?php }?>
+							<?php if($stock_view == true){ ?>
 							<li class="<?php if(array_get($path,2) == 'import_report_by_po'){echo "current open";} ?>">
 								<a href="<?php echo base_url('stock/import_report_by_po');?>">
 									<i class="icon-angle-right"></i>
 									Report Import Item by PO
 								</a>
 							</li>
+							<?php }?>
 
 
 						</ul>
 					</li>
+					<?php }?>
 					<?php
 					$tracking  = $this->hublibrary_model->permission('tracking',0,'view');
 					if($tracking == true){

@@ -63,10 +63,10 @@
 											<th>Thickness</th>
 											<th>P.film</th>
 											<th>AICA</th>
-											<th class="hidden-xs">Total Qty</th>
-											<th class="hidden-xs">Min Qty</th>
-											<th class="hidden-xs">Item Price</th>
-											<th class="hidden-xs"></th>
+											<th>Total Qty</th>
+											<th>Min Qty</th>
+											<th>Item Price</th>
+											<th></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -78,18 +78,21 @@
 											<td><?php echo $r['item_thickness'];?></td>
 											<td><?php echo $r['item_pfilm'];?></td>
 											<td><?php echo $r['item_aica'];?></td>
-											<td class="hidden-xs"><?php echo $r['item_qty'];?></td>
-											<td class="hidden-xs"><?php echo $r['item_min'];?></td>
-											<td class="hidden-xs"><?php echo $r['item_price'];?> $</td>
-											<td class="hidden-xs"><?php echo nbs(5);?>
-											<input type="button" onClick="location.href='<?php echo base_url(); ?>stock/edit_item/<?php echo $r['item_id'];?>'" class="btn btn-sm btn" value="Edit"><?php echo nbs(5);?><input type="button" onClick="location.href='<?php echo base_url(); ?>stock/stock_item/<?php echo $r['item_id'];?>'" class="btn btn-sm btn-success" value="Imported Detail"><?php echo nbs(5);?><!--<input type="button" onClick="location.href='<?php echo base_url(); ?>stock/update_min/<?php echo $r['item_id'];?>'" class="btn btn-sm btn-info" value="Update Min">-->
+											<td><?php echo $r['item_qty'];?></td>
+											<td><?php echo $r['item_min'];?></td>
+											<td><?php echo $r['item_price'];?> $</td>
+											<td><?php echo nbs(5);?>
+												<?php if($this->hublibrary_model->permission('stock','stock','update')== true){ ?>
+												<input type="button" onClick="location.href='<?php echo base_url(); ?>stock/edit_item/<?php echo $r['item_id'];?>'" class="btn btn-sm btn" value="Edit">
+												<?php } ?>
+												<?php echo nbs(5);?>
+												<input type="button" onClick="location.href='<?php echo base_url(); ?>stock/stock_item/<?php echo $r['item_id'];?>'" class="btn btn-sm btn-success" value="Imported Detail">
+
 											</td>
 										</tr>
 									<?php $i++; }?>	
 									</tbody>
 								</table>
-								<div align="right"><!--<input class="btn btn-sm btn-primary" type="button"  onclick="window.location.href='<?php echo base_url(); ?>stock/export_by_order'" value="เบิกสินค้า">-->
-									<input class="btn btn-sm btn-inverse" type="submit" value="Export"></div>
 							</div>
 						</div>
 					</div>

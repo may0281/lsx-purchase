@@ -41,7 +41,7 @@
             </div>
             <div class="row row-bg"> <!-- .row-bg -->
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-11">
 
                         <form class="form-horizontal row-border" action="" method="post">
                             <div class="form-group">

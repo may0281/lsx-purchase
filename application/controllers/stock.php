@@ -22,7 +22,7 @@ class stock extends CI_Controller {
 	
 	public function add_item()
     {
-		$permission = $this->hublibrary_model->permission($this->major,$this->minor,'create');
+		$permission = $this->hublibrary_model->permission($this->major,$this->minor,'update');
         if($permission == false)
         {
             echo $this->load->view('template/left','',true);
@@ -41,6 +41,13 @@ class stock extends CI_Controller {
 	
 	public function edit_item()
     {
+        $permission = $this->hublibrary_model->permission($this->major,$this->minor,'update');
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('template/400','',true);
+            die();
+        }
 		$data = array(
             'menu'=> 'Stock',
             'subMenu'=> 'Edit Item',
@@ -136,7 +143,7 @@ class stock extends CI_Controller {
 	public function list_item()
     {
 	
-			$permission = $this->hublibrary_model->permission($this->major,$this->minor,'view');
+        $permission = $this->hublibrary_model->permission($this->major,$this->minor,'view');
         if($permission == false)
         {
             echo $this->load->view('template/left','',true);
@@ -156,6 +163,13 @@ class stock extends CI_Controller {
 	
 	public function stock_item()
     {
+        $permission = $this->hublibrary_model->permission($this->major,$this->minor,'view');
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('template/400','',true);
+            die();
+        }
 		$data = array(
             'menu'=> 'Stock List',
             'subMenu'=> 'Detail Importing',
@@ -168,6 +182,13 @@ class stock extends CI_Controller {
 
     public function import_report()
     {
+        $permission = $this->hublibrary_model->permission($this->major,$this->minor,'view');
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('template/400','',true);
+            die();
+        }
         $data = array(
             'menu'=> 'Stock',
             'subMenu'=> 'Import Transaction Report',
@@ -180,6 +201,13 @@ class stock extends CI_Controller {
 
     public function import_report_po($po,$prefix)
     {
+        $permission = $this->hublibrary_model->permission($this->major,$this->minor,'view');
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('template/400','',true);
+            die();
+        }
         $data = array(
             'menu'=> 'Import Transaction Report',
             'subMenu'=> 'Import Transaction Report ',
@@ -192,6 +220,13 @@ class stock extends CI_Controller {
 
     public function import_report_by_po()
     {
+        $permission = $this->hublibrary_model->permission($this->major,$this->minor,'view');
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('template/400','',true);
+            die();
+        }
         $data = array(
             'menu'=> 'Stock',
             'subMenu'=> 'Import Transaction Report by PO',
