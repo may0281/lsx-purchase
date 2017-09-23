@@ -36,7 +36,9 @@
 
 				</ul>
 				<ul class="crumb-buttons">
+					<?php if($this->hublibrary_model->permission('param',0,'create') == true){ ?>
 					<li><a data-toggle="modal" href="#createParamConfig" ><i class="icon-plus"></i><span>Create Config Email</span></a></li>
+					<?php }?>
 				</ul>
 			</div>
 
@@ -79,15 +81,15 @@
 										<td><?php echo $it['param_email']; ?></td>
 										<td><?php echo $it['param_des']; ?></td>
 										<td class="align-center">
-											<a >
-											<a class="btn btn-sm btn-warning" data-toggle="modal" href="#updateParamConfig-<?php echo $it['param_id'];?>" >
-												<i class="icon-edit"></i>
-											</a>
-
-											<a data-toggle="modal" href="#delete-<?php echo $it['param_id'];?>"class="btn btn-sm btn-danger"><i class=" icon-remove"></i></a>
-
+											<?php if($this->hublibrary_model->permission('param',0,'update')){?>
+												<a class="btn btn-sm btn-warning" data-toggle="modal" href="#updateParamConfig-<?php echo $it['param_id'];?>" ><i class="icon-edit"></i></a>
+											<?php }?>
+											<?php if($this->hublibrary_model->permission('param',0,'delete')){?>
+												<a data-toggle="modal" href="#delete-<?php echo $it['param_id'];?>"class="btn btn-sm btn-danger"><i class=" icon-remove"></i></a>
+											<?php }?>
 										</td>
-										<div class="modal fade" id="updateParamConfig-<?php echo $it['param_id'];?>">
+										<?php if($this->hublibrary_model->permission('param',0,'update')){?>
+											<div class="modal fade" id="updateParamConfig-<?php echo $it['param_id'];?>">
 											<div class="modal-dialog">
 												<div class="modal-content">
 													<form class="form-horizontal row-border" method="post" id="validate-1" action="<?php echo base_url(); ?>param/update">
@@ -135,8 +137,9 @@
 												</div><!-- /.modal-content -->
 											</div><!-- /.modal-dialog -->
 										</div><!-- /.modal -->
-
-										<div class="modal fade" id="delete-<?php echo $it['param_id'];?>">
+										<?php }?>
+										<?php if($this->hublibrary_model->permission('param',0,'delete')){?>
+											<div class="modal fade" id="delete-<?php echo $it['param_id'];?>">
 											<div class="modal-dialog">
 												<div class="modal-content">
 													<form class="form-horizontal row-border" method="get" action="<?php echo base_url(); ?>param/delete/<?php echo $it['param_id'];?>">
@@ -155,6 +158,7 @@
 												</div><!-- /.modal-content -->
 											</div><!-- /.modal-dialog -->
 										</div><!-- /.modal -->
+										<?php }?>
 									</tr>
 
 									<?php $i++;} ?>
