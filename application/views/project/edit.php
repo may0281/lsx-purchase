@@ -36,10 +36,10 @@
 							<h4><i class="icon-reorder"></i>Edit Project</h4>
 						</div>
 						<div class="widget-content">
-							<form class="form-horizontal row-border" method="post"  action="<?php echo base_url(); ?>project/update_action" onsubmit="return checkForm(this);" >
+							<form class="form-horizontal row-border" method="post"  action="<?php echo base_url(); ?>project/update_action" onSubmit="return checkForm(this);" >
 
 								<div class="form-group">
-									<label class="col-md-2 control-label">Project Name:</label>
+									<label class="col-md-2 control-label">Project Name: <span class="required">*</span></label>
 									<div class="col-md-10">
                                         <input type="text" id="name" name="name" value="<?php echo array_get($data,'proj_name');?>" class="form-control">
                                         <label id="msg_name" class="col-md-6 errors" style="color: red" > </label>

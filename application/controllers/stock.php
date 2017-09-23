@@ -227,7 +227,7 @@ class stock extends CI_Controller {
         );
 
         $this->load->view('template/left');
-        $this->load->view('stock/import_report',$data);
+        $this->load->view('stock/import_report_item',$data);
     }
 
     public function import_report_po($po,$prefix)
