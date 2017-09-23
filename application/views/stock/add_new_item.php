@@ -37,17 +37,17 @@
 			<div class="col-md-12">
 			<div class="widget box">
 			<div class="widget-header">
-			<h4><i class="icon-reorder"></i>Edit</h4>
+			<h4><i class="icon-reorder"></i>Add</h4>
 			</div>
 			<div class="widget-content">
-			<form class="form-horizontal row-border" method="post" action="<?php echo base_url(); ?>stock/edit_item_action/<?php echo $this->uri->segment(3);?>">
+			<form class="form-horizontal row-border" method="post" action="<?php echo base_url(); ?>stock/add_item_action">
 			<!--									<div class="alert alert-info fade in">
 			<i class="icon-remove close" data-dismiss="alert"></i>
 			This are examples of full width input fields. Please find select-boxes and other things below.
 			</div>-->
 			<div class="form-group">
-			<label class="col-md-2 control-label">Item Code: <span style="color:#F00">*</span></label>
-			<div class="col-md-10"><input type="text" name="item_code" value="<?php echo array_get($data,'item_code');?>" disabled="disabled" class="form-control" required></div>
+			<label class="col-md-2 control-label">Item Code:<span style="color:#F00">*</span></label>
+			<div class="col-md-10"><input type="text" name="item_code" class="form-control" required></div>
 			</div>
 <!--			<div class="form-group">
 			<label class="col-md-2 control-label" for="input19">Type</label>
@@ -60,47 +60,27 @@
 			</div-->		
 			<div class="form-group">
 			<label class="col-md-2 control-label">Qty:</label>
-			<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="stk_qty" value=" <?php echo array_get($data,'item_qty');?>" disabled="disabled"></div>
+			<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="stk_qty"></div>
 			</div>
 			<div class="form-group">
 			<label class="col-md-2 control-label">Detail:</label>
 			<div class="col-md-10">
 			<div class="row">
 			<div class="col-md-3">
-			Size <span style="color:#F00">*</span><input type="text" name="item_size" class="form-control input-width-medium" placeholder="Size" value="<?php echo array_get($data,'item_size');?>" required>
+			Size <span style="color:#F00">*</span><input type="text" name="item_size" class="form-control input-width-medium" placeholder="Size" required>
 			</div>
 			<div class="col-md-3">
-			Thickness <span style="color:#F00">*</span><input type="text" name="item_thickness" class="form-control input-width-medium" placeholder="Thickness" value="<?php echo array_get($data,'item_thickness');?>" required>
+			Thickness <span style="color:#F00">*</span><input type="text" name="item_thickness" class="form-control input-width-medium" placeholder="Thickness" required>
 			</div>
 			<div class="col-md-3">
 			P.Film <span style="color:#F00">*</span><select id="input19" name="item_pfilm" class="form-control required input-width-medium">
-           <?php
-            if((array_get($data,'item_pfilm')) == 'yes')
-			{
-				$yes = 'selected="selected"';
-				$celsus ='';	
-				$portform ='';
-			}elseif((array_get($data,'item_pfilm')) == 'celsus')
-			{
-				$yes = '';
-				$celsus ='selected="selected"';	
-				$portform ='';
-			}elseif((array_get($data,'item_pfilm')) == 'portform')
-			{
-				$yes = '';
-				$celsus ='';	
-				$portform ='selected="selected"';
-			}
-			
-			?>
-            
-			<option value="yes" <?php echo $yes;?>>Yes</option>
-			<option value="celsus" <?php echo $celsus;?>>CELSUS</option>
-			<option value="portform" <?php echo $portform;?>>Postform</option>
+			<option value="yes">Yes</option>
+			<option value="celsus">CELSUS</option>
+			<option value="portform">Postform</option>
 			</select>
 			</div>
 			<div class="col-md-3">
-			AICA Finish <span style="color:#F00">*</span><input type="text" name="item_aica" class="form-control input-width-medium" placeholder="AICA Finish" value="<?php echo array_get($data,'item_aica');?>" required>
+			AICA Finish <span style="color:#F00">*</span><input type="text" name="item_aica" class="form-control input-width-medium" placeholder="AICA Finish" required>
 			</div>
 			</div>
 			</div>
@@ -108,14 +88,14 @@
 
 			<div class="form-group">
 			<label class="col-md-2 control-label">Unit Price: <span style="color:#F00">*</span></label>
-			<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="item_price" placeholder="US" value="<?php echo array_get($data,'item_price');?>" required></div>
+			<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="item_price" placeholder="US" required></div>
 			</div>
 			<div class="form-group">
 			<label class="col-md-2 control-label">QTY Min:</label>
-			<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="item_min" value="<?php echo array_get($data,'item_min');?>"></div>
+			<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="item_min"></div>
 			</div>
 			<div align="right">
-			<input class="btn btn-sm btn-primary" type="submit" value="Edit"> <input class="btn" type="reset" value="Reset"></div>
+			<input class="btn btn-sm btn-primary" type="submit" value="Add"> <input class="btn" type="reset" value="Reset"></div>
 			</form>
 			</div>
 			</div>

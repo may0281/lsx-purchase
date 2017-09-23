@@ -39,6 +39,25 @@ class stock extends CI_Controller {
         $this->load->view('stock/add_item',$data);
     }
 	
+		public function add_new_item()
+    {
+		$permission = $this->hublibrary_model->permission($this->major,$this->minor,'create');
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('template/400','',true);
+            die();
+        }
+		
+		$data = array(
+            'menu'=> 'Stock',
+            'subMenu'=> 'Add Item'
+        );
+
+		$this->load->view('template/left');
+        $this->load->view('stock/add_new_item',$data);
+    }
+	
 	public function edit_item()
     {
 		$data = array(
@@ -64,7 +83,7 @@ class stock extends CI_Controller {
 		
 		$data_stk = array(
 			'stk_qty'=> $this->input->post('stk_qty'),
-			'stk_unit_price'=> $this->input->post('stk_unit_price'),
+			'stk_unit_price'=> $this->input->post('item_price'),
 			'stk_add_date'=> date('Y-m-d H:i:s'),
 			'stk_add_type'=> '1',
 			'stk_add_by'=> $this->project_model->getUserlogin($this->session->userdata('adminData')),
@@ -80,7 +99,7 @@ class stock extends CI_Controller {
 			'item_pfilm'=> $this->input->post('item_pfilm'),
 			'item_aica'=> $this->input->post('item_aica'),
 			'item_qty'=> $this->input->post('stk_qty'),
-			'item_price'=> $this->input->post('stk_unit_price'),
+			'item_price'=> $this->input->post('item_price'),
 			'item_min'=> $this->input->post('item_min'),
 			'item_add_date'=> date('Y-m-d H:i:s'),
 			'stk_id'=> $stock_id,

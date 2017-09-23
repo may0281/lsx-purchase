@@ -82,7 +82,7 @@
 											<td class="hidden-xs"><?php echo $r['item_min'];?></td>
 											<td class="hidden-xs"><?php echo $r['item_price'];?> $</td>
 											<td class="hidden-xs"><?php echo nbs(5);?>
-											<input type="button" onClick="location.href='<?php echo base_url(); ?>stock/edit_item/<?php echo $r['item_id'];?>'" class="btn btn-sm btn" value="Edit"><?php echo nbs(5);?><input type="button" onClick="location.href='<?php echo base_url(); ?>stock/stock_item/<?php echo $r['item_id'];?>'" class="btn btn-sm btn-success" value="Imported Detail"><?php echo nbs(5);?><!--<input type="button" onClick="location.href='<?php echo base_url(); ?>stock/update_min/<?php echo $r['item_id'];?>'" class="btn btn-sm btn-info" value="Update Min">-->
+											<input type="button" onClick="location.href='<?php echo base_url(); ?>stock/edit_item/<?php echo $r['item_id'];?>'" class="btn btn-sm btn" value="Edit"><?php echo nbs(5);?><!--<input type="button" onClick="location.href='<?php echo base_url(); ?>stock/stock_item/<?php echo $r['item_id'];?>'" class="btn btn-sm btn-success" value="Imported Detail"><?php echo nbs(5);?>--><!--<input type="button" onClick="location.href='<?php echo base_url(); ?>stock/update_min/<?php echo $r['item_id'];?>'" class="btn btn-sm btn-info" value="Update Min">-->
 											</td>
 										</tr>
 									<?php $i++; }?>	
