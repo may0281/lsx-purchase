@@ -78,11 +78,7 @@ class stock_model extends ci_model
 	
     public function getTransactionImport()
 	{
- 		 $this->db->select('impre_import_num,impre_ipo,impre_date,impre_stk_id,impre_by,SUM(impre_qty) as total');
-		 $this->db->from('import_item_report');
- 		 $this->db->group_by('impre_import_num');
- 		 $this->db->order_by('impre_id', 'desc');
-        $query = $this->db->get();
+		$query = $this->db->query("select distinct(impre_ipo),COUNT(impre_item_code) as total,sum(impre_qty) as sum from import_item_report  group by impre_ipo");
         $this->log_model->Logging('stock_model','success',$this->db->last_query());
         return $query->result_array();
 	}
@@ -98,6 +94,17 @@ class stock_model extends ci_model
  		 $this->db->order_by('impre_id','desc');
          $query = $this->db->get();
         $this->log_model->Logging('stock_model','success',$this->db->last_query());
+         return $query->result_array();
+	}
+
+			public function getTransactionImportItem($po)
+	{
+ 		 $this->db->select('*');
+		 $this->db->from('import_item_report');
+		 $this->db->join('item','item.item_code	 = import_item_report.impre_item_code');
+		 $this->db->where('impre_ipo',$po);
+ 		 $this->db->order_by('impre_id','desc');
+         $query = $this->db->get();
          return $query->result_array();
 	}
 
