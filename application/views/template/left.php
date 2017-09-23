@@ -324,8 +324,14 @@
 							Stock
 						</a>
 						<ul class="sub-menu">
-							<?php if($stock_view == true){ ?>
-							<li class="<?php if(array_get($path,2) == 'list_item'){echo "current open";} ?>">
+							<li class="<?php if(array_get($path,2) == 'add_new_item'){echo "current open";} ?>">
+								<a href="<?php echo base_url('stock/add_new_item');?>">
+									<i class="icon-angle-right"></i>
+									Add Item
+								</a>
+							</li>
+                            <?php if($stock_view == true){ ?>
+                            <li class="<?php if(array_get($path,2) == 'list_item'){echo "current open";} ?>">
 								<a href="<?php echo base_url('stock/list_item');?>">
 									<i class="icon-angle-right"></i>
 									Stock Item List
