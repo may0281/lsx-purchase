@@ -190,7 +190,8 @@
                                 </div>
                             <?php } ?>
                             <div class="form-group">
-                                <label class="col-md-2 control-label"></label>
+                                <label class="col-md-1 control-label"></label>
+                                <label class="col-md-1 control-label"></label>
                                 <label class="col-md-3 control-label" style="text-align: center"> ITEM CODE</label>
                                 <label class="col-md-1 control-label" style="text-align: center"> QTY</label>
                                 <label class="col-md-2 control-label" style="text-align: center"> Size</label>
@@ -201,8 +202,19 @@
 
                                 <?php for($i=1; $i<= 30;$i++) {?>
                                 <div class="<?php if($i<2){echo 'count-form';}?> <?php if($i>1){echo 'hidden';}?>" id="item-list-<?php echo $i;?>" data-value="<?php echo $i;?>">
-                                    <label class="col-md-2 control-label"><?php if($i==1){ ?>Product Code <?php }?> <?php if($i==1){ ?> <span class="required">*</span><?php }else{?>
-                                            <a class="btn btn-sm reset-item" id="reset-<?php echo $i ?>"><i class="icon-remove"></i></a> <?php } ?>&nbsp;&nbsp;  [<?php echo $i;?>]</label>
+                                    <label class="col-md-1 control-label">
+                                        <?php echo $i;?>
+                                        <?php if($i==1 and $action == 'create'){ ?>
+                                            <span class="required">*</span>
+                                        <?php } ?>
+                                    </label>
+                                    <label class="col-md-1 control-label">
+                                        <?php if($i==1){ ?>
+                                            <a class="btn btn-sm reset-item" id="main-reset"><i class="icon-refresh"></i></a>
+                                        <?php }else{ ?>
+                                            <a class="btn btn-sm reset-item" id="reset-<?php echo $i ?>"><i class="icon-remove"></i></a>
+                                        <?php }?>
+                                    </label>
                                     <div class="col-md-3 clearfix">
                                         <select name="item_id[]" id="item-<?php echo $i ?>" class="col-md-12 select2 full-width-fix required item_list">
                                             <option></option>
@@ -386,6 +398,14 @@
     $("#reset-mkt").click(function () {
         $('#marketing').val(null).trigger("change");
         $('#mkt_mobile').val('');
+    });
+    $("#main-reset").click(function () {
+        $('#item-1').val(null).trigger("change");
+        $('#item-1-qty').val('');
+        $('#item-1-size').prop("disabled", false).val('');
+        $('#item-1-thickness').prop("disabled", false).val('');
+        $('#item-1-film').prop("disabled", false).val('');
+        $('#item-1-aica').prop("disabled", false).val('');
     });
 
     $("#reset-sale").click(function () {

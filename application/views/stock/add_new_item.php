@@ -120,7 +120,7 @@
 
 			<div class="form-group">
 			<label class="col-md-2 control-label">Unit Price: <span style="color:#F00">*</span></label>
-			<div class="col-md-10"><input class="form-control digits input-width-medium" type="text" name="item_price" placeholder="US" required></div>
+			<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="item_price" placeholder="US" required></div>
 			</div>
 			<div class="form-group">
 			<label class="col-md-2 control-label">QTY Min:</label>
