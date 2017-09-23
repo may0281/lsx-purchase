@@ -42,14 +42,14 @@ class purchaseorder extends CI_Controller {
             $poData = $this->purchase_model->getPurchaseOrder($filter);
         }
 
-
-
         $allowDelete = $this->hublibrary_model->permission($this->major,$this->minor,'delete');
+        $allowChangeStatus = $this->hublibrary_model->permission($this->major,$this->minor,'change-status');
 
         $data = array(
             'menu'=> $this->menu,
             'subMenu'=> $this->submenu,
             'allowDelete'=> $allowDelete,
+            'allowChangeStatus'=> $allowChangeStatus,
             'data' => $poData,
             'filter' => $filter,
         );

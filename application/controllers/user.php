@@ -22,7 +22,13 @@ class user extends CI_Controller {
 
     public function index()
     {
-
+        $permission = $this->hublibrary_model->permission($this->major,$this->minor,'view');
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('template/400','',true);
+            die();
+        }
         $data = array(
             'menu'=> $this->menu,
             'q' => $this->user_model->getUser()

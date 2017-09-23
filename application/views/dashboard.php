@@ -12,9 +12,7 @@
                     <i class="icon-home"></i>
                     <a href="<?php echo base_url();?>dashboard">DASHBOARD</a>
                 </li>
-                <li>
-                    <a href="<?php echo base_url();?>blogs" title=""><?php echo strtoupper($menu); ?></a>
-                </li>
+
 
             </ul>
         </div>

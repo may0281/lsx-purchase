@@ -138,7 +138,7 @@
                                     <th>Create By</th>
                                     <th>Order Date</th>
                                     <th>Forecasts Receive Date</th>
-                                    <th>Status</th>
+                                    <th class="align-center">Status</th>
 
                                     <th class="align-center">Action</th>
                                 </tr>
@@ -151,12 +151,24 @@
                                     <td><?php echo $r['puror_inquiry_by'];?></td>
                                     <td><?php echo $r['puror_order_date'];?></td>
                                     <td><?php echo $r['puror_forecasts_date'];?></td>
-                                    <td> <div id="status_<?php echo $r['puror_id'];?>"><?php echo $r['puror_status'];?></div></td>
+                                    <td class="align-center">
+                                        <div id="status_<?php echo $r['puror_id'];?>">
+                                            <?php echo $r['puror_status'];?>
+                                            <?php
+                                            if($r['puror_status'] == 'received'){
+                                                $amount = $this->db->where('puror_id',$r['puror_id'])->where('puror_item_status','ordered')->from("purchase_order_item")->count_all_results(); ?>
+                                                <?php if($amount > 0){ ?>
+                                                <i class="icon-warning-sign red bs-tooltip" data-original-title="สินคัายังเข้าไม่ครบจำนวน <?php echo $amount; ?> items."></i>
+
+                                            <?php } } ?>
+                                        </div>
+                                    </td>
 
                                     <td class="align-center">
                                         <span class="btn-group">
                                             <a href="<?php echo base_url('purchase/po-report/detail/'.$r['puror_id'])?>" class="btn btn-xs bs-tooltip" title="" data-original-title="View"><i class="icon-search"></i></a>
                                             <a href="<?php echo base_url('purchase/po-report/list/'.$r['puror_id'])?>" class="btn btn-xs bs-tooltip" title="" data-original-title="View List"><i class="icon-list"></i></a>
+                                            <?php if($allowChangeStatus ==true){?>
                                             <a data-toggle="modal" href="#change_status_<?php echo $i;?>" id="cha_<?php echo $r['purq_id'];?>" class="btn btn-xs bs-tooltip" title="" data-original-title="ค้างรับ">ACCRUAL</a>
                                             <div class="modal fade" id="change_status_<?php echo $i;?>">
                                                 <form class="form-horizontal row-border" method="post" id="frm_change_status_<?php echo $i;?>"  onsubmit="return checkForm(this);" >
@@ -189,6 +201,7 @@
                                                     </div>
                                                 </form>
                                             </div><!-- /.modal -->
+                                            <?php }?>
                                             <?php if($allowDelete == true){?>
                                                 <a data-toggle="modal" href="#delete-<?php echo $i;?>" class="btn btn-xs bs-tooltip" title="Delete"><i class="icon-trash"></i></a>
                                                 <div class="modal fade" id="delete-<?php echo $i;?>">

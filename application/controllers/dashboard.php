@@ -19,6 +19,14 @@ class dashboard extends CI_Controller {
 	
 	public function index()
 	{
+        $permission = $this->hublibrary_model->permission('dashboard',0,'view');
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('dashboard-empty','',true);
+            die();
+        }
+
         $data = array(
             'menu'=> 'dashboard',
 			'all' => $this->dashboard_model->getCountPurchaseByStatus(),

@@ -406,6 +406,20 @@ class purchase_model extends ci_model
         $this->log_model->Logging('purchase_model','success',$this->db->last_query());
     }
 
+    public function checkStatusPurchaseOrderItem($po_id)
+    {
+        $this->db->select('*');
+        $this->db->from('purchase_order_item');
+        $this->db->where('purchase_order_item.puror_id',$po_id);
+        $query = $this->db->get();
+        foreach ($query->result_array() as $r)
+        {
+            s($r);
+        }
+        sd('s');
+    }
+
+
 
 
 
