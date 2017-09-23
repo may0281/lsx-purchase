@@ -16,11 +16,19 @@ class role extends CI_Controller {
         $this->delete = 'delete';
         $this->change_status = 'change-status';
         $this->menu = 'Role Management';
-
+        $this->major = 'authen';
+        $this->minor = 'init-role';
 	}
 
 	public function index()
 	{
+        $permission = $this->hublibrary_model->permission($this->major,$this->minor,'view');
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('template/400','',true);
+            die();
+        }
         $data = array(
             'menu'=> 'Role Management',
             'q' => $this->role_model->getRole()
@@ -32,6 +40,13 @@ class role extends CI_Controller {
 
 	public function createRole()
     {
+        $permission = $this->hublibrary_model->permission($this->major,$this->minor,'create');
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('template/400','',true);
+            die();
+        }
         $functions = $this->prepareMenu();
         $data = array(
             'menu' => $this->menu,
@@ -115,6 +130,13 @@ class role extends CI_Controller {
 
     public function updateRole($roleCode)
     {
+        $permission = $this->hublibrary_model->permission($this->major,$this->minor,'update');
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('template/400','',true);
+            die();
+        }
         $roleData = $this->role_model->getRoleByRoleCode($roleCode);
         if(empty($roleData))
         {
@@ -186,6 +208,13 @@ class role extends CI_Controller {
 
     public function deleteRole($roleCode)
     {
+        $permission = $this->hublibrary_model->permission($this->major,$this->minor,'delete');
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('template/400','',true);
+            die();
+        }
         $masterFlag = $this->role_model->checkMasterFlag($roleCode);
         if($masterFlag)
         {

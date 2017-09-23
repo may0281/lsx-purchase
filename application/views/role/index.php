@@ -22,8 +22,9 @@
                     </li>
                 </ul>
                 <ul class="crumb-buttons">
+                    <?php if($this->hublibrary_model->permission('authen','init-role','create') == true) { ?>
                     <li><a href="<?php echo base_url(); ?>authen/init-role/create" title=""><i class="icon-plus"></i><span>ADD ROLE</span></a></li>
-
+                    <?php } ?>
                 </ul>
             </div>
 
@@ -34,9 +35,6 @@
                     <span></span>
                 </div>
             </div>
-
-            <!--=== Page Content ===-->
-            <!--=== Managed Tables ===-->
 
             <!--=== Normal ===-->
             <div class="row">
@@ -73,12 +71,16 @@
                                     <td><?php echo $r['update_by'];?> <br> <?php echo $r['update_date'];?> </td>
 
                                     <td class="align-center">
+                                        <?php if($this->hublibrary_model->permission('authen','init-role','update') == true) { ?>
                                         <a class="btn btn-sm btn-warning" href="<?php echo base_url(); ?>authen/init-role/update/<?php echo $r['role_code']; ?>">
                                             <i class="icon-edit"></i>
                                         </a>
+                                        <?php } ?>
                                     </td>
                                     <td class="align-center">
+                                        <?php if($this->hublibrary_model->permission('authen','init-role','delete') == true) { ?>
                                         <a data-toggle="modal" href="#delete-<?php echo $i;?>" class="btn btn-sm btn-danger"><i class=" icon-remove"></i></a>
+                                        <?php }?>
                                     </td>
                                 </tr>
                                     <div class="modal fade" id="delete-<?php echo $i;?>">
