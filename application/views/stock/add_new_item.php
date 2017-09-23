@@ -1,6 +1,53 @@
+<style>
+    .errors
+    {
+        color: red;
+    }
+    .input-error
+    {
+        border: red 1px solid;
+    }
+</style>
+<script type="text/javascript" src="<?php echo base_url(); ?>plugins/sparkline/jquery.sparkline.min.js"></script>
+
+<script type="text/javascript" src="<?php echo base_url(); ?>plugins/daterangepicker/moment.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>plugins/daterangepicker/daterangepicker.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>plugins/blockui/jquery.blockUI.min.js"></script>
+
+<!-- Forms -->
+<script type="text/javascript" src="<?php echo base_url(); ?>plugins/uniform/jquery.uniform.min.js"></script> <!-- Styled radio and checkboxes -->
+<script type="text/javascript" src="<?php echo base_url(); ?>plugins/select2/select2.min.js"></script> <!-- Styled select boxes -->
+<script type="text/javascript" src="<?php echo base_url(); ?>plugins/fileinput/fileinput.js"></script>
+
 <!-- Form Validation -->
 <script type="text/javascript" src="<?php echo base_url(); ?>plugins/validation/jquery.validate.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>plugins/validation/additional-methods.min.js"></script>    
+<script type="text/javascript" src="<?php echo base_url(); ?>plugins/validation/additional-methods.min.js"></script>
+
+<!-- Noty -->
+<script type="text/javascript" src="<?php echo base_url(); ?>plugins/noty/jquery.noty.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>plugins/noty/layouts/top.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>plugins/noty/themes/default.js"></script>
+
+<!-- App -->
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/app.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/plugins.form-components.js"></script>
+
+
+<script src="<?php echo base_url();?>assets/ckeditor/ckeditor.js"></script>
+<script src="<?php echo base_url();?>assets/sample.js"></script>
+<link rel="stylesheet" href="<?php echo base_url();?>assets/ckeditor/toolbarconfigurator/lib/codemirror/neo.css">
+
+<script type="text/javascript" src="<?php echo base_url();?>plugins/bootbox/bootbox.min.js"></script>
+
+<!-- Demo JS -->
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/custom.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/demo/form_validation.js"></script>
+
+<script type="text/javascript" src="<?php echo base_url();?>plugins/noty/jquery.noty.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>plugins/noty/layouts/top.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>plugins/noty/themes/default.js"></script>
+  
 <?php $data = $item_code[0]; ?>
 <div id="container">
     <div id="content">
@@ -60,7 +107,7 @@
 			</div-->		
 			<div class="form-group">
 			<label class="col-md-2 control-label">Qty:</label>
-			<div class="col-md-10"><input class="form-control" name="stk_qty"></div>
+			<div class="col-md-10"><input class="form-control digits" name="stk_qty"></div>
 			</div>
 			<div class="form-group">
 			<label class="col-md-2 control-label">Detail:</label>
@@ -73,8 +120,8 @@
 			Thickness <span style="color:#F00">*</span><input type="text" name="item_thickness" class="form-control input-width-medium" placeholder="Thickness" required>
 			</div>
 			<div class="col-md-3">
-			P.Film 
-            <input type="text" name="item_pfilm" class="form-control input-width-medium" placeholder="P.Film">
+			P.Film : <span style="color:#F00">*</span>
+            <input type="text" name="item_pfilm" class="form-control input-width-medium" placeholder="P.Film" required>
 			</div>
 			<div class="col-md-3">
 			AICA Finish <span style="color:#F00">*</span><input type="text" name="item_aica" class="form-control input-width-medium" placeholder="AICA Finish" required>
@@ -85,11 +132,11 @@
 
 			<div class="form-group">
 			<label class="col-md-2 control-label">Unit Price: <span style="color:#F00">*</span></label>
-			<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="item_price" placeholder="US" required></div>
+			<div class="col-md-10"><input class="form-control digits input-width-medium" type="text" name="item_price" placeholder="US" required></div>
 			</div>
 			<div class="form-group">
 			<label class="col-md-2 control-label">QTY Min:</label>
-			<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="item_min"></div>
+			<div class="col-md-10"><input class="form-control digits input-width-medium" type="text" name="item_min"></div>
 			</div>
 			<div align="right">
 			<input class="btn btn-sm btn-primary" type="submit" value="Add"> <input class="btn" type="reset" value="Reset"></div>
@@ -107,13 +154,4 @@
 
 </div>
 </div>
-<script>
-	$(function () {
-	  $('#Add').on('click', function () {
-	//	$('<p>Text</p>').appendTo('#other_company');
-		 $("#other_company").toggle();
-	  });
-	});
-	
-</script>
 </body>
