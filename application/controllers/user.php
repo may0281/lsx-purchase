@@ -14,6 +14,9 @@ class user extends CI_Controller {
         $this->load->model('role_model');
         $this->load->database();
         $this->menu = 'User Management';
+        $this->major = 'authen';
+        $this->minor = 'init-user';
+
 	}
 
 
@@ -31,6 +34,13 @@ class user extends CI_Controller {
 
     public function createUser()
     {
+        $permission = $this->hublibrary_model->permission($this->major,$this->minor,'create');
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('template/400','',true);
+            die();
+        }
         $data = array(
             'menu'=> $this->menu,
             'subMenu'=> 'Create User',
@@ -94,6 +104,13 @@ class user extends CI_Controller {
 
     public function updateUser($account)
     {
+        $permission = $this->hublibrary_model->permission($this->major,$this->minor,'update');
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('template/400','',true);
+            die();
+        }
         $data = array(
             'menu'=> $this->menu,
             'subMenu'=> 'Update User',
@@ -155,7 +172,12 @@ class user extends CI_Controller {
 
     public function deleteUser($account)
     {
-
+        $permission = $this->hublibrary_model->permission($this->major,$this->minor,'delete');
+        if($permission == false)
+        {
+            echo "<script>alert('Method Disallow.'); history.back(); </script>";
+            exit();
+        }
         $masterFlag  = $this->user_model->getMasterFlag($account);
 
         if($masterFlag == 'Y')

@@ -22,7 +22,10 @@
 
                 </ul>
                 <ul class="crumb-buttons">
+                    <?php
+                     if($this->hublibrary_model->permission('authen','init-user','create')){ ?>
                     <li><a href="<?php echo base_url(); ?>authen/init-user/create" title=""><i class="icon-plus"></i><span>ADD USER</span></a></li>
+                    <?php }?>
 
                 </ul>
             </div>
@@ -77,12 +80,16 @@
                                     <td><?php echo $r['last_login_date'];?></td>
 
                                     <td class="align-center">
+                                        <?php if($this->hublibrary_model->permission('authen','init-user','update')){ ?>
                                         <a class="btn btn-sm btn-warning" href="<?php echo base_url(); ?>authen/init-user/update/<?php echo $r['account']; ?>">
                                             <i class="icon-edit"></i>
                                         </a>
+                                        <?php }?>
                                     </td>
                                     <td class="align-center">
+                                        <?php if($this->hublibrary_model->permission('authen','init-user','delete')){ ?>
                                         <a data-toggle="modal" href="#delete-<?php echo $i;?>" class="btn btn-sm btn-danger"><i class=" icon-remove"></i></a>
+                                        <?php }?>
                                     </td>
                                 </tr>
                                     <div class="modal fade" id="delete-<?php echo $i;?>">
