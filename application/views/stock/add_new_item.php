@@ -1,6 +1,6 @@
 <!-- Form Validation -->
 <script type="text/javascript" src="<?php echo base_url(); ?>plugins/validation/jquery.validate.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>plugins/validation/additional-methods.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>plugins/validation/additional-methods.min.js"></script>    
 <?php $data = $item_code[0]; ?>
 <div id="container">
     <div id="content">
@@ -40,7 +40,7 @@
 			<h4><i class="icon-reorder"></i>Add</h4>
 			</div>
 			<div class="widget-content">
-			<form class="form-horizontal row-border" method="post" action="<?php echo base_url(); ?>stock/add_item_action">
+			<form class="form-horizontal row-border" id="validate-2" method="post" action="<?php echo base_url(); ?>stock/add_item_action">
 			<!--									<div class="alert alert-info fade in">
 			<i class="icon-remove close" data-dismiss="alert"></i>
 			This are examples of full width input fields. Please find select-boxes and other things below.
@@ -60,7 +60,7 @@
 			</div-->		
 			<div class="form-group">
 			<label class="col-md-2 control-label">Qty:</label>
-			<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="stk_qty"></div>
+			<div class="col-md-10"><input class="form-control" name="stk_qty"></div>
 			</div>
 			<div class="form-group">
 			<label class="col-md-2 control-label">Detail:</label>
@@ -73,11 +73,8 @@
 			Thickness <span style="color:#F00">*</span><input type="text" name="item_thickness" class="form-control input-width-medium" placeholder="Thickness" required>
 			</div>
 			<div class="col-md-3">
-			P.Film <span style="color:#F00">*</span><select id="input19" name="item_pfilm" class="form-control required input-width-medium">
-			<option value="yes">Yes</option>
-			<option value="celsus">CELSUS</option>
-			<option value="portform">Postform</option>
-			</select>
+			P.Film 
+            <input type="text" name="item_pfilm" class="form-control input-width-medium" placeholder="P.Film">
 			</div>
 			<div class="col-md-3">
 			AICA Finish <span style="color:#F00">*</span><input type="text" name="item_aica" class="form-control input-width-medium" placeholder="AICA Finish" required>

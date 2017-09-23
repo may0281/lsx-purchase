@@ -1,6 +1,7 @@
 <!-- Form Validation -->
 <script type="text/javascript" src="<?php echo base_url(); ?>plugins/validation/jquery.validate.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>plugins/validation/additional-methods.min.js"></script>
+
 <?php $data = $item_code[0]; ?>
 <div id="container">
     <div id="content">
@@ -73,31 +74,8 @@
 			Thickness <span style="color:#F00">*</span><input type="text" name="item_thickness" class="form-control input-width-medium" placeholder="Thickness" value="<?php echo array_get($data,'item_thickness');?>" required>
 			</div>
 			<div class="col-md-3">
-			P.Film <span style="color:#F00">*</span><select id="input19" name="item_pfilm" class="form-control required input-width-medium">
-           <?php
-            if((array_get($data,'item_pfilm')) == 'yes')
-			{
-				$yes = 'selected="selected"';
-				$celsus ='';	
-				$portform ='';
-			}elseif((array_get($data,'item_pfilm')) == 'celsus')
-			{
-				$yes = '';
-				$celsus ='selected="selected"';	
-				$portform ='';
-			}elseif((array_get($data,'item_pfilm')) == 'portform')
-			{
-				$yes = '';
-				$celsus ='';	
-				$portform ='selected="selected"';
-			}
-			
-			?>
-            
-			<option value="yes" <?php echo $yes;?>>Yes</option>
-			<option value="celsus" <?php echo $celsus;?>>CELSUS</option>
-			<option value="portform" <?php echo $portform;?>>Postform</option>
-			</select>
+			P.Film 
+            <input type="text" name="item_pfilm" class="form-control input-width-medium" placeholder="P.Film" value="<?php echo array_get($data,'item_pfilm');?>">
 			</div>
 			<div class="col-md-3">
 			AICA Finish <span style="color:#F00">*</span><input type="text" name="item_aica" class="form-control input-width-medium" placeholder="AICA Finish" value="<?php echo array_get($data,'item_aica');?>" required>
@@ -115,7 +93,7 @@
 			<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="item_min" value="<?php echo array_get($data,'item_min');?>"></div>
 			</div>
 			<div align="right">
-			<input class="btn btn-sm btn-primary" type="submit" value="Edit"> <input class="btn" type="reset" value="Reset"></div>
+			<input class="btn btn-sm btn-primary" type="submit" value="Edit"> <!--<input class="btn" type="reset" value="Reset">--></div>
 			</form>
 			</div>
 			</div>
