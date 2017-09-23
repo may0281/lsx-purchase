@@ -63,18 +63,26 @@
 									<thead>
 										<tr>
 											<th>No</th>
-											<th>Imported PO</th>
-											<th>Imported QTY</th>
-											<th>Imported Sum</th>
+											<th>Item Code</th>
+											<th>Size</th>
+											<th>Thickness</th>
+                                            <th>P.Film</th>
+                                            <th>AICA</th>
+                                            <th>Price</th>
+                                            <th>QTY</th>
 										</tr>
 									</thead>
 									<tbody>
 									<?php  $i=1;foreach ($q as $r) { ?>
 										<tr>
 											<td><?php echo $i;?></td>
-											<td><a href="<?php echo base_url();?>stock/import_report_item/<?php echo $r['impre_ipo'];?>"><?php echo $r['impre_ipo'];?></a></td>
-											<td><?php echo $r['total'];?></td>
-											<td><?php echo $r['sum']; ?></td>
+											<td><?php echo $r['item_code']; ?></td>
+											<td><?php echo $r['item_size'];?></td>
+											<td><?php echo $r['item_thickness']; ?></td>
+                                            <td><?php echo $r['item_pfilm']; ?></td>
+                                            <td><?php echo $r['item_aica']; ?></td>
+                                            <td><?php echo $r['item_price']; ?></td>
+                                            <td><?php echo $r['impre_qty']; ?></td>
 										</tr>
 									<?php $i++; }?>	
 									</tbody>

@@ -337,26 +337,18 @@
 									Import Stock
 								</a>
 							</li>
+							<li class="<?php if(array_get($path,2) == 'import_report'){echo "current open";} ?>">
+								<a href="<?php echo base_url('stock/import_report');?>">
+									<i class="icon-angle-right"></i>
+									Import Report
+								</a>
+							</li>
 							<li class="<?php if(array_get($path,2) == 'export'){echo "current open";} ?>">
 								<a href="<?php echo base_url(); ?>stock/export">
 									<i class="icon-angle-right"></i>
 									Export Stock
 								</a>
 							</li>
-							<li class="<?php if(array_get($path,2) == 'import_report'){echo "current open";} ?>">
-								<a href="<?php echo base_url('stock/import_report');?>">
-									<i class="icon-angle-right"></i>
-									Report Import Item
-								</a>
-							</li>
-							<li class="<?php if(array_get($path,2) == 'import_report_by_po'){echo "current open";} ?>">
-								<a href="<?php echo base_url('stock/import_report_by_po');?>">
-									<i class="icon-angle-right"></i>
-									Report Import Item by PO
-								</a>
-							</li>
-
-
 						</ul>
 					</li>
 					<?php
