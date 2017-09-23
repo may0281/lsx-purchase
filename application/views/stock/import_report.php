@@ -64,8 +64,8 @@
 										<tr>
 											<th>No</th>
 											<th>Imported PO</th>
-											<th>Imported QTY</th>
-											<th>Imported Sum</th>
+											<th>Total Item</th>
+											<th>Total Amount</th>
 										</tr>
 									</thead>
 									<tbody>

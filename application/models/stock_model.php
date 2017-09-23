@@ -249,6 +249,54 @@ class stock_model extends ci_model
 		}
 		
 	}
+	
+	public function importItemInternal($filename)
+	{
+		/*date_default_timezone_set('asia/bangkok');
+		$xlsx = new SimpleXLSX($filename);
+		$i = 1;
+		foreach( $xlsx->rows() as $r ) {
+			if($i > 1){
+
+			$chk_have_item = $this->checkHave_item($r[0]);
+			if($chk_have_item == 1){ $item_have[] = $r[0]; } else {
+				
+				$data = array(
+				  'item_code'=> $r[1].$r[2].$r[3].$r[4],
+				  'item_aica'=> $r[5],
+				  'item_pfilm'=> $r[6],
+				  'item_size'=> $r[7],
+				  'item_thickness'=> $r[8],
+				  'item_price'=> $r[9],
+				  'item_qty'=> $emapData[9],
+				  'item_min'=> $emapData[10],
+				 );
+
+				$this->db->set($data);
+				$this->db->insert('item');
+		
+				}
+
+			
+			}
+
+			$i++;
+		}
+		
+		if (empty($item_eno)) {
+		
+			echo "<script>alert('Import Success'); window.location.assign('".base_url()."index.php/stock/list_item'); </script>";	
+			
+		}else{
+		
+			$message = "Item ที่ไม่สามารถเบิกสินค้าได้แก่\\n\\n";
+			foreach($item_eno as $item) {
+				$message .= "".$item."\\n";
+			}
+			echo "<script>alert('$message'); window.location.assign('".base_url()."index.php/stock/list_item'); </script>";	
+		}*/
+		
+	}
 
 	public function importInstockItem($filename,$tmp_type)
 	{
