@@ -78,7 +78,7 @@ class stock_model extends ci_model
 	
     public function getTransactionImport()
 	{
-		$query = $this->db->query("select distinct(impre_ipo),COUNT(impre_item_code) as total,sum(impre_qty) as sum from import_item_report  group by impre_ipo");
+		$query = $this->db->query("select distinct(impre_ipo),COUNT(impre_item_code) as total,sum(impre_qty) as total_amount from import_item_report  group by impre_ipo");
         $this->log_model->Logging('stock_model','success',$this->db->last_query());
         return $query->result_array();
 	}

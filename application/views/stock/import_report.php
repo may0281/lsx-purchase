@@ -74,7 +74,7 @@
 											<td><?php echo $i;?></td>
 											<td><a href="<?php echo base_url();?>stock/import_report_item/<?php echo $r['impre_ipo'];?>"><?php echo $r['impre_ipo'];?></a></td>
 											<td><?php echo $r['total'];?></td>
-											<td><?php echo $r['sum']; ?></td>
+											<td><?php echo $r['total_amount']; ?></td>
 										</tr>
 									<?php $i++; }?>	
 									</tbody>
