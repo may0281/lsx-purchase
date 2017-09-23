@@ -56,7 +56,7 @@
 
 								<div class="form-group" style="float:right; margin-right:20px; margin-top:20px;">
 									<input name="proj_id" type="hidden" value="<?php echo array_get($data,'proj_id'); ?>">
-									<input class="btn btn-sm btn-primary" type="submit" value="Edit"> <input class="btn" type="reset" value="Reset">
+									<input class="btn btn-sm btn-primary" type="submit" value="Edit">
 								</div>
 
 							</form>

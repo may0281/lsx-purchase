@@ -12,6 +12,7 @@ class stock_model extends ci_model
 	{		 
         $this->db->insert('stock', $data);
 		$insert_id = $this->db->insert_id();
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
 		return  $insert_id;
 	}
 	
@@ -19,6 +20,7 @@ class stock_model extends ci_model
 	{		 
         $this->db->insert('item', $data);
 		$insert_id = $this->db->insert_id();
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
 		return  $insert_id;
 	}
 	
@@ -28,7 +30,8 @@ class stock_model extends ci_model
             'item_id'=> $item_id
         );
 		$this->db->where('stk_id', $stk_id);
-		$this->db->update('stock', $data); 	
+		$this->db->update('stock', $data);
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
 	}
 	
 	public function updatePriceItem($item_id,$price)
@@ -38,12 +41,14 @@ class stock_model extends ci_model
         );
 		$this->db->where('item_id', $item_id);
 		$this->db->update('item', $data);
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
 	}
 
 	public function updateQTY($data)
 	{
 		$this->db->where('item_id', $this->uri->segment(3));
-		$this->db->update('item', $data); 	
+		$this->db->update('item', $data);
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
 	}
 	
 	public function getItemList()
@@ -53,6 +58,7 @@ class stock_model extends ci_model
 		$this->db->where('item_status',1);
 		$this->db->order_by('item_id','DESC');
         $query = $this->db->get();
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
         return $query->result_array();
 	}
 	
@@ -66,20 +72,22 @@ class stock_model extends ci_model
 		}
 		
         $query = $this->db->get();
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
         return $query->result_array();
 	}
 	
-		public function getTransactionImport()
+    public function getTransactionImport()
 	{
  		 $this->db->select('impre_import_num,impre_ipo,impre_date,impre_stk_id,impre_by,SUM(impre_qty) as total');
 		 $this->db->from('import_item_report');
  		 $this->db->group_by('impre_import_num');
  		 $this->db->order_by('impre_id', 'desc');
         $query = $this->db->get();
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
         return $query->result_array();
 	}
 
-		public function getTransactionImportPo($po,$prefix)
+    public function getTransactionImportPo($po,$prefix)
 	{
  		 $this->db->select('import_item_report.impre_ipo,import_item_report.impre_item_code,item.item_size,item.item_thickness,item.item_pfilm,item.item_aica,import_item_report.impre_qty,stock.stk_unit_price');
 		 $this->db->from('import_item_report');
@@ -89,15 +97,17 @@ class stock_model extends ci_model
 		 $this->db->where('impre_import_num',$prefix);
  		 $this->db->order_by('impre_id','desc');
          $query = $this->db->get();
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
          return $query->result_array();
 	}
 
-		public function getTransactionImportByPO()
+    public function getTransactionImportByPO()
 	{
 			$this->db->select('impre_qty,impre_ipo, SUM(impre_qty) as total_imported');
 			$this->db->from('import_item_report');
 			$this->db->group_by('impre_ipo');
        		$query = $this->db->get();
+            $this->log_model->Logging('stock_model','success',$this->db->last_query());
         	return $query->result_array();
 	}
 
@@ -112,6 +122,7 @@ class stock_model extends ci_model
 		}
 		$this->db->where('tmp_type',$tmp_type);
         $query = $this->db->get();
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
         return $query->result_array();
 	}
 
@@ -132,10 +143,11 @@ class stock_model extends ci_model
         $this->db->from('item');
         $this->db->where('item_id',$item_id);
         $query = $this->db->get();
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
         return $query->result_array();
 	}
 	
-		public function sumItem($stk_qty,$item_id)
+    public function sumItem($stk_qty,$item_id)
 	{
 		// count
 		
@@ -149,6 +161,7 @@ class stock_model extends ci_model
 			
 		// plus
 			$total = $stk_qty+$total;
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
 
 			return $total;
 	}
@@ -166,6 +179,7 @@ class stock_model extends ci_model
 			}else{
 				$item_code = "-";
 			}
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
 		return $item_code;
 	}
 	
@@ -182,6 +196,7 @@ class stock_model extends ci_model
 			}else{
 				$item_id = "-";
 			}
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
 		return $item_id;
 	}
 	
@@ -296,13 +311,14 @@ class stock_model extends ci_model
 		fclose($file);
 	}
 
-		public function checkDuplicate_item($item_code)
+    public function checkDuplicate_item($item_code)
 	{
 			$this->db->select('item_code');
 			$this->db->from('item');
 			$this->db->where('item_code',$item_code);
 			$query = $this->db->get();
 			$row = $query->row();
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
 				if ($query->num_rows() > 0)
 				{
 					return 1;
@@ -311,28 +327,28 @@ class stock_model extends ci_model
 				}
 
 	}
-			public function genImportNumber()
-			{
-			$this->db->select('impre_import_num');
-			$this->db->from('import_item_report');
-			$this->db->order_by('impre_id','DESC');
-			$this->db->limit(1);
-			$query = $this->db->get();
-			$row = $query->row();
-			if ($query->num_rows() > 0)
-			{
-				$new_num = $row->impre_import_num + 1;
+    public function genImportNumber()
+    {
+        $this->db->select('impre_import_num');
+        $this->db->from('import_item_report');
+        $this->db->order_by('impre_id','DESC');
+        $this->db->limit(1);
+        $query = $this->db->get();
+        $row = $query->row();
+        if ($query->num_rows() > 0)
+        {
+            $new_num = $row->impre_import_num + 1;
 
 
-			}else{
+        }else{
 
-					$new_num = 1;
-			}
-					return $new_num;
-			}
+                $new_num = 1;
+        }
+                return $new_num;
+    }
 
 
-			public function checkEnough_item($item_code,$qty)
+    public function checkEnough_item($item_code,$qty)
 	{
 			$this->db->select('item_qty');
 			$this->db->from('item');
@@ -351,7 +367,7 @@ class stock_model extends ci_model
 				}
 	}
 	
-		public function checkHave_item($item_code)
+    public function checkHave_item($item_code)
 	{
 			$this->db->select('item_code');
 			$this->db->from('item');
@@ -373,6 +389,7 @@ class stock_model extends ci_model
 			$this->db->from('purchase_order');
 			$this->db->where('puror_code',$puror_code);
 			$query = $this->db->get();
+            $this->log_model->Logging('stock_model','success',$this->db->last_query());
 
             if ($query->num_rows() > 0)
             {
@@ -389,7 +406,7 @@ class stock_model extends ci_model
 			$this->db->where('tmp_item_code',$item_code);
 			//$this->db->where('tmp_type',$item_code);
 			$query = $this->db->get();
-
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
 			$row = $query->row();
 				if ($query->num_rows() > 0)
 				{
@@ -401,13 +418,13 @@ class stock_model extends ci_model
 	}
 
 
-		public function IsItemNew($item_code)
+    public function IsItemNew($item_code)
 	{
 			$this->db->select('item_code');
 			$this->db->from('item');
 			$this->db->where('item_code',$item_code);
 			$query = $this->db->get();
-
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
 			$row = $query->row();
 				if ($query->num_rows() > 0)
 				{
@@ -533,6 +550,7 @@ class stock_model extends ci_model
         $this->db->where('purq_status','received');
 		$this->db->or_where('purq_status','approved');
         $query = $this->db->get();
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
         return $query->result_array();
 	}
 
@@ -545,6 +563,7 @@ class stock_model extends ci_model
 		$this->db->or_where('purq_status','approved');
 		$this->db->group_by('proj_owner_name'); 
         $query = $this->db->get();
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
         return $query->result_array();
 	}
 	
@@ -555,6 +574,7 @@ class stock_model extends ci_model
         $this->db->where('purq_status','received');
 		$this->db->or_where('purq_status','approved');
         $query = $this->db->get();
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
         return $query->result_array();
 	}
 
@@ -569,6 +589,7 @@ class stock_model extends ci_model
 		$this->db->like('purchase_request.purq_id',$data["purq_id"]); 
 		$this->db->where_in('purchase_request.purq_status',array("received","approved"));
 		$query = $this->db->get();
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
         return $query->result_array();
 	}
 	
@@ -583,7 +604,7 @@ class stock_model extends ci_model
 		$this->db->where('purchase_request_item.purq_item_status',"received");
 		$this->db->or_where('purchase_request_item.purq_item_status',"approved");
 		$query = $this->db->get();
-		
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
         return $query->result_array();
 	}
 	
@@ -665,6 +686,7 @@ class stock_model extends ci_model
         $this->db->from('purchase_order');
         $this->db->where('puror_status','ordered');
         $query = $this->db->get();
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
         return $query->result_array();
 	}
 	
@@ -675,7 +697,7 @@ class stock_model extends ci_model
 		$this->db->like('purchase_order.puror_code',$data["puror_code"]); 
 		$this->db->where('purchase_order.puror_status',"ordered");
 		$query = $this->db->get();
-		
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
         return $query->result_array();
 	}
 	
@@ -687,6 +709,7 @@ class stock_model extends ci_model
 		$this->db->where('purchase_order_item.puror_id',$puror_id);
 		$this->db->where('purchase_order_item.puror_item_status',"ordered");
 		$query = $this->db->get();
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
         return $query->result_array();
 	}
 	
@@ -697,6 +720,7 @@ class stock_model extends ci_model
         $this->db->where('purq_code',$purq_code);
         $query = $this->db->get();
         $row = $query->row();
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
         return $row->purq_id;
     }
 
@@ -708,12 +732,14 @@ class stock_model extends ci_model
         $this->db->where('a.item_code',$item_code);
         $this->db->where('b.puror_code',$po_code);
         $query = $this->db->get();
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
         return $query->num_rows();
     }
 
     public function insertImportItemReport($data)
     {
         $this->db->insert('import_item_report', $data);
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
     }
 
     public function updateItemQty($item_code,$qty)
@@ -721,6 +747,7 @@ class stock_model extends ci_model
         $this->db->set('item_qty', 'item_qty+'.$qty, FALSE);
         $this->db->where('item_code', $item_code);
         $this->db->update('item');
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
     }
 
     public function summaryImportItemReportByItemAndPO($po,$item_code)
@@ -730,6 +757,7 @@ class stock_model extends ci_model
         $this->db->where('impre_item_code',$item_code);
         $query = $this->db->get('import_item_report');
         $result = $query->result();
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
         return $result[0]->Amount;
     }
 
@@ -742,6 +770,7 @@ class stock_model extends ci_model
         $this->db->where('item_code',$item_code);
         $query = $this->db->get();
         $result = $query->result();
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
         return $result[0]->puror_qty;
     }
 
@@ -752,6 +781,7 @@ class stock_model extends ci_model
         $this->db->where('purchase_order_item.item_code',$item_code);
         $this->db->where('purchase_order.puror_code',$po);
         $this->db->update('purchase_order_item JOIN purchase_order ON purchase_order_item.puror_id= purchase_order.puror_id');
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
 
     }
 
@@ -759,7 +789,9 @@ class stock_model extends ci_model
     {
         $this->db->set('puror_status',$status);
         $this->db->where('puror_code', $po);
+        $this->db->where('puror_status != ','accrual');
         $this->db->update('purchase_order');
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
     }
 
 }

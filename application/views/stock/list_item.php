@@ -85,8 +85,6 @@
 												<?php if($this->hublibrary_model->permission('stock','stock','update')== true){ ?>
 												<input type="button" onClick="location.href='<?php echo base_url(); ?>stock/edit_item/<?php echo $r['item_id'];?>'" class="btn btn-sm btn" value="Edit">
 												<?php } ?>
-												<?php echo nbs(5);?>
-												<input type="button" onClick="location.href='<?php echo base_url(); ?>stock/stock_item/<?php echo $r['item_id'];?>'" class="btn btn-sm btn-success" value="Imported Detail">
 
 											</td>
 										</tr>

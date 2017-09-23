@@ -277,7 +277,6 @@ class stock extends CI_Controller {
                 $qty = $r[2];
 
                 $isTrue = $this->stock_model->getItemOnPO($po_code,$item_code);
-
                 if($isTrue)
                 {
                     $stockData = array(
@@ -320,7 +319,6 @@ class stock extends CI_Controller {
                     );
                 }
             }
-
             $i++;
         }
 

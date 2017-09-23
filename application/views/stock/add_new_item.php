@@ -88,23 +88,11 @@
 			</div>
 			<div class="widget-content">
 			<form class="form-horizontal row-border" id="validate-2" method="post" action="<?php echo base_url(); ?>stock/add_item_action">
-			<!--									<div class="alert alert-info fade in">
-			<i class="icon-remove close" data-dismiss="alert"></i>
-			This are examples of full width input fields. Please find select-boxes and other things below.
-			</div>-->
+
 			<div class="form-group">
 			<label class="col-md-2 control-label">Item Code:<span style="color:#F00">*</span></label>
 			<div class="col-md-10"><input type="text" name="item_code" class="form-control" required></div>
 			</div>
-<!--			<div class="form-group">
-			<label class="col-md-2 control-label" for="input19">Type</label>
-			<div class="col-md-10">
-			<select id="input19" class="select2-select-00 col-md-12 full-width-fix">
-			<option value="AK">---Select--</option>
-			<option value="HI">-----</option>
-			</select>
-			</div>
-			</div-->		
 			<div class="form-group">
 			<label class="col-md-2 control-label">Qty:</label>
 			<div class="col-md-10"><input class="form-control digits" name="stk_qty"></div>

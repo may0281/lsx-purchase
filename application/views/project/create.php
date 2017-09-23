@@ -57,7 +57,7 @@
 									</div>
 
 									<div class="form-group" style="float:right; margin-right:20px; margin-top:20px;">
-										<input class="btn btn-sm btn-primary" type="submit" value="Save"> <input class="btn" type="reset" value="Reset">
+										<input class="btn btn-sm btn-primary" type="submit" value="Save">
 									</div>
 
 								</form>
