@@ -27,7 +27,7 @@
                         <a href="<?php echo base_url();?>dashboard">DASHBOARD</a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url();?>" title=""><?php echo strtoupper($menu); ?></a>
+                        <a href="<?php echo base_url(strtolower($menu));?>" title=""><?php echo strtoupper($menu); ?></a>
                     </li>
                     <li class="current">
                         <a href="#" title="">Item List</a>

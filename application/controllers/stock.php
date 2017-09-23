@@ -397,7 +397,7 @@ class stock extends CI_Controller {
 			
 		$data = array(
             'menu'=> 'STOCK ITEM',
-            'subMenu'=> 'เบิกสินค้า',
+            'subMenu'=> 'Export Stock',
 			'pj' => $this->stock_model->getPJ(),
 			'own' => $this->stock_model->getOwner(),
 			'pur' => $this->stock_model->getPurchaseRequest(),
@@ -424,7 +424,7 @@ class stock extends CI_Controller {
 		
 		$data = array(
             'menu'=> 'Stock',
-            'subMenu'=> 'เบิกสินค้า'
+            'subMenu'=> 'Export Stock'
         );
 
 		$this->load->view('template/left');
@@ -434,7 +434,7 @@ class stock extends CI_Controller {
 	public function export_by_order_sum()
     {
 		$data = array(
-            'menu'=> 'เบิกสินค้า',
+            'menu'=> 'Export Stock',
             'subMenu'=> 'ยืนยันเบิกสินค้า',
 			'q' => $this->stock_model->getExportItem($this->uri->segment(3))
         );

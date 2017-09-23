@@ -61,7 +61,7 @@ $label = array(
 
             <div class="row row-bg"> <!-- .row-bg -->
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-11">
 
                         <form class="form-horizontal row-border" action="" method="post">
                             <div class="form-group">
@@ -175,7 +175,7 @@ $label = array(
                                             <?php if($allowUpdate == true && $r['purq_status'] == 'request'){ ?>
                                                 <a href="<?php echo base_url('purchase/request/update/'.$r['purq_id'])?>" class="btn btn-xs bs-tooltip" title="" data-original-title="Edit"><i class="icon-pencil"></i></a>
                                             <?php } ?>
-                                            <?php if($allowDelete == true){ ?>
+                                            <?php if($allowDelete == true && $r['purq_status'] == 'request'){ ?>
                                                 <a id="del_<?php echo $r['purq_id'];?>" class="btn btn-xs bs-tooltip confirm-dialog" title="" data-original-title="Delete"><i class="icon-trash"></i></a>
                                             <?php } ?>
 
