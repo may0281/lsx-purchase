@@ -88,8 +88,8 @@ class stock_model extends ci_model
 		 $this->db->where('impre_ipo',$po);
 		 $this->db->where('impre_import_num',$prefix);
  		 $this->db->order_by('impre_id','desc');
-        $query = $this->db->get();
-        return $query->result_array();
+         $query = $this->db->get();
+         return $query->result_array();
 	}
 
 		public function getTransactionImportByPO()
@@ -196,10 +196,13 @@ class stock_model extends ci_model
 
 			$chk_eno = $this->checkEnough_item($r[0],$r[1]);
 			$chk_have_item = $this->checkHave_item($r[0]);
-			//echo $r[0].' '.$r[1].'==>'.$chk_eno.'<br>';
+		//	echo $r[0].' '.$r[1].'have ==>'.$chk_have_item.'eno ==>'.$chk_eno.'<br>';
+		//	exit();
+			// chk_eno return = 0 is not enougn 1 is enougn
+			// chk_have_item return = 1 is have item 0 is no item 
 			
 			if($chk_eno == 0){ $item_eno[] = $r[0]; } else {
-				if($chk_have_item == 1){ $item_no_have[] = $r[0]; } else {
+				if($chk_have_item == 0){ $item_no_have[] = $r[0]; } else {
 					$this->db->select('item_qty');
 					$this->db->from('item');
 					$this->db->where('item_code',$r[0]);

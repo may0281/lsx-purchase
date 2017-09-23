@@ -85,7 +85,7 @@
 														 if ($k % 3 == 0){
 															echo '<a href="'.base_url().'stock/import_report_po/'.$row->impre_ipo.'/'.$r['impre_import_num'].'">'.$row->impre_ipo.'</a><br>';
 														}else{
-															echo '<a href="'.base_url().'stock/import_report_po/'.$row->impre_ipo.'/'.$r['impre_import_num'].'">'.$row->impre_ipo.'</a>, ';
+															echo '<a href="'.base_url().'stock/import_report_po/'.$row->impre_ipo.'/'.$r['impre_import_num'].'">'.$row->impre_ipo.'</a> ';
 														}
 														$k ++;
 													}
