@@ -404,16 +404,7 @@
 
 				</ul>
 				<!-- /Navigation -->
-				<div class="sidebar-widget align-center">
-					<div class="btn-group" data-toggle="buttons" id="theme-switcher">
-						<label class="btn active">
-							<input type="radio" name="theme-switcher" data-theme="bright"><i class="icon-sun"></i> Bright
-						</label>
-						<label class="btn">
-							<input type="radio" name="theme-switcher" data-theme="dark"><i class="icon-moon"></i> Dark
-						</label>
-					</div>
-				</div>
+
 
 			</div>
 			<div id="divider" class="resizeable"></div>

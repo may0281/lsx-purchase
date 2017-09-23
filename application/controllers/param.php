@@ -16,6 +16,13 @@ class param extends CI_Controller {
 
     public function index()
     {
+        $permission = $this->hublibrary_model->permission($this->major,0,'view');
+        if($permission == false)
+        {
+            echo $this->load->view('template/left','',true);
+            echo $this->load->view('template/400','',true);
+            die();
+        }
 
         $list = $this->param_model->getParamAll();
         $data = array(
