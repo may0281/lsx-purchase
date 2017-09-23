@@ -324,11 +324,15 @@ class stock extends CI_Controller {
                 }
                 else
                 {
-                    $async[] = array(
-                        'item_code' => $item_code,
-                        'po_code' => $po_code,
-                        'qty' => $qty
-                    );
+                    if(!empty($po_code) and !empty($item_code))
+                    {
+                        $async[] = array(
+                            'item_code' => $item_code,
+                            'po_code' => $po_code,
+                            'qty' => $qty
+                        );
+                    }
+
                 }
             }
             $i++;
