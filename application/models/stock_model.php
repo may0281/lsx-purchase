@@ -215,19 +215,20 @@ class stock_model extends ci_model
 		$i = 1;
 		foreach( $xlsx->rows() as $r ) {
 			if($i > 1){
-
-			$chk_eno = $this->checkEnough_item($r[0],$r[1]);
-			$chk_have_item = $this->checkHave_item($r[0]);
+			$item_code = trim($r[0]);
+			$chk_eno = $this->checkEnough_item($item_code,$r[1]);
+			$chk_have_item = $this->checkHave_item($item_code);
 		//	echo $r[0].' '.$r[1].'have ==>'.$chk_have_item.'eno ==>'.$chk_eno.'<br>';
 		//	exit();
 			// chk_eno return = 0 is not enougn 1 is enougn
 			// chk_have_item return = 1 is have item 0 is no item 
 			
-			if($chk_eno == 0){ $item_eno[] = $r[0]; } else {
-				if($chk_have_item == 0){ $item_no_have[] = $r[0]; } else {
+			
+			if($chk_eno == 0){ $item_eno[] = $item_code; } else {
+				if($chk_have_item == 0){ $item_no_have[] = $item_code; } else {
 					$this->db->select('item_qty');
 					$this->db->from('item');
-					$this->db->where('item_code',$r[0]);
+					$this->db->where('item_code',$item_code);
 					$query = $this->db->get();
 					$row = $query->row();
 					if ($query->num_rows() > 0)
@@ -238,9 +239,9 @@ class stock_model extends ci_model
 						'item_qty'=> $update_total
 					);
 
-					$item_id = $this->getItemid($r[0]);
+					$item_id = $this->getItemid($item_code);
 
-					$this->db->where('item_code', $r[0]);
+					$this->db->where('item_code', $item_code);
 					$this->db->update('item', $data_update);
 						}
 
@@ -250,7 +251,7 @@ class stock_model extends ci_model
 			$i++;
 		}
 		
-		if (empty($item_eno)) {
+/*		if (empty($item_eno)) {
 		
 			echo "<script>alert('Export Success'); window.location.assign('".base_url()."index.php/stock/list_item'); </script>";	
 			
@@ -261,7 +262,33 @@ class stock_model extends ci_model
 				$message .= "".$item."\\n";
 			}
 			echo "<script>alert('$message'); window.location.assign('".base_url()."index.php/stock/list_item'); </script>";	
+		}*/
+		
+		if (!empty($item_eno)) {
+		
+			$message = "Item ที่ไม่สามารถเบิกสินค้าได้เนื่องจากจำนวนไม่พอที่จะเบิกได้แก่\\n\\n";
+			foreach($item_eno as $item) {
+				$message .= "".$item."\\n";
+			}
+			echo "<script>alert('$message');</script>";	
+			
 		}
+		
+		if (!empty($item_no_have)) {
+		
+			$message_n = "Item ที่ไม่สามารถเบิกสินค้าได้เนื่องจากไม่มีในรายการได้แก่\\n\\n";
+			foreach($item_no_have as $item_n) {
+				$message_n .= "".$item_n."\\n";
+			}
+			echo "<script>alert('$message_n');</script>";	
+			
+		}
+		if (empty($item_eno) and empty($item_no_have)) {
+		
+			echo "<script>alert('Export Success');</script>";	
+			}
+			
+			echo "<script>window.location.assign('".base_url()."index.php/stock/list_item');</script>";
 		
 	}
 	
