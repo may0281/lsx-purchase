@@ -98,6 +98,7 @@ class purchaseorder extends CI_Controller {
             'subMenu'=> $orderDetail[0]['puror_code'],
             'data' => $orderDetail[0],
             'item' => $orderItem,
+            'po' => $orderDetail[0]['puror_code']
         );
 
         $this->load->view('template/left');
@@ -281,4 +282,5 @@ class purchaseorder extends CI_Controller {
         echo "<script>alert('Success.'); window.location.assign('".base_url()."purchase/po-report');</script>";
 
     }
+
 }

@@ -159,11 +159,9 @@
                                                 $amount = $this->db->where('puror_id',$r['puror_id'])->where('puror_item_status','ordered')->from("purchase_order_item")->count_all_results(); ?>
                                                 <?php if($amount > 0){ ?>
                                                 <i class="icon-warning-sign red bs-tooltip" data-original-title="สินคัายังเข้าไม่ครบจำนวน <?php echo $amount; ?> items."></i>
-
                                             <?php } } ?>
                                         </div>
                                     </td>
-
                                     <td class="align-center">
                                         <span class="btn-group">
                                             <a href="<?php echo base_url('purchase/po-report/detail/'.$r['puror_id'])?>" class="btn btn-xs bs-tooltip" title="" data-original-title="View"><i class="icon-search"></i></a>

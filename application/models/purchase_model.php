@@ -416,9 +416,19 @@ class purchase_model extends ci_model
         {
             s($r);
         }
-        sd('s');
     }
 
+    public function getImportItemReport($item_code,$po)
+    {
+        $this->db->select_sum('impre_qty');
+        $this->db->from('import_item_report');
+        $this->db->where('impre_item_code',$item_code);
+        $this->db->where('impre_ipo',$po);
+        $query = $this->db->get();
+        $data =  $query->result_array();
+        return $data[0]['impre_qty'];
+
+    }
 
 
 

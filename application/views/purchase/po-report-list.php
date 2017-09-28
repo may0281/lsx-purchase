@@ -61,18 +61,25 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Item Code</th>
-                                        <th>Purchase Code</th>
-                                        <th>QTY</th>
+                                        <th>Purchase Request Code</th>
+                                        <th>Order QTY</th>
+                                        <th>จำนวนสินค้าที่เข้าแล้ว</th>
+                                        <th>จำนวนสินค้าค้าง</th>
                                         <th class="align-center"> Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php  $i=1;foreach ($item as $r) {  ?>
+                                    <?php  $i=1;foreach ($item as $r) {
+                                        $impre = $this->purchase_model->getImportItemReport($r['item_code'],$po);
+                                        $current = $r['puror_qty']-$impre;
+                                    ?>
                                         <tr>
                                             <td><?php echo $i;?></td>
                                             <td><?php echo $r['item_code'];?></td>
                                             <td><?php echo $r['purq_code'];?></td>
                                             <td><?php echo $r['puror_qty'];?></td>
+                                            <td><?php echo $impre;?></td>
+                                            <td><?php echo ($current>0)? $current : null ;?></td>
                                             <th class="align-center"><?php echo $r['puror_item_status'];?></td>
                                         </tr>
                                     <?php $i++; } ?>
