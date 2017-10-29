@@ -270,7 +270,8 @@ class stock_model extends ci_model
 			foreach($item_eno as $item) {
 				$message .= "".$item."\\n";
 			}
-			echo "<script>alert('$message');</script>";	
+			//echo 'header("Content-type: text/html; charset=utf-8");';
+			echo "<script CHARSET='UTF-8'>alert('$message');</script>";	
 			
 		}
 		
@@ -280,7 +281,8 @@ class stock_model extends ci_model
 			foreach($item_no_have as $item_n) {
 				$message_n .= "".$item_n."\\n";
 			}
-			echo "<script>alert('$message_n');</script>";	
+			//echo 'header("Content-type: text/html; charset=utf-8");';
+			echo "<script CHARSET='UTF-8'>alert('$message_n');</script>";	
 			
 		}
 		if (empty($item_eno) and empty($item_no_have)) {
@@ -288,7 +290,7 @@ class stock_model extends ci_model
 			echo "<script>alert('Export Success');</script>";	
 			}
 			
-			echo "<script>window.location.assign('".base_url()."index.php/stock/list_item');</script>";
+			echo "<script>window.location.assign('".base_url()."stock/list_item');</script>";
 		
 	}
 	

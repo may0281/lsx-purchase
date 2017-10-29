@@ -328,9 +328,7 @@
                             <?php if($stock_view == true){ ?>
                             <li class="<?php if(array_get($path,2) == 'list_item'){echo "current open";} ?>">
 								<a href="<?php echo base_url('stock/list_item');?>">
-									<i class="icon-angle-right"></i>
-									Item List
-								</a>
+									<i class="icon-angle-right"></i>Item List</a>
 							</li>
 							<?php }?>
 							<?php if($stock_create == true){ ?>
