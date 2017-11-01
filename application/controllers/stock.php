@@ -155,7 +155,7 @@ class stock extends CI_Controller {
 		$this->db->where('item_id',$this->uri->segment(3));
 		$this->db->update('item', $data_update);
 
-		echo "<script>alert('Success.'); window.location.assign('".base_url()."index.php/stock/list_item'); </script>";
+		echo "<script>alert('Success.'); window.location.assign('".base_url()."stock/list_item'); </script>";
 		exit();
     }
 	
