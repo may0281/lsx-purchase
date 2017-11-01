@@ -825,6 +825,12 @@ class stock_model extends ci_model
         $this->db->insert('import_item_report', $data);
         $this->log_model->Logging('stock_model','success',$this->db->last_query());
     }
+	
+	public function insertImportItem($data)
+    {
+        $this->db->insert('item', $data);
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
+    }
 
     public function updateItemQty($item_code,$qty)
     {
