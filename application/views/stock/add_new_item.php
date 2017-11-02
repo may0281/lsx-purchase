@@ -78,7 +78,32 @@
 
             <!--=== Page Content ===-->
             <!--=== Managed Tables ===-->
+<div class="row">
+                <div class="col-md-6">
+                    <div class="widget box">
+                        <div class="widget-header">
+                            <h4><i class="icon-reorder"></i> Import New Item.</h4>
+                        </div>
+                        <div class="widget-content">
+                            <form class="form-horizontal row-border" id="validate-3" method="post" action="<?php echo base_url('stock/import_new_item'); ?>" enctype="multipart/form-data">
 
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">File <span class="required">*</span></label>
+                                    <div class="col-md-9">
+                                        <input type="file" name="file" class="required" data-style="fileinput" data-inputsize="medium">
+                                        <p class="help-block">Excel only (.xlsx)</p>
+                                        <label for="file" class="has-error help-block" generated="true" style="display:none;"></label>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <input type="submit" value="Upload" class="btn btn-primary pull-right">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
 			<!--=== Normal ===-->
 			<div class="row">
 			<div class="col-md-12">
@@ -134,6 +159,7 @@
 			</div>
 			</div>
 			<!-- /Normal -->
+            
 
 
         <!-- /Page Content -->

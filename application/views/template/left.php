@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -99,6 +100,8 @@
 </head>
 
 <body>
+
+
 	<!-- Header -->
 	<header class="header navbar navbar-fixed-top" role="banner">
 		<!-- Top Navigation Bar -->
@@ -326,13 +329,13 @@
 						</a>
 						<ul class="sub-menu">
                             <?php if($stock_view == true){ ?>
-                            <li class="<?php if(array_get($path,2) == 'list_item'){echo "current open";} ?>">
+                            <li class="<?php if(array_get($path,2) == 'list_item' or array_get($path,2) == 'edit_item'){echo "current open";} ?>">
 								<a href="<?php echo base_url('stock/list_item');?>">
 									<i class="icon-angle-right"></i>Item List</a>
 							</li>
 							<?php }?>
 							<?php if($stock_create == true){ ?>
-							<li class="<?php if(array_get($path,2) == 'add_new_item' or array_get($path,2) == 'edit_item'){echo "current open";} ?>">
+							<li class="<?php if(array_get($path,2) == 'add_new_item'){echo "current open";} ?>">
 								<a href="<?php echo base_url('stock/add_new_item');?>">
 									<i class="icon-angle-right"></i>
 									Add Item
@@ -348,7 +351,7 @@
 							</li>
 							<?php }?>
                             <?php if($stock_view == true){ ?>
-                                <li class="<?php if(array_get($path,2) == 'import_report'){echo "current open";} ?>">
+                                <li class="<?php if(array_get($path,2) == 'import_report' or array_get($path,2) == 'import_report_item'){echo "current open";} ?>">
                                     <a href="<?php echo base_url('stock/import_report');?>">
                                         <i class="icon-angle-right"></i>
                                         Import Report

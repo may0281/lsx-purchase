@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 class stock_model extends ci_model
 	{
@@ -271,7 +271,9 @@ class stock_model extends ci_model
 				$message .= "".$item."\\n";
 			}
 			//echo 'header("Content-type: text/html; charset=utf-8");';
-			echo "<script CHARSET='UTF-8'>alert('$message');</script>";	
+	
+			echo "<meta http-equiv='Content-Type' content='text/html; charset=tis620' />";
+			echo "<script>alert('$message');</script>";	
 			
 		}
 		
@@ -282,7 +284,8 @@ class stock_model extends ci_model
 				$message_n .= "".$item_n."\\n";
 			}
 			//echo 'header("Content-type: text/html; charset=utf-8");';
-			echo "<script CHARSET='UTF-8'>alert('$message_n');</script>";	
+			echo "<meta http-equiv='Content-Type' content='text/html; charset=tis620' />";
+			echo "<script>alert('$message_n');</script>";	
 			
 		}
 		if (empty($item_eno) and empty($item_no_have)) {
@@ -823,6 +826,12 @@ class stock_model extends ci_model
     public function insertImportItemReport($data)
     {
         $this->db->insert('import_item_report', $data);
+        $this->log_model->Logging('stock_model','success',$this->db->last_query());
+    }
+	
+	public function insertImportItem($data)
+    {
+        $this->db->insert('item', $data);
         $this->log_model->Logging('stock_model','success',$this->db->last_query());
     }
 

@@ -155,7 +155,7 @@ class stock extends CI_Controller {
 		$this->db->where('item_id',$this->uri->segment(3));
 		$this->db->update('item', $data_update);
 
-		echo "<script>alert('Success.'); window.location.assign('".base_url()."index.php/stock/list_item'); </script>";
+		echo "<script>alert('Success.'); window.location.assign('".base_url()."stock/list_item'); </script>";
 		exit();
     }
 	
@@ -346,6 +346,52 @@ class stock extends CI_Controller {
 
         $this->load->view('template/left');
         $this->load->view('stock/pre_import',$data);
+
+    }
+	
+	 public function import_new_item()
+    {
+		date_default_timezone_set('asia/bangkok');
+        $date = date('Y-m-d H:i:s');
+        $import_num = strtotime($date);
+        $filename=$_FILES["file"]["tmp_name"];
+        $xlsx = new SimpleXLSX($filename);
+        $i=0;
+		
+        foreach ($xlsx->rows() as $r)
+        {
+            if($i > 0)
+            {
+				$item_code = $r[0];
+                $item_size = $r[3];
+				$item_thickness = $r[4];
+				$item_pfilm = $r[2];
+				$item_aica = $r[1];
+				$item_price = $r[5];
+				$item_add_date = $date;
+				$item_status = 1;
+				
+				$isNew = $this->stock_model->checkDuplicate_item($item_code);
+				
+				if($isNew == 0){
+                    $importItem = array(
+                        'item_code'=> $item_code,
+                        'item_size'=> $item_size,
+                        'item_thickness'=> $item_thickness,
+                        'item_pfilm'=> $item_pfilm,
+                        'item_aica'=> $item_aica,
+                        'item_price'=> $item_price,
+                        'item_add_date'=> $date,
+						'item_status'=> $item_status
+                    );
+
+                    $this->stock_model->insertImportItem($importItem);
+				}
+            }
+            $i++;
+        }
+
+      	echo "<script>alert('Import Successfully.'); window.location.assign('".base_url()."index.php/stock/list_item'); </script>";	
 
     }
 	
