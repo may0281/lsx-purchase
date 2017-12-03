@@ -2831,7 +2831,7 @@ ul.stats:not(.no-dividers) li {
 }
 ul.stats li {
   display: table-cell;
-  padding: 15px;
+  padding: 0px;
 }
 ul.stats li:last-child {
   border-right: none;

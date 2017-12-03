@@ -5,9 +5,9 @@ $active_record = TRUE;
 
 
 $db['default']['hostname'] = 'localhost';
-//$db['default']['username'] = 'premiumr_purchase';
-//$db['default']['password'] = 'lsxcoth';
-//$db['default']['database'] = 'premiumr_purchase';
+//$db['default']['username'] = 'lsxthailand';
+//$db['default']['password'] = 'dsfdsf124dfg';
+//$db['default']['database'] = 'purchase';
 $db['default']['username'] = 'root';
 $db['default']['password'] = '';
 $db['default']['database'] = 'lsx-purchase';

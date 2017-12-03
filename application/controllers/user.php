@@ -226,6 +226,49 @@ class user extends CI_Controller {
         }
     }
 
+    public function changPassword()
+    {
+        $user = $this->session->userdata('adminData');
+        $oldpass =  md5($this->input->post('oldpass'));
+
+        if($this->input->post('oldpass') == '')
+        {
+            echo "<script>alert('Input you current password!');history.back();</script>";
+            exit();
+        }
+        if($this->input->post('pass1') == '')
+        {
+            echo "<script>alert('Input new password!');history.back();</script>";
+            exit();
+        }
+        if($this->input->post('cpass1') == '')
+        {
+            echo "<script>alert('Input confirm password!');history.back();</script>";
+            exit();
+        }
+        if($this->input->post('pass1') != $this->input->post('cpass1'))
+        {
+            echo "<script>alert('Confirm Password not match');history.back();</script>";
+            exit();
+        }
+
+        $q = $this->user_model->checkUserdata($user,$oldpass);
+
+
+        if($q){
+            $data = array('password' => md5($this->input->post('pass1')));
+            $this->db->where('account', $user);
+            $this->db->update('bn_user_profile', $data);
+            echo "<script>alert('Success!!! Your password has been changed');history.back();</script>";
+        }
+        else
+        {
+            echo "<script>alert('Username or Password is wrong');window.location.assign('".base_url()."dashboard');</script>";
+        }
+
+
+
+    }
 
 
 

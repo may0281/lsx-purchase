@@ -132,7 +132,10 @@
 					</a>
 				</li>
 				<li>
-					<a href="<?php echo base_url();?>logout"><i class="icon-plus"></i><span>Logout</span></a>
+					<a data-toggle="modal" href="#myModal0" ><span>Change Password</span></a>
+				</li>
+				<li>
+					<a href="<?php echo base_url();?>logout"><span>Logout</span></a>
 				</li>
 			</ul>
 			<!-- /Top Left Menu -->
@@ -402,3 +405,39 @@
 			</div>
 			<div id="divider" class="resizeable"></div>
 		</div>
+		<div class="modal fade" id="myModal0">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<form class="form-horizontal row-border" method="post"  action="<?php echo base_url();?>user/changPassword">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h4 class="modal-title">เปลี่ยนรหัสผ่าน</h4>
+						</div>
+						<div class="modal-body">
+							<div class="form-group">
+								<label class="col-md-3 control-label">Old Password :</label>
+								<div class="col-md-9">
+									<input type="text" name="oldpass" class="form-control required">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-3 control-label">Password <span class="required">*</span></label>
+								<div class="col-md-9">
+									<input type="password" name="pass1" class="form-control required" minlength="5">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-3 control-label">Confirm Password <span class="required">*</span></label>
+								<div class="col-md-9">
+									<input type="password" name="cpass1" class="form-control required" minlength="5" equalTo="[name='pass1']">
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-primary" >Save changes</button>
+						</div>
+					</form>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->

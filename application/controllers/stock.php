@@ -85,7 +85,7 @@ class stock extends CI_Controller {
 		$chk_new = $this->stock_model->IsItemNew($this->input->post('item_code'));
 		
 		if($chk_new == '1'){
-			echo "<script>alert('ชออภัย Item ".$this->input->post('item_code')." นีมีอยู่แล้วในระบบ กรุณาเลือก Add More Item ในรายการ Item ที่มีอยู่แล้ว'); window.location.assign('".base_url()."index.php/stock/add_item'); </script>";	
+			echo "<script>alert('ชออภัย Item ".$this->input->post('item_code')." นีมีอยู่แล้วในระบบ กรุณาเลือก Add More Item ในรายการ Item ที่มีอยู่แล้ว'); window.location.assign('".base_url()."stock/add_item'); </script>";	
 		}
 		
 		$data_stk = array(
@@ -116,7 +116,7 @@ class stock extends CI_Controller {
 		$item_id = $this->stock_model->addItem($data_item);
 		
 		$this->stock_model->updateItemID($stock_id,$item_id);
-		echo "<script>alert('Success.'); window.location.assign('".base_url()."index.php/stock/list_item'); </script>";
+		echo "<script>alert('Success.'); window.location.assign('".base_url()."stock/list_item'); </script>";
 		
     }
 	
@@ -353,48 +353,38 @@ class stock extends CI_Controller {
     {
 		date_default_timezone_set('asia/bangkok');
         $date = date('Y-m-d H:i:s');
-        $import_num = strtotime($date);
         $filename=$_FILES["file"]["tmp_name"];
         $xlsx = new SimpleXLSX($filename);
         $i=0;
-		
         foreach ($xlsx->rows() as $r)
         {
-            if($i > 0)
-            {
-				$item_code = $r[0];
-                $item_size = $r[3];
-				$item_thickness = $r[4];
-				$item_pfilm = $r[2];
-				$item_aica = $r[1];
-				$item_price = $r[5];
-				$item_add_date = $date;
-				$item_status = 1;
-				
-				$isNew = $this->stock_model->checkDuplicate_item($item_code);
-				
-				if($isNew == 0){
-                    $importItem = array(
-                        'item_code'=> $item_code,
-                        'item_size'=> $item_size,
-                        'item_thickness'=> $item_thickness,
-                        'item_pfilm'=> $item_pfilm,
-                        'item_aica'=> $item_aica,
-                        'item_price'=> $item_price,
-                        'item_add_date'=> $date,
-						'item_status'=> $item_status
-                    );
+            $importItem = array(
+                'item_code'=> $r[1],
+                'item_size'=> $r[2],
+                'item_thickness'=> $r[3],
+                'item_pfilm'=> $r[4],
+                'item_aica'=> $r[5],
+                'item_qty'=> $r[6],
+                'item_price'=> $r[7],
+                'item_min'=> $r[8],
+                'item_add_date'=> $date,
+                'item_status'=> 1
+            );
 
-                    $this->stock_model->insertImportItem($importItem);
-				}
+            $isNew = $this->stock_model->checkDuplicate_item($r[1]);
+            if($isNew == 1){
+
+                $importItem['item_code'] = $r[1].' SPECIAL';
             }
+
+            $this->stock_model->insertImportItem($importItem);
+
             $i++;
         }
 
-      	echo "<script>alert('Import Successfully.'); window.location.assign('".base_url()."index.php/stock/list_item'); </script>";	
 
     }
-	
+
     public function export_item()
     {
 			$filename=$_FILES["file"]["tmp_name"];
@@ -559,7 +549,7 @@ class stock extends CI_Controller {
 	public function export_item_action()
     {
 		$this->stock_model->UpdateExportItem($this->uri->segment(3));
-		echo "<script>alert('Export Successfully.'); window.location.assign('".base_url()."index.php/stock/export_by_order'); </script>";	
+		echo "<script>alert('Export Successfully.'); window.location.assign('".base_url()."stock/export_by_order'); </script>";	
 	}
 	
 	
@@ -606,7 +596,7 @@ class stock extends CI_Controller {
 		public function import_item_action()
     {
 		$this->stock_model->UpdateImportItem($this->uri->segment(3));
-		echo "<script>alert('Import Successfully.'); window.location.assign('".base_url()."index.php/stock/import_by_order'); </script>";	
+		echo "<script>alert('Import Successfully.'); window.location.assign('".base_url()."stock/import_by_order'); </script>";	
 	}
 	
 	    public function update_min()
@@ -638,7 +628,7 @@ class stock extends CI_Controller {
         );
 		$this->db->where('item_id', $this->uri->segment(3));
 		$this->db->update('item', $data_update); 
-		echo "<script>alert('Update Successfully.'); window.location.assign('".base_url()."index.php/stock/list_item'); </script>";		
+		echo "<script>alert('Update Successfully.'); window.location.assign('".base_url()."stock/list_item'); </script>";		
 		
     }
 
