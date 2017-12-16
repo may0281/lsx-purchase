@@ -321,9 +321,9 @@
                                     <select name="mkt_account" id="marketing" class="col-md-12 select2 full-width-fix">
                                         <option></option>
                                         <?php
-                                            foreach ($users as $user){
+                                            foreach ($mkts as $mtk){
                                         ?>
-                                            <option value="<?php echo array_get($user,'account')?>" <?php echo ($data['mkt_account'] == array_get($user,'account') ? 'selected' : '') ?>   mobile-value="<?php echo array_get($user,'mobile')?>"><?php echo array_get($user,'firstname'). ' '.array_get($user,'lastname');?></option>
+                                            <option value="<?php echo array_get($mtk,'account')?>" <?php echo ($data['mkt_account'] == array_get($mtk,'account') ? 'selected' : '') ?>   mobile-value="<?php echo array_get($mtk,'mobile')?>"><?php echo array_get($mtk,'firstname'). ' '.array_get($mtk,'lastname');?></option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -342,9 +342,9 @@
                                     <select name="sale_account" id="sale" class="col-md-12 select2 full-width-fix">
                                         <option ></option>
                                         <?php
-                                            foreach ($users as $user){
+                                            foreach ($sales as $sale){
                                         ?>
-                                            <option value="<?php echo array_get($user,'account')?>" <?php echo ($data['sale_account'] == array_get($user,'account') ? 'selected' : '') ?>  mobile-value="<?php echo array_get($user,'mobile')?>"><?php echo array_get($user,'firstname'). ' '.array_get($user,'lastname');?></option>
+                                            <option value="<?php echo array_get($sale,'account')?>" <?php echo ($data['sale_account'] == array_get($sale,'account') ? 'selected' : '') ?>  mobile-value="<?php echo array_get($sale,'mobile')?>"><?php echo array_get($sale,'firstname'). ' '.array_get($sale,'lastname');?></option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -727,14 +727,14 @@
 
 
 
-        if(form.proj_owner_name.value == '' &&  form.contractor_name.value == '' && form.designer_name.value  == '')
-        {
-            $('#proj_owner_name').addClass('input-error');
-            $('#contractor_name').addClass('input-error');
-            $('#designer_name').addClass('input-error');
-            $("#msg_project").html('* Please fill in one set.');
-            status = false;
-        }
+//        if(form.proj_owner_name.value == '' &&  form.contractor_name.value == '' && form.designer_name.value  == '')
+//        {
+//            $('#proj_owner_name').addClass('input-error');
+//            $('#contractor_name').addClass('input-error');
+//            $('#designer_name').addClass('input-error');
+//            $("#msg_project").html('* Please fill in one set.');
+//            status = false;
+//        }
 
         if(form.proj_owner_name.value)
         {
@@ -829,6 +829,34 @@
             $('#sale').addClass('input-error');
             $("#msg_person").html('* Please fill in one set [Marketing or sale].');
             status = false;
+        }
+        if(form.mkt_account.value)
+        {
+
+            $('#designer_name').addClass('input-error');
+            $('#msg_designer_name').html(error_msg);
+
+            $('#designer_contacts').addClass('input-error');
+            $('#msg_designer_contacts').html(error_msg);
+
+            $('#designer_mobile').addClass('input-error');
+            $('#msg_designer_mobile').html(error_msg);
+            status = false;
+
+        }
+        if(form.sale_account.value)
+        {
+
+            $('#contractor_name').addClass('input-error');
+            $('#msg_contractor_name').html(error_msg);
+
+            $('#contractor_contacts').addClass('input-error');
+            $('#msg_contractor_contacts').html(error_msg);
+
+            $('#contractor_mobile').addClass('input-error');
+            $('#msg_contractor_mobile').html(error_msg);
+            status = false;
+
         }
 
 

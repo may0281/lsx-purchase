@@ -23,6 +23,9 @@
                     <a href="#" title=""><?php echo strtoupper($subMenu) ?></a>
                 </li>
             </ul>
+            <ul class="crumb-buttons">
+                <li class="first"><a style="cursor: pointer;" href="#" onclick="window.history.go(-1); return false;" title=""><i class="icon-arrow-left"></i><span>Back</span></a></li>
+            </ul>
         </div>
         <!-- /Breadcrumbs line -->
 

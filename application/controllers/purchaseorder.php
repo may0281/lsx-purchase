@@ -36,9 +36,9 @@ class purchaseorder extends CI_Controller {
 
         $poData = array();
         $filter = array();
-        if($this->input->post('submit'))
+        if($this->input->get('submit'))
         {
-            $filter = $this->input->post();
+            $filter = $this->input->get();
             $poData = $this->purchase_model->getPurchaseOrder($filter);
         }
 

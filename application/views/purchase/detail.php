@@ -6,6 +6,10 @@
     {
         @page { margin: 0; }
         body  { margin-top: 25px }
+        .go-back
+        {
+            display: none !important;
+        }
     }
 </style>
 <div id="content">
@@ -24,6 +28,9 @@
                     <a href="#" title=""><?php echo strtoupper($subMenu) ?></a>
                 </li>
             </ul>
+            <ul class="crumb-buttons">
+                <li class="first"><a style="cursor: pointer;" href="#" onclick="window.history.go(-1); return false;" title=""><i class="icon-arrow-left"></i><span>Back</span></a></li>
+            </ul>
         </div>
         <!-- /Breadcrumbs line -->
 
@@ -36,6 +43,7 @@
                         <div class="pull-left">
                             <h2>Purchase No <span><?php echo $data['purq_code'] ?></span> </h2>
                         </div>
+
                     </div>
                     <table class="table  ">
                         <tr>

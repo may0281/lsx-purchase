@@ -43,7 +43,7 @@
                 <div class="row">
                     <div class="col-md-11">
 
-                        <form class="form-horizontal row-border" action="" method="post">
+                        <form class="form-horizontal row-border" action="" method="get">
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Purchase Order Code:</label>
                                 <div class="col-md-2">

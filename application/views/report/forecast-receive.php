@@ -73,7 +73,7 @@
 								<thead>
 								<tr>
 									<th class="align-center" style="vertical-align: middle" rowspan="2">ITEM</th>
-									<th class="align-center" style="vertical-align: middle" rowspan="2">QTY</th>
+									<th class="align-center" style="vertical-align: middle" rowspan="2">STOCK</th>
 									<th class="align-center" colspan="<?php echo $totalLast;?>"><?php echo $month['lastMonth']['month'] ?></th>
 									<th class="align-center" colspan="<?php echo $totalCurrent;?>"><?php echo $month['currentMonth']['month'] ?></th>
 									<th class="align-center" colspan="<?php echo $totalNext1;?>"><?php echo $month['next1Month']['month'] ?></th>

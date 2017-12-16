@@ -10,6 +10,7 @@ class purchase extends CI_Controller {
 		if($this->session->userdata('isSession') == false){
             echo "<script> window.location.assign('".base_url()."login?ReturnUrl=".$_SERVER['REQUEST_URI']."');</script>";
 		}
+
         $this->load->model('purchase_model');
         $this->load->model('project_model');
         $this->load->model('stock_model');
@@ -48,9 +49,9 @@ class purchase extends CI_Controller {
         {
             $role = $this->session->userdata('role');
         }
-        if($this->input->post('submit'))
+        if($this->input->get('submit'))
         {
-            $filter = $this->input->post();
+            $filter = $this->input->get();
             $purchaseData = $this->purchase_model->getAllPurchaseRequest($role,$filter);
         }
 
@@ -128,7 +129,8 @@ class purchase extends CI_Controller {
             'action' => $this->create,
             'projects' => $this->project_model->getNameProjectList(),
             'items' => $this->stock_model->getItemList(),
-            'users' => $this->user_model->getNameUser()
+            'sales' => $this->user_model->getNameUser('SALE'),
+            'mkts' => $this->user_model->getNameUser('MARKETING')
         );
 
         $this->load->view('template/left');

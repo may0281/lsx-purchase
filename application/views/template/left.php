@@ -142,10 +142,14 @@
 		</div>
 	</header> <!-- /.header -->
     <?php $path = array(1=>null,1=>null,2=>null); $path = explode('/',$_SERVER["REQUEST_URI"]);
+	$queryStr1 = explode('?',$path[1]);
+	$path_1 = $queryStr1[0];
 	if(isset($path[2]))
 	{
-		$path_2 = $path[2];
+		$queryStr2 = explode('?',$path[2]);
+		$path_2 = $queryStr2[0];
 	}else{ $path_2 =null;}
+
 	?>
     <div id="container">
 		<div id="sidebar" class="sidebar-fixed">
@@ -156,7 +160,7 @@
 					$dashboard  = $this->hublibrary_model->permission('dashboard',0,'view');
 					if(	$dashboard == true){
 					?>
-					<li class="<?php if(array_get($path,1) == 'dashboard'){echo "current open";} ?>">
+					<li class="<?php if($path_1 == 'dashboard'){echo "current open";} ?>">
 						<a href="<?php echo base_url('dashboard')?>">
 							<i class="icon-dashboard"></i>
 							Dashboard
@@ -168,7 +172,7 @@
 					$role  = $this->hublibrary_model->permission('authen','init-role','view');
 					if(	$user == true or $role == true){
 					?>
-					<li class="<?php if(array_get($path,1) == 'authen'){echo "current open";} ?>">
+					<li class="<?php if($path_1 == 'authen'){echo "current open";} ?>">
 						<a href="javascript:void(0);">
 							<i class="icon-sitemap"></i>
 							Authentication
@@ -206,7 +210,7 @@
 							$po_report == true or
 							$po_create == true){
 					?>
-					<li class="<?php if(array_get($path,1) == 'purchase'){echo "current open";} ?>">
+					<li class="<?php if($path_1 == 'purchase'){echo "current open";} ?>">
 						<a href="javascript:void(0);">
 							<i class="icon-usd"></i>
 							Purchase Management
@@ -216,7 +220,7 @@
 							<li class="<?php if($path_2 == 'report' || $path_2 == ''){echo "current";} ?>">
 								<a href="<?php echo base_url('purchase');?>">
 									<i class="icon-angle-right"></i>
-									Purchase Report
+									Purchase Request Report
 								</a>
 							</li>
 							<?php } ?>
@@ -262,7 +266,7 @@
 						$proj_create  = $this->hublibrary_model->permission('project','init-project','create');
 						if(	$proj_view == true or $proj_create == true){
 					?>
-					<li class="<?php if(array_get($path,1) == 'project'){echo "current open";} ?>">
+					<li class="<?php if($path_1 == 'project'){echo "current open";} ?>">
 						<a href="javascript:void(0);">
 							<i class="icon-hdd"></i>
 							Project
@@ -293,7 +297,7 @@
 					$forecast_view  = $this->hublibrary_model->permission('report','forecast-receive','view');
 					if(	$weekly_view == true or $forecast_view == true){
 					?>
-					<li class="<?php if(array_get($path,1) == 'report'){echo "current open";} ?>">
+					<li class="<?php if($path_1 == 'report'){echo "current open";} ?>">
 						<a href="javascript:void(0);">
 							<i class="icon-hdd"></i>
 							Report
@@ -325,7 +329,7 @@
 					if(	$stock_view == true or $stock_update == true or $stock_create == true){
 					?>
 
-					<li class="<?php if(array_get($path,1) == 'stock'){echo "current open";} ?>">
+					<li class="<?php if($path_1 == 'stock'){echo "current open";} ?>">
 						<a href="javascript:void(0);">
 							<i class="icon-barcode"></i>
 							Stock
@@ -377,7 +381,7 @@
 					$tracking  = $this->hublibrary_model->permission('tracking',0,'view');
 					if($tracking == true){
 					?>
-					<li class="<?php if(array_get($path,1) == 'tracking'){echo "current open";} ?>">
+					<li class="<?php if($path_1 == 'tracking'){echo "current open";} ?>">
 						<a href="<?php echo base_url('tracking')?>">
 							<i class="icon-barcode"></i>
 							Tracking Order
@@ -390,7 +394,7 @@
 					$param  = $this->hublibrary_model->permission('param',0,'view');
 					if($param == true){
 					?>
-					<li class="<?php if(array_get($path,1) == 'param'){echo "current open";} ?>">
+					<li class="<?php if($path_1 == 'param'){echo "current open";} ?>">
 						<a href="<?php echo base_url('param')?>">
 							<i class="icon-barcode"></i>
 							Parameter Config

@@ -33,6 +33,10 @@
                         <a href="#" title="">Item List</a>
                     </li>
                 </ul>
+                <ul class="crumb-buttons">
+                    <li class="first"><a style="cursor: pointer;" href="#" onclick="window.history.go(-1); return false;" title=""><i class="icon-arrow-left"></i><span>Back</span></a></li>
+                </ul>
+
             </div>
 
             <!--=== Page Header ===-->
@@ -41,6 +45,7 @@
                     <h3><?php echo $purq_code ?> (list)</h3>
                     <span></span>
                 </div>
+
             </div>
             <!--=== Normal ===-->
             <div class="row">
