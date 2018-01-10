@@ -12,6 +12,7 @@ class role_model extends ci_model
         $this->db->select('*');
         $this->db->from('bn_func_major');
         $query = $this->db->get();
+        $this->log_model->Logging('role_model','success',$this->db->last_query());
         return $query->result_array();
 	}
 
@@ -21,6 +22,7 @@ class role_model extends ci_model
         $this->db->from('bn_func_minor');
         $this->db->where('func_master_id',$masterId);
         $query = $this->db->get();
+        $this->log_model->Logging('role_model','success',$this->db->last_query());
         return $query->result_array();
     }
 	public function getMinorSub($masterId,$minorId = 0)
@@ -29,6 +31,7 @@ class role_model extends ci_model
         $this->db->from('bn_func_minor_sub');
         $this->db->where('func_master_id',$masterId);
         $this->db->where('func_minor_id',$minorId);
+        $this->log_model->Logging('role_model','success',$this->db->last_query());
         $query = $this->db->get();
         return $query->result_array();
     }
@@ -40,6 +43,7 @@ class role_model extends ci_model
                 left join bn_func_minor c on a.func_minor_id = c.func_minor_ids';
 
         $query = $this->db->query($sql);
+        $this->log_model->Logging('role_model','success',$this->db->last_query());
         return $query->result_array();
     }
 
@@ -48,6 +52,7 @@ class role_model extends ci_model
         $this->db->select('*');
         $this->db->from('bn_auth_role');
         $query = $this->db->get();
+        $this->log_model->Logging('role_model','success',$this->db->last_query());
         return $query->result_array();
     }
 
@@ -57,22 +62,26 @@ class role_model extends ci_model
         $this->db->from('bn_auth_role');
         $this->db->where('role_code',$roleCode);
         $query = $this->db->get();
+        $this->log_model->Logging('role_model','success',$this->db->last_query());
         return $query->result_array();
     }
 
     public function createRole($data)
     {
         $this->db->insert('bn_auth_role', $data);
+        $this->log_model->Logging('role_model','success',$this->db->last_query());
     }
 
     public function createAuthRole($data)
     {
         $this->db->insert('bn_auth_role_func', $data);
+        $this->log_model->Logging('role_model','success',$this->db->last_query());
     }
 
     public function deleteAuthRole($roleCode)
     {
         $this->db->delete('bn_auth_role_func', array('role_ref' => $roleCode));
+        $this->log_model->Logging('role_model','success',$this->db->last_query());
     }
 
     public function checkMasterFlag($roleCode)
@@ -82,6 +91,7 @@ class role_model extends ci_model
         $this->db->where('role_code',$roleCode);
         $this->db->where('master_flag','Y');
         $query = $this->db->get();
+        $this->log_model->Logging('role_model','success',$this->db->last_query());
         return $query->result_array();
     }
 
@@ -94,6 +104,7 @@ class role_model extends ci_model
         $this->db->where('role_ref',$roleCode);
 
         $query = $this->db->get();
+        $this->log_model->Logging('role_model','success',$this->db->last_query());
         return $query->result_array();
     }
 
@@ -101,6 +112,7 @@ class role_model extends ci_model
     {
         $this->db->where('role_code', $roleCode);
         $this->db->update('bn_auth_role', $roleData);
+        $this->log_model->Logging('role_model','success',$this->db->last_query());
     }
 
     public function getUserUseRole($roleCode)
@@ -110,12 +122,14 @@ class role_model extends ci_model
         $this->db->where('role_id',$roleCode);
 
         $query = $this->db->get();
+        $this->log_model->Logging('role_model','success',$this->db->last_query());
         return $query->result_array();
     }
 
     public function deleteRole($roleCode)
     {
         $this->db->delete('bn_auth_role', array('role_code' => $roleCode));
+        $this->log_model->Logging('role_model','success',$this->db->last_query());
     }
 
     public function getMinorSubID($masterId,$minorId,$action)
@@ -129,6 +143,7 @@ class role_model extends ci_model
         $this->db->where('func_minor_sub_status','A');
         $query = $this->db->get();
         $result = $query->result_array();
+        $this->log_model->Logging('role_model','success',$this->db->last_query());
         if($result)
         {
             $id = $result[0]['id'];

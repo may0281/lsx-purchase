@@ -15,6 +15,7 @@ class login_model extends ci_model
         $this->db->where('password',$password);
         $this->db->where('status','A');
         $login = $this->db->get();
+        $this->log_model->Logging('login_model','success',$this->db->last_query());
         return $login->result_array();
 
     }
@@ -23,6 +24,7 @@ class login_model extends ci_model
     {
         $this->db->where('account', $account);
         $this->db->update('bn_user_profile', array('last_login_date'=>date('Y-m-d H:i:s')));
+        $this->log_model->Logging('login_model','success',$this->db->last_query());
     }
 
 //    public function getMenu()

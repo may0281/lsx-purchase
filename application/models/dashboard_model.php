@@ -26,6 +26,7 @@ class dashboard_model extends ci_model
         $this->db->where('YEAR(purq_create_date)',date('Y'));
         $query = $this->db->get();
         $row = $query->row();
+        $this->log_model->Logging('dashboard_model','success',$this->db->last_query());
         if (isset($row))
         {
             return $row->total;
@@ -42,6 +43,7 @@ class dashboard_model extends ci_model
         $this->db->where('MONTH(purq_create_date)',$month);
         $query = $this->db->get();
         $row = $query->row();
+        $this->log_model->Logging('dashboard_model','success',$this->db->last_query());
         if (isset($row))
         {
             return $row->total;

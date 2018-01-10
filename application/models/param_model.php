@@ -12,6 +12,7 @@ class param_model extends ci_model
         $this->db->select('*');
         $this->db->from('param');
         $query = $this->db->get();
+        $this->log_model->Logging('param_model','success',$this->db->last_query());
         return $query->result_array();
 	}
 
@@ -19,6 +20,7 @@ class param_model extends ci_model
     {
         $this->db->insert('param', $data);
         $this->log_model->Logging('param','success',$this->db->last_query());
+        $this->log_model->Logging('param_model','success',$this->db->last_query());
 
     }
 
@@ -29,6 +31,7 @@ class param_model extends ci_model
         $this->db->where('param_email',$email);
         $this->db->where('param_key',$key);
         $query = $this->db->get();
+        $this->log_model->Logging('param_model','success',$this->db->last_query());
 
         return $query->result_array();
     }
@@ -43,6 +46,7 @@ class param_model extends ci_model
     public function delete($id)
     {
         $this->db->delete('param', array('param_id' => $id));
+        $this->log_model->Logging('param_model','success',$this->db->last_query());
     }
 
 

@@ -23,6 +23,7 @@ class tracking_model extends ci_model
         $this->db->order_by('a.puror_id', 'asc');
 
         $query = $this->db->get();
+        $this->log_model->Logging('tracking_model','success',$this->db->last_query());
         return $query->result_array();
 	}
 	

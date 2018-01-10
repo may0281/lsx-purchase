@@ -296,15 +296,15 @@
                                     <label id="msg_contractor_name" class="errors"></label>
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="text" name="contractor_contacts" class="form-control"  value="<?php echo $data['contractor_contacts']; ?>"  placeholder="ชื่อผู้ติดต่อ">
+                                    <input type="text" name="contractor_contacts" id="msg_contractor_contacts" class="form-control"  value="<?php echo $data['contractor_contacts']; ?>"  placeholder="ชื่อผู้ติดต่อ">
                                     <label id="msg_contractor_contacts" class="errors"></label>
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="text" name="contractor_mobile" class="form-control"  value="<?php echo $data['contractor_mobile']; ?>"  placeholder="เบอร์ผู้ติดต่อ">
+                                    <input type="text" name="contractor_mobile" id="contractor_mobile" class="form-control"  value="<?php echo $data['contractor_mobile']; ?>"  placeholder="เบอร์ผู้ติดต่อ">
                                     <label id="msg_contractor_mobile" class="errors"></label>
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" name="contractor_email" class="form-control"  value="<?php echo $data['contractor_email']; ?>"  placeholder="อีเมล์">
+                                    <input type="text" name="contractor_email" id="contractor_email" class="form-control"  value="<?php echo $data['contractor_email']; ?>"  placeholder="อีเมล์">
                                 </div>
                                 <div style="clear:both;"></div>
                                 <label id="msg_project" class="col-md-6 errors" style="text-align: left" > </label>
@@ -525,6 +525,30 @@
         return false;
 
     });
+
+
+    $('#contractor_name').keypress(function () {
+        $('#msg_contractor_name').html('');
+
+    });$('#contractor_contacts').keypress(function () {
+        $('#msg_contractor_contacts').html('');
+
+    });;$('#contractor_mobile').keypress(function () {
+        $('#msg_contractor_mobile').html('');
+
+    });
+
+    $('#designer_name').keypress(function () {
+        $('#msg_designer_name').html('');
+
+    });$('#designer_contacts').keypress(function () {
+        $('#msg_designer_contacts').html('');
+
+    });;$('#designer_mobile').keypress(function () {
+        $('#msg_designer_mobile').html('');
+
+    });
+
 
     function checkForm(form) {
 
@@ -832,30 +856,54 @@
         }
         if(form.mkt_account.value)
         {
+            if(form.contractor_name.value == '')
+            {
+                $('#designer_name').addClass('input-error');
+                $('#msg_designer_name').html(error_msg);
+                status = false;
+            }
 
-            $('#designer_name').addClass('input-error');
-            $('#msg_designer_name').html(error_msg);
+            if(form.designer_contacts.value == '')
+            {
+                $('#designer_contacts').addClass('input-error');
+                $('#msg_designer_contacts').html(error_msg);
+                status = false;
+            }
 
-            $('#designer_contacts').addClass('input-error');
-            $('#msg_designer_contacts').html(error_msg);
+            if(form.designer_contacts.value == '')
+            {
+                $('#designer_mobile').addClass('input-error');
+                $('#msg_designer_mobile').html(error_msg);
+                status = false;
+            }
 
-            $('#designer_mobile').addClass('input-error');
-            $('#msg_designer_mobile').html(error_msg);
-            status = false;
 
         }
         if(form.sale_account.value)
         {
 
-            $('#contractor_name').addClass('input-error');
-            $('#msg_contractor_name').html(error_msg);
+            if(form.contractor_name.value == '')
+            {
+                $('#contractor_name').addClass('input-error');
+                $('#msg_contractor_name').html(error_msg);
+                status = false;
+            }
 
-            $('#contractor_contacts').addClass('input-error');
-            $('#msg_contractor_contacts').html(error_msg);
+            if(form.contractor_contacts.value == '')
+            {
+                $('#contractor_contacts').addClass('input-error');
+                $('#msg_contractor_contacts').html(error_msg);
+                status = false;
+            }
 
-            $('#contractor_mobile').addClass('input-error');
-            $('#msg_contractor_mobile').html(error_msg);
-            status = false;
+            if(form.contractor_contacts.value == '')
+            {
+                $('#contractor_mobile').addClass('input-error');
+                $('#msg_contractor_mobile').html(error_msg);
+                status = false;
+            }
+
+
 
         }
 

@@ -14,7 +14,7 @@ class project_model extends ci_model
         $this->db->from('project');
 		$this->db->where('status',1);
         $query = $this->db->get();
-
+        $this->log_model->Logging('project_model','success',$this->db->last_query());
         return $query->result_array();
 	}
 
@@ -24,6 +24,7 @@ class project_model extends ci_model
         $this->db->from('project');
         $this->db->where('proj_id',$proj_id);
         $query = $this->db->get();
+        $this->log_model->Logging('project_model','success',$this->db->last_query());
         return $query->result_array();
 	}
 
@@ -34,13 +35,15 @@ class project_model extends ci_model
             'status'=> '0'
         );
 		$this->db->where('proj_id', $proj_id);
-		$this->db->update('project', $data); 
+		$this->db->update('project', $data);
+        $this->log_model->Logging('project_model','success',$this->db->last_query());
 	}
 	
 	
 	public function createProject($data)
 	{		 
         $this->db->insert('project', $data);
+        $this->log_model->Logging('project_model','success',$this->db->last_query());
 	}
 
 	
@@ -53,6 +56,7 @@ class project_model extends ci_model
 		$row = $query->row();
 		
 		$name = $row->firstname.' '.$row->lastname;
+        $this->log_model->Logging('project_model','success',$this->db->last_query());
 		
 		return $name;
 	}
@@ -65,6 +69,7 @@ class project_model extends ci_model
 		$row = $query->row();
 		
 		$account = $row->account;
+        $this->log_model->Logging('project_model','success',$this->db->last_query());
 		
 		return $account;
 	}
@@ -81,6 +86,7 @@ class project_model extends ci_model
         $this->db->from('project');
         $this->db->where('status',1);
         $query = $this->db->get();
+        $this->log_model->Logging('project_model','success',$this->db->last_query());
         return $query->result_array();
     }
 
@@ -90,6 +96,7 @@ class project_model extends ci_model
         $this->db->from('purchase_request');
         $this->db->where('proj_id',$proj_id);
         $query = $this->db->get();
+        $this->log_model->Logging('project_model','success',$this->db->last_query());
         return $query->result_array();
     }
 

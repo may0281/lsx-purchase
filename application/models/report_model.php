@@ -23,6 +23,7 @@ class report_model extends ci_model
         $this->db->order_by('a.puror_id', 'asc');
 
         $query = $this->db->get();
+        $this->log_model->Logging('report_model','success',$this->db->last_query());
         return $query->result_array();
     }
 
@@ -46,6 +47,7 @@ class report_model extends ci_model
         $this->db->order_by('c.purq_code', 'desc');
 
         $query = $this->db->get();
+        $this->log_model->Logging('report_model','success',$this->db->last_query());
         return $query->result_array();
     }
 
@@ -54,7 +56,7 @@ class report_model extends ci_model
         $this->db->select('proj_id,proj_name');
         $this->db->from('project');
         $query = $this->db->get();
-        $this->log_model->Logging('purchase_model','success',$this->db->last_query());
+        $this->log_model->Logging('report_model','success',$this->db->last_query());
         return $query->result_array();
     }
 
@@ -65,6 +67,7 @@ class report_model extends ci_model
         $this->db->where('item_status',1);
         $this->db->order_by('item_id','DESC');
         $query = $this->db->get();
+        $this->log_model->Logging('report_model','success',$this->db->last_query());
         return $query->result_array();
     }
 
@@ -77,6 +80,7 @@ class report_model extends ci_model
         $this->db->where('a.item_code',$item_code);
         $this->db->order_by('puror_item_id','DESC');
         $query = $this->db->get();
+        $this->log_model->Logging('report_model','success',$this->db->last_query());
         return $query->result_array();
     }
 
